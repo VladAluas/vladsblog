@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://www.vladaluas.com/</loc>
+    <lastmod>2021-02-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt"
+                href="https://www.vladaluas.com/pt/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://www.vladaluas.com/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://www.vladaluas.com/categories/</loc>
+    <lastmod>2021-02-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt"
+                href="https://www.vladaluas.com/pt/categories/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://www.vladaluas.com/categories/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://www.vladaluas.com/post/data-cleaning/</loc>
+    <lastmod>2021-02-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.vladaluas.com/tags/data-cleaning/</loc>
+    <lastmod>2021-02-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.vladaluas.com/post/</loc>
+    <lastmod>2021-02-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.vladaluas.com/tags/r/</loc>
+    <lastmod>2021-02-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.vladaluas.com/tags/</loc>
+    <lastmod>2021-02-15T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt"
+                href="https://www.vladaluas.com/pt/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://www.vladaluas.com/tags/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://www.vladaluas.com/tags/tidyverse/</loc>
+    <lastmod>2021-02-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.vladaluas.com/categories/tutorial/</loc>
+    <lastmod>2021-02-15T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.vladaluas.com/tags/code-mainetnance/</loc>
+    <lastmod>2021-02-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.vladaluas.com/post/code-maintenance/</loc>
+    <lastmod>2021-02-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.vladaluas.com/tags/ggplot2/</loc>
+    <lastmod>2021-02-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.vladaluas.com/post/introduction-to-visuals/</loc>
+    <lastmod>2021-02-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.vladaluas.com/tags/plot/</loc>
+    <lastmod>2021-02-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.vladaluas.com/series/</loc>
+    <lastmod>2021-02-11T00:00:00+00:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang="pt"
+                href="https://www.vladaluas.com/pt/series/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="https://www.vladaluas.com/series/"
+                />
+  </url>
+  
+  <url>
+    <loc>https://www.vladaluas.com/series/tutorials/</loc>
+    <lastmod>2021-02-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.vladaluas.com/tags/github/</loc>
+    <lastmod>2021-02-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.vladaluas.com/post/github-with-r/</loc>
+    <lastmod>2021-02-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.vladaluas.com/tags/text-analysis/</loc>
+    <lastmod>2021-02-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.vladaluas.com/post/text-analysis-with-r/</loc>
+    <lastmod>2021-02-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.vladaluas.com/tags/tidytext/</loc>
+    <lastmod>2021-02-10T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.vladaluas.com/about/</loc>
+    <lastmod>2020-02-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://www.vladaluas.com/archives/</loc>
+    <lastmod>2019-05-28T00:00:00+00:00</lastmod>
+  </url>
+  
+</urlset>

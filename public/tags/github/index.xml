@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GitHub on Clarity</title>
+    <link>https://www.vladaluas.com/tags/github/</link>
+    <description>Recent content in GitHub on Clarity</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
+    <lastBuildDate>Wed, 10 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.vladaluas.com/tags/github/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GitHub With R</title>
+      <link>https://www.vladaluas.com/post/github-with-r/</link>
+      <pubDate>Wed, 10 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.vladaluas.com/post/github-with-r/</guid>
+      <description>
+        
+          
+&lt;script src=&#34;https://www.vladaluas.com/post/github-with-r/index.en_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Countless times, while working on a project I had to copy a file and save it with a suffix like &lt;em&gt;_v1&lt;/em&gt;, &lt;em&gt;_v2&lt;/em&gt; or &lt;em&gt;_my_name&lt;/em&gt;. It was almost always because the file was saved on a shared drive, multiple people were working on it and someone else had the file opened when I started working. This is where &lt;em&gt;GitHub&lt;/em&gt; comes to rescue. &lt;/strong&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;In this article I would like to discuss a new way to organise your personal or team projects as a data analyst by integrating &lt;strong&gt;GitHub&lt;/strong&gt; in your workflow.&lt;/p&gt;
+&lt;p&gt;My main focus will be to show you how you can integrate &lt;strong&gt;GitHub&lt;/strong&gt; with your &lt;strong&gt;R&lt;/strong&gt; projects, however I will explain broadly how &lt;strong&gt;GitHub&lt;/strong&gt; works and what are the main advantages of integrating it in all your projects, not just the &lt;strong&gt;R&lt;/strong&gt; related ones.&lt;/p&gt;
+&lt;p&gt;You might ask yourself what is &lt;strong&gt;GitHub&lt;/strong&gt; and why use it?&lt;/p&gt;
+&lt;p&gt;Let me exemplify some situations that happened to me more than once and see if you can relate, and then we can discuss &lt;strong&gt;GitHub&lt;/strong&gt;.&lt;/p&gt;
+&lt;div id=&#34;times-when-github-would-have-been-useful&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Times when GitHub would have been useful&lt;/h2&gt;
+&lt;p&gt;Countless times, while working on a project I had to copy a file and save it with a suffix like &lt;strong&gt;_v1&lt;/strong&gt;, &lt;strong&gt;_v2&lt;/strong&gt; or &lt;strong&gt;_my_name&lt;/strong&gt;. It was almost always because the file was saved on a shared drive, multiple people were working on it and someone else had the file opened when I started working.&lt;/p&gt;
+&lt;p&gt;Most of the times I would start working and not tell the other person to close it because it would be just &lt;em&gt;“a quick check-up”&lt;/em&gt;. After some hours or days of &lt;em&gt;“quick check-ups”&lt;/em&gt; on a read-only file I could either lose all the work I’ve done or save it in a different file, with one of the aforementioned suffixes. This situation can easily degenerate from a project that had one or two working files at first into one that now has multiple files. This usually means that someone in the team needs to spend a lot of time to integrate the files or directories in one cohesive project once more.&lt;/p&gt;
+&lt;p&gt;Another situation that one can find frustrating is taking over someone else’s project or report.&lt;/p&gt;
+&lt;p&gt;Depending on how organised they are, it can be a smooth transition or a nightmare that can take months to figure out. If the project is not organised in any cohesive way, and if the tasks that need to be executed are using different tools and folders that are not linked in any logical way, it can be very hard for someone taking over to remember the steps or change and repair something should it be needed.&lt;/p&gt;
+&lt;p&gt;The person that developed the project or report might consider this process to be logical or has gotten used to it, however, the person taking over might have a difficult time adjusting or figuring out which of the many folders is the latest one.&lt;/p&gt;
+&lt;p&gt;Although not a universal situation, I am sure a lot of people had to deal with similar scenarios, especially in teams where the work is segregated and each member has an area of expertise. With people having different ways of working, one can find it difficult to adjust to a project that is based on someone else’s working style.&lt;/p&gt;
+&lt;p&gt;How about this? Has this ever happened to you?&lt;/p&gt;
+&lt;p&gt;Your team is tasked with creating a report for a department in your company. You create the report, it works just fine and you implement it in production.&lt;/p&gt;
+&lt;p&gt;Now, another department tells you they would like the same report with their data. Simple enough, you can just add the data. However, they would also like to include an extra feature so you add it and re-deploy the report.&lt;/p&gt;
+&lt;p&gt;On top of this someone else thinks one of the original features should be changed just a bit, and maybe another one should be eliminated because it’s redundant and it takes space in the final product without bringing any value.&lt;/p&gt;
+&lt;p&gt;Everyone is happy with the report, although it is very different to the original, but hey, that is how it should be. You are creating reports for the business decision makers and this is how reports should evolve, organically.&lt;/p&gt;
+&lt;p&gt;However, the first department tells you that they still need the report in its original form.&lt;/p&gt;
+&lt;p&gt;Since the current report is totally different from the original one, you have to spend a lot of time tracing back the original development of the report. You also have to keep in mind, that some of the changes where bug fixes, not feature changes. Those fixes will have to be included, so you will need to spend extra time trying to figure out what is a bug fix and what is a feature requested by the second department.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;what-is-github&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;What is GitHub?&lt;/h2&gt;
+&lt;p&gt;If any of the above examples apply to you, especially if all of them apply, you might want to look into implementing &lt;strong&gt;GitHub&lt;/strong&gt; in your workflow.&lt;/p&gt;
+&lt;p&gt;So, here we get back to our original question, what is &lt;strong&gt;GitHub&lt;/strong&gt;?&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;GitHub&lt;/strong&gt; is a platform that provides software development version control using &lt;strong&gt;Git&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Now, I know that the above needs no further explanation, however, I would like to ask you to bear with me since I spent some time phrasing the above in a non-developer way, so here it goes.&lt;/p&gt;
+&lt;p&gt;Basically, &lt;strong&gt;GitHub&lt;/strong&gt; is a platform that allows you to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Keep your project in one single place&lt;/li&gt;
+&lt;li&gt;Have multiple team members working on the project at the same time&lt;/li&gt;
+&lt;li&gt;Use the latest version of your project&lt;/li&gt;
+&lt;li&gt;Test different features safely&lt;/li&gt;
+&lt;li&gt;Role back to a previous step easily if needed&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It can do this by simply recording each change that you submit to your project.&lt;/p&gt;
+&lt;p&gt;That means that you can see, download and use the latest version of the project and check its history by seeing the submitted changes. The changes are called &lt;strong&gt;commits&lt;/strong&gt; (if you want to use fancy &lt;strong&gt;Git&lt;/strong&gt; language) and they are snapshots of past stages of your project. If you ever want to check the status of your project at a previous stage, you just need to go to the &lt;strong&gt;commits&lt;/strong&gt; tab, click on the one that you consider it was the latest at which your project worked as intended, and voilà, your project works again.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;GitHub&lt;/strong&gt; provides a way for multiple people to work on the same project at the same time and &lt;strong&gt;commit&lt;/strong&gt; changes to it, as long as they do not send conflicting &lt;strong&gt;commits&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;You can also create a separate branch so you can experiment with your project and if everything works well, you can just integrate it in the main branch of the project.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;workflow&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Workflow&lt;/h2&gt;
+&lt;p&gt;Here is the workflow that you should follow, as I see it. This workflow is for teams that are just starting with &lt;strong&gt;GitHub&lt;/strong&gt; and in time, each team will develop it’s own workflow, however the below can be a good starting point.&lt;/p&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Your team wants to start a new project&lt;/li&gt;
+&lt;li&gt;You create a &lt;strong&gt;repository&lt;/strong&gt; in &lt;strong&gt;GitHub&lt;/strong&gt; (this will be your main source of truth)&lt;/li&gt;
+&lt;li&gt;You divide the work within the team&lt;/li&gt;
+&lt;li&gt;Each member clones the &lt;strong&gt;repository&lt;/strong&gt; on their local machine&lt;/li&gt;
+&lt;li&gt;Each team member does their work&lt;/li&gt;
+&lt;li&gt;Each member pushes their work onto the main &lt;strong&gt;repository&lt;/strong&gt; when it’s done&lt;/li&gt;
+&lt;li&gt;Repeat from step 5 onward&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Every time you start a new task, or work on something, it’s a good idea to refresh the work on your local machine by pulling the &lt;strong&gt;repository&lt;/strong&gt; once more.&lt;/p&gt;
+&lt;p&gt;These things can be done even if you work alone without any team members. It’s a good idea to keep your work on &lt;strong&gt;Github&lt;/strong&gt; as it allows you to better switch between machines and projects. Also it allows you to better understand decisions you’ve taken previously.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;installation&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Installation&lt;/h1&gt;
+&lt;p&gt;If you decided you want to give it a go, let’s set everything up for you and your team.&lt;/p&gt;
+&lt;p&gt;Since the steps are quite numerous and differ slightly for each OS, I would like to recommend following the instructions in the book &lt;a href=&#34;https://happygitwithr.com/install-intro.html&#34;&gt;Happy Git with R&lt;/a&gt; by &lt;em&gt;Jenny Bryan&lt;/em&gt; and her team. The book is excellent and the steps are clear and easy to follow.&lt;/p&gt;
+&lt;p&gt;Also, if you want to start using &lt;strong&gt;Github&lt;/strong&gt;, the book is an excellent guide, way more detailed than this article, so I would really recommend reading it, or just having it as a reference if you encounter any problems.&lt;/p&gt;
+&lt;p&gt;So, click on the link, install &lt;strong&gt;Git&lt;/strong&gt; and a &lt;strong&gt;GitHub client&lt;/strong&gt; and I’ll see you in a bit.&lt;/p&gt;
+&lt;p&gt;All set up? Good!&lt;/p&gt;
+&lt;p&gt;Fortunately, you will only have to go through this once when you install a machine, not every time you want to use or start a project.&lt;/p&gt;
+&lt;p&gt;So, let’s get started with the good stuff.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;creating-and-using-repositories&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Creating and using Repositories&lt;/h1&gt;
+&lt;p&gt;In this part I would like to show you how to use &lt;strong&gt;GitHub&lt;/strong&gt; from the &lt;strong&gt;RStudio IDE&lt;/strong&gt; and you will see that it is quite simple and straightforward to use.&lt;/p&gt;
+&lt;p&gt;So, let’s starts by creating a &lt;strong&gt;repository&lt;/strong&gt;. You will need to go to &lt;a href=&#34;https://github.com&#34;&gt;https://github.com&lt;/a&gt; and in the upper left hand corner you will see a green button that says &lt;strong&gt;“NEW”&lt;/strong&gt;. Click on it.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;https://www.vladaluas.com/images/Screenshots_Git_with_R/New_Button.png&#34; alt=&#34;&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;New Repository Button&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Once you do that you will get a window asking you to name a new &lt;strong&gt;repository&lt;/strong&gt;. It will look like this:&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;https://www.vladaluas.com/images/Screenshots_Git_with_R/New_Repo_Window.png&#34; alt=&#34;&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;New Repository Window&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Now, we need to pick a name for said &lt;strong&gt;repository&lt;/strong&gt;. Let’s call it &lt;code&gt;Hello-World&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;As you can also see, it allows you to select whether your &lt;strong&gt;repository&lt;/strong&gt; should be public or private. Let’s make it public. Now we can click on &lt;strong&gt;Create Repository&lt;/strong&gt;.
+Congrats, you have created your first &lt;strong&gt;repository&lt;/strong&gt; (&lt;strong&gt;repo&lt;/strong&gt; for short). This &lt;strong&gt;repository&lt;/strong&gt; is empty and it will look a bit weird, like below:&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;https://www.vladaluas.com/images/Screenshots_Git_with_R/Empty_Repo_Window.png&#34; alt=&#34;&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;Empty Repo Window&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;As you can see, &lt;strong&gt;GitHub&lt;/strong&gt; is very helpful in this case and asks us if we want to create a new project or we already have an existing one that we would like to upload. I like to start a &lt;strong&gt;repo&lt;/strong&gt; by creating a &lt;strong&gt;ReadMe&lt;/strong&gt; file. It can be very useful for someone else to see exactly what is intended with this project. You can also record the stages of the project or other essential information. Click on &lt;strong&gt;README&lt;/strong&gt; and let’s get started&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;https://www.vladaluas.com/images/Screenshots_Git_with_R/Readme_edit.png&#34; alt=&#34;&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;README&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;The &lt;strong&gt;README&lt;/strong&gt; in question is a simple &lt;strong&gt;markdown&lt;/strong&gt; document.
+For those of you who have not worked with &lt;strong&gt;markdown&lt;/strong&gt; until now, it is a plain-text-formatting syntax that can be converted in many output formats. In this case that format is &lt;strong&gt;HTML&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Here is a &lt;a href=&#34;https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet&#34;&gt;link&lt;/a&gt; to a very nice cheat sheet if you want to edit your &lt;strong&gt;README&lt;/strong&gt; in a fancy way.
+It is recommended to write a short summary of your project and the scope. Of course, you can add the initial set up, or kick off discussion, or whatever you feel like, go nuts! For this &lt;strong&gt;repo&lt;/strong&gt; we will just add the text “This is just a test version.” and scroll down. You will see the following &lt;strong&gt;commit&lt;/strong&gt; menu.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;https://www.vladaluas.com/images/Screenshots_Git_with_R/Readme_commit.png&#34; alt=&#34;&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;Initial Commit&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;We can select the name of the &lt;strong&gt;commit&lt;/strong&gt;, remember, a &lt;strong&gt;commit&lt;/strong&gt; is a submission of change, and some additional description if we want. We will leave it as it is and click on &lt;strong&gt;Commit new file&lt;/strong&gt;. This will take us to the &lt;strong&gt;repo&lt;/strong&gt; window. Here you will be able to access the latest state of your project. At the moment it only has a &lt;strong&gt;README&lt;/strong&gt; file and looks like this:&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;https://www.vladaluas.com/images/Screenshots_Git_with_R/Repo_First_Commit.png&#34; alt=&#34;&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;Repo after the first commit&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;connecting-github-to-r&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Connecting GitHub to R&lt;/h2&gt;
+&lt;p&gt;Now that we have a &lt;strong&gt;repo&lt;/strong&gt; that we can connect it to &lt;strong&gt;R&lt;/strong&gt; and see what we can do with it and how we can easily update &lt;strong&gt;GitHub&lt;/strong&gt; from &lt;strong&gt;R&lt;/strong&gt;.
+So, how do we do that? Simple, we need to click the &lt;strong&gt;Clone or download&lt;/strong&gt; button and we will get a &lt;em&gt;https&lt;/em&gt; link that will allow us to access the &lt;strong&gt;repository&lt;/strong&gt;. It should look like this:&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;https://www.vladaluas.com/images/Screenshots_Git_with_R/Clone_Repo.png&#34; alt=&#34;&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;Clone Repo&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Now for the good part, let’s open &lt;strong&gt;RStudio&lt;/strong&gt; and select &lt;strong&gt;File&lt;/strong&gt; -&amp;gt; &lt;strong&gt;New Project&lt;/strong&gt; and you will get a window asking to select the type of project. You will need to select the last option &lt;strong&gt;Version Control&lt;/strong&gt;, then &lt;strong&gt;Git&lt;/strong&gt;.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;https://www.vladaluas.com/images/Screenshots_Git_with_R/Project_Selection.png&#34; alt=&#34;&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;Project Selection&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;This will get you to a window in which we can link the project with &lt;strong&gt;Git&lt;/strong&gt;. You will see a window looking like this:&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;https://www.vladaluas.com/images/Screenshots_Git_with_R/Git_Project.png&#34; alt=&#34;&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;Project Selection&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Here we need to paste the link in the URL field. You can also select the name of the folder in which you will keep the project. I would suggest leaving the one suggested, and select the main folder in which you want to keep the project. In my case is &lt;strong&gt;~Documents/Projects/R/Github&lt;/strong&gt; because this is where I keep all my &lt;strong&gt;GitHub&lt;/strong&gt; related projects.&lt;/p&gt;
+&lt;p&gt;All good?&lt;/p&gt;
+&lt;p&gt;Congrats, you have just linked &lt;strong&gt;R&lt;/strong&gt; to &lt;strong&gt;GitHub&lt;/strong&gt;. Now we can work like we would in any other project, so let’s start creating some scripts.&lt;/p&gt;
+&lt;p&gt;First, create a new &lt;code&gt;R Script&lt;/code&gt; (Ctrl / Cmd + Shift + N) and let’s play with some code. You can use the code below as an example. I will create some simple graphics.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggplot2)
+ggplot(data = mtcars, 
+       mapping = aes(x = hp, 
+                     y = mpg, 
+                     colour = gear,
+                     size = qsec)) +
+  geom_point(mapping = aes(shape = as.factor(cyl)))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://www.vladaluas.com/post/github-with-r/index.en_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;We have the script for a plot so let’s also save it. We don’t want to lose all that hard work. Finally, we can check the status of our project.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggsave(filename = &amp;quot;My_Plot.png&amp;quot;,
+       plot = last_plot())&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Save the script &lt;strong&gt;Plot.R&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;We can check the status of our project in the &lt;strong&gt;Git&lt;/strong&gt; tab, next to &lt;strong&gt;Environment&lt;/strong&gt;.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;https://www.vladaluas.com/images/Screenshots_Git_with_R/Git_Tab.png&#34; alt=&#34;&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;Git Tab&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Now, as you can see, we have some files in the project.
+* .gitignore
+* Hello-World.Rproj
+* My_Plot.png
+* Plot.R&lt;/p&gt;
+&lt;p&gt;However, if we look in the project folder, we can find more files. Remember that it records just the changes from the last submission. So, let’s push them to &lt;strong&gt;GitHub&lt;/strong&gt;.
+We can do that by clicking the &lt;strong&gt;Commit&lt;/strong&gt; button that will take us to a new tab in which we can select the file to &lt;strong&gt;commit&lt;/strong&gt;.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;https://www.vladaluas.com/images/Screenshots_Git_with_R/Commit_Tab.png&#34; alt=&#34;&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;Commit Tab&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;As you can see, we have multiple sections here. The pane on the upper left side shows us the files to be committed. Let’s select all of them by checking the box next to them.
+Now we need to &lt;strong&gt;commit&lt;/strong&gt; them. Let’s write a message that will tell us the stage of our project in the upper right pane (&lt;em&gt;e.g.&lt;/em&gt; Final commit).
+Once you click &lt;strong&gt;commit&lt;/strong&gt; the changes have been submitted to the project and have a message attached. This is helpful, however, we have one more simple step to complete the process.
+As you can see, the tab is empty now, however, above the upper left pane a new message has appeared &lt;strong&gt;Your branch is ahead of origin/master by 1 commit&lt;/strong&gt;. This just tells us that the local project has some commits that were not updated to &lt;strong&gt;GitHub&lt;/strong&gt;. We can do that by clicking the push button (Green up arrow) on the right hand side of the tab.
+We should get a message like the below:&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;https://www.vladaluas.com/images/Screenshots_Git_with_R/Commit_Message.png&#34; alt=&#34;&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;Commit Message&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Congrats, you have just committed your first project to &lt;strong&gt;GitHub&lt;/strong&gt;. If you need to add more files, just do the same, add some files in &lt;strong&gt;R&lt;/strong&gt; or in the project folder and &lt;strong&gt;commit&lt;/strong&gt; and push them to &lt;strong&gt;GitHub&lt;/strong&gt;. Just remember that if you want to add new files, It is a good practice to pull the project from &lt;strong&gt;GitHub&lt;/strong&gt; before starting. You want to work on the latest version of the project.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;how-it-can-help-your-team&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;How it can help your team&lt;/h1&gt;
+&lt;p&gt;You might ask yourself, why add this to my workflow? It just seems like an extra layer that I need to observe.
+Well, yes, it can be an extra layer, however, as I mentioned in the beginning it is a great tool to manage you projects in just one place. It is also a great tool to make sure you always use the latest version of your project, you just need to link the &lt;strong&gt;repo&lt;/strong&gt; to &lt;strong&gt;R&lt;/strong&gt; and pull the &lt;strong&gt;repo&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;It is also a great tool that can help you trace back the reasons behind some of the decisions you have taken. Another advantage is that it records your project step by step so it is easy to review your workflow and possibly recreate it in another similar project.&lt;/p&gt;
+&lt;p&gt;The last major benefit can be the fact that you can experiment with your projects as much as you like and if you screw something up, you can just delete the last &lt;strong&gt;commit&lt;/strong&gt;, or multiple commits until you get to the last version that worked. It is very easy to roll back your project.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Conclusion&lt;/h1&gt;
+&lt;p&gt;I hope that through this article that I managed to make you interested enough in &lt;strong&gt;GitHub&lt;/strong&gt; to test it out. You don’t have to start with very complex projects, I would suggest starting with small projects so you and your team can get comfortable with using it.&lt;/p&gt;
+&lt;p&gt;It takes a surprisingly short time to adjust to the new work style. When I started using &lt;strong&gt;GitHub&lt;/strong&gt; for my own projects it was a good way for me to store some data in one place so I can share it between different devices. Then I started keeping my scripts there as well and I’ve noticed that it’s way better for me to have them in just one place.&lt;/p&gt;
+&lt;p&gt;Now, I no longer need to make sure I am working on the right folder, or the latest, I just need to pull the project from &lt;strong&gt;GitHub&lt;/strong&gt; and start working on it.&lt;/p&gt;
+&lt;p&gt;If you consider that it is something you would like to try for your team, please let me know how it went and if you like it.&lt;/p&gt;
+&lt;/div&gt;
+
+        
+      </description>
+    </item>
+    
+  </channel>
+</rss>

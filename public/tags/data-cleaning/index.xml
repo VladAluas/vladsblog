@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>data cleaning on Clarity</title>
+    <link>https://www.vladaluas.com/tags/data-cleaning/</link>
+    <description>Recent content in data cleaning on Clarity</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright>
+    <lastBuildDate>Mon, 15 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://www.vladaluas.com/tags/data-cleaning/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Data Cleaning</title>
+      <link>https://www.vladaluas.com/post/data-cleaning/</link>
+      <pubDate>Mon, 15 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://www.vladaluas.com/post/data-cleaning/</guid>
+      <description>
+        
+          
+&lt;script src=&#34;https://www.vladaluas.com/post/data-cleaning/index.en_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+&lt;div id=&#34;TOC&#34;&gt;
+
+&lt;/div&gt;
+
+&lt;p&gt;&lt;/br&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+“Like families, tidy datasets are all alike but every messy dataset is messy in its own way.”
+&lt;footer&gt;
+&lt;em&gt;— Hadley Wickham, Chief Scientist at RStudio&lt;/em&gt;
+&lt;/footer&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This article will try to show how we can link the structure of a dataset to it’s meaning and make sure the data is showing what we want to show.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;In my experience, a data analyst spends most of his or hers time on data cleaning and data validation. For quite a few companies, data cleaning means a series of manual tasks that take up a lot of time and require a lot of focus from the data analysts’ part. I am sure most of my colleagues can confirm this, especially those who work in an organisation that is slow to change its ways or work with people who are too accustomed to their ways that they are reluctant to adopt new tools and methods.&lt;/p&gt;
+&lt;p&gt;Although as quoted at the beginning of this article, every dataset is messy in its own way, and common sense would suggest that the best way to clean it is to do it manually, I disagree. The are some ways in which one can automate the data cleaning process. Even if you do it partially is still a huge win.&lt;/p&gt;
+&lt;p&gt;I do not agree with a manual approach to repetitive tasks for several reasons. Here are the ones that I consider the most important:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The quality of the work can vary between individuals. Some people are more organised than others and that can decrease the chances of overlooking something&lt;/li&gt;
+&lt;li&gt;People get bored doing the same thing over and over again&lt;/li&gt;
+&lt;li&gt;Doing tasks that take a lot of time and little creativity, data cleaning can be like that, can lower motivation and the analysts will no longer try to improve the datasets or find useful insights into the data&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I think it’s in everyone’s interest for the analysts to have free time to think of ways in which they can use the data to improve the company or the environment around them, not just make sure the data is there and it is correct, checking record by record. For me that used to be the most frustrating part of the job and it took me a lot of energy to find the motivation to start the work.&lt;/p&gt;
+&lt;p&gt;In the above section I have discussed why data cleaning might be problematic when done manually. In the next section I would like to go into a bit more detail about what is data cleaning and how we can automate some of the processes done by a data analyst so they can focus on analysis more than data manipulation.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;what-is-data-cleaning-and-data-wrangling&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;What is data cleaning and data wrangling&lt;/h1&gt;
+&lt;div id=&#34;data-cleaning&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Data cleaning&lt;/h2&gt;
+&lt;p&gt;We will start with data cleaning as it is the more general term used by people and generally refers to a process through which the data quality is ensured. This can include but is not limited to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;ensuring the data format is correct (&lt;em&gt;e.g.&lt;/em&gt; the dates have a standard format in the data source so the analysis software can detect it)&lt;/li&gt;
+&lt;li&gt;dealing with missing data&lt;/li&gt;
+&lt;li&gt;dealing with outliers&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;When dealing with these cases, analysts don’t necessarily spend the time to analyse each observation individually, but they rather follow a predetermined set of rules, usually a general rule per variable. We can see some examples below:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;changing the dates in a suitable format&lt;/li&gt;
+&lt;li&gt;replacing missing records either with a &lt;em&gt;mean&lt;/em&gt;, &lt;em&gt;median&lt;/em&gt; or &lt;em&gt;remove&lt;/em&gt; them altogether&lt;/li&gt;
+&lt;li&gt;eliminating outliers from the analysis or separating them in a different dataset so they can be studied in detail&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;No matter which of these is encountered daily, there is no reason why this cannot be automated as we already have the logic for it, so we can program a computer to do the same.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-wrangling&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Data wrangling&lt;/h2&gt;
+&lt;p&gt;Data wrangling is the process through which we manipulate the data so we can transform it to a format that is more suitable for our purposes. Data can come in a plethora of formats, however, when it comes to tabular data, which is the focus of this article, the format I found to be most useful and easiest to read and manipulate by most data software is a &lt;em&gt;Tidy Format&lt;/em&gt; quoted at the beginning of this article(see &lt;a href=&#34;https://vita.had.co.nz/papers/tidy-data.pdf&#34;&gt;here&lt;/a&gt;).&lt;/p&gt;
+&lt;p&gt;We will see some interesting tools to use for data wrangling in the examples that follow.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-cleaning-in-practice&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data cleaning in practice&lt;/h1&gt;
+&lt;p&gt;In the next section, we will discuss and go through a series of exercises that will allow us to clean and manipulate the data in a data source. For this we will use the &lt;code&gt;tidyverse&lt;/code&gt; package from &lt;em&gt;R&lt;/em&gt;. If you do not have it installed, you can do so by copying the following line into your console &lt;code&gt;install.packages(&#34;tidyverse&#34;)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Now for the actual analysis, we will start by activating it in the environment.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In order to play around with a dataset, we will use the &lt;em&gt;mtcars&lt;/em&gt; dataset that comes with the &lt;code&gt;tidyverse&lt;/code&gt; package. We can see the dataset using the code below:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mtcars %&amp;gt;%      # Our Dataset
+      head()    # First six results&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;#&amp;gt;                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+#&amp;gt; Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+#&amp;gt; Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+#&amp;gt; Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+#&amp;gt; Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+#&amp;gt; Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+#&amp;gt; Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you are new to &lt;em&gt;R&lt;/em&gt; and are not familiar with the &lt;code&gt;%&amp;gt;%&lt;/code&gt; symbol used earlier, a good way to think of it is to consider that it links the actions attached to a dataset. It is to be read “take &lt;em&gt;dataset&lt;/em&gt; then (%&amp;gt;%)”. In this case it would be “take &lt;em&gt;mtcars&lt;/em&gt; then show the top 5 records”.&lt;/p&gt;
+&lt;p&gt;Now that we have the dataset and the knowledge on how to read the code, let’s start with actual data cleaning and wrangling.&lt;/p&gt;
+&lt;div id=&#34;mutate&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Mutate&lt;/h3&gt;
+&lt;p&gt;As we can see, the row numbers in this data set are the car names. However, this is not very useful if we want to use the names in our analysis or group by name. So we will use a function that is very useful in data cleaning, &lt;code&gt;mutate()&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;mutate()&lt;/code&gt; allows the users to either create a new column at the end of a dataset, which is quite useful, or change an existing column. We will use this to create a new column with the names of the cars.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mtcars %&amp;gt;%
+  mutate(car_names = row.names(mtcars)) %&amp;gt;%
+  head()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;#&amp;gt;                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+#&amp;gt; Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+#&amp;gt; Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+#&amp;gt; Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+#&amp;gt; Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+#&amp;gt; Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+#&amp;gt; Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+#&amp;gt;                           car_names
+#&amp;gt; Mazda RX4                 Mazda RX4
+#&amp;gt; Mazda RX4 Wag         Mazda RX4 Wag
+#&amp;gt; Datsun 710               Datsun 710
+#&amp;gt; Hornet 4 Drive       Hornet 4 Drive
+#&amp;gt; Hornet Sportabout Hornet Sportabout
+#&amp;gt; Valiant                     Valiant&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There, we have added a new column to the dataset. Now, what if we need to filter something out of the data set?&lt;/p&gt;
+&lt;p&gt;Luckily the &lt;code&gt;tidyverse&lt;/code&gt; is quite intuitive when it comes to naming functions and we can use the &lt;code&gt;filter()&lt;/code&gt; function.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;filter&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Filter&lt;/h3&gt;
+&lt;p&gt;Let’s filter out from the dataset the cars with four cylinders (&lt;em&gt;cyl&lt;/em&gt;).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mtcars %&amp;gt;%
+  filter(cyl != 4)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;#&amp;gt;                      mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+#&amp;gt; Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+#&amp;gt; Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+#&amp;gt; Hornet 4 Drive      21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+#&amp;gt; Hornet Sportabout   18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
+#&amp;gt; Valiant             18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
+#&amp;gt; Duster 360          14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
+#&amp;gt; Merc 280            19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
+#&amp;gt; Merc 280C           17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
+#&amp;gt; Merc 450SE          16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
+#&amp;gt; Merc 450SL          17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
+#&amp;gt; Merc 450SLC         15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
+#&amp;gt; Cadillac Fleetwood  10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
+#&amp;gt; Lincoln Continental 10.4   8 460.0 215 3.00 5.424 17.82  0  0    3    4
+#&amp;gt; Chrysler Imperial   14.7   8 440.0 230 3.23 5.345 17.42  0  0    3    4
+#&amp;gt; Dodge Challenger    15.5   8 318.0 150 2.76 3.520 16.87  0  0    3    2
+#&amp;gt; AMC Javelin         15.2   8 304.0 150 3.15 3.435 17.30  0  0    3    2
+#&amp;gt; Camaro Z28          13.3   8 350.0 245 3.73 3.840 15.41  0  0    3    4
+#&amp;gt; Pontiac Firebird    19.2   8 400.0 175 3.08 3.845 17.05  0  0    3    2
+#&amp;gt; Ford Pantera L      15.8   8 351.0 264 4.22 3.170 14.50  0  1    5    4
+#&amp;gt; Ferrari Dino        19.7   6 145.0 175 3.62 2.770 15.50  0  1    5    6
+#&amp;gt; Maserati Bora       15.0   8 301.0 335 3.54 3.570 14.60  0  1    5    8&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;As we can see the &lt;em&gt;Datsun 710&lt;/em&gt; that had 4 cylinders has disappeared from the first 6 records.&lt;/p&gt;
+&lt;p&gt;Of course, this function can also filter specific variables, and include multiple arguments. Let’s try to filter just the cars that have 4 cylinders and more that 90 horse power (&lt;em&gt;hp&lt;/em&gt;).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mtcars %&amp;gt;%
+  filter(cyl == 4, hp &amp;gt; 90)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;#&amp;gt;                mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+#&amp;gt; Datsun 710    22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+#&amp;gt; Merc 230      22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+#&amp;gt; Toyota Corona 21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
+#&amp;gt; Porsche 914-2 26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+#&amp;gt; Lotus Europa  30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+#&amp;gt; Volvo 142E    21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Please note that this function will not work if you DO NOT use a double &lt;code&gt;=&lt;/code&gt; when trying to compare values. One &lt;code&gt;=&lt;/code&gt; means attribution in &lt;em&gt;R&lt;/em&gt;, which is why the function cannot accept it in a comparison.&lt;/p&gt;
+&lt;p&gt;If you want to manipulate missing data in a column you can use the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;filter(is.na(column_name))&lt;/code&gt; filters the rows that have a missing values for the specified column&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;filter(!is.na(column_name))&lt;/code&gt; filters the rows that DO NOT have a missing values for the specified column&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;selecting-columns&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Selecting columns&lt;/h3&gt;
+&lt;p&gt;Maybe in some situations, you do not need to use the full dataset you have at your disposal.&lt;/p&gt;
+&lt;p&gt;In this case, you can use a &lt;code&gt;select()&lt;/code&gt; statement that will allow you to work with just the needed dataset. Let’s select just two columns, &lt;em&gt;mpg&lt;/em&gt; and &lt;em&gt;cyl&lt;/em&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mtcars %&amp;gt;%
+  select(mpg, cyl) %&amp;gt;%
+  head()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;#&amp;gt;                    mpg cyl
+#&amp;gt; Mazda RX4         21.0   6
+#&amp;gt; Mazda RX4 Wag     21.0   6
+#&amp;gt; Datsun 710        22.8   4
+#&amp;gt; Hornet 4 Drive    21.4   6
+#&amp;gt; Hornet Sportabout 18.7   8
+#&amp;gt; Valiant           18.1   6&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now we can select just the needed data without over exhausting our computing resources with unnecessary data.&lt;/p&gt;
+&lt;p&gt;What if we need to use multiple datasets and it would be good to have them all in one place?&lt;/p&gt;
+&lt;p&gt;For that we can use a &lt;code&gt;join()&lt;/code&gt; statement.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;join&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Join&lt;/h3&gt;
+&lt;p&gt;Joining two or more datasets is quite a straightforward process, however, I would like to take a moment and explain it a little bit for those who do not have experience with it and point out some possible aspects for which it would be good to watch out.&lt;/p&gt;
+&lt;p&gt;The process of joining two datasets requires a reference column with common values in both tables. The joining process will look in the column from the first set, will search the values for each row in the other set and will bring all the values associated with that row in the first set. Let’s see a simple example below. We will create two dummy data sets so we can demonstrate this better.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;letters &amp;lt;- cbind(ID = c(1, 2, 3, 3, 1, 2),
+                 Value1 = c(&amp;quot;A&amp;quot;, &amp;quot;B&amp;quot;, &amp;quot;C&amp;quot;, &amp;quot;D&amp;quot;, &amp;quot;E&amp;quot;, &amp;quot;F&amp;quot;)) %&amp;gt;%
+           as_tibble()
+
+numbers &amp;lt;- cbind(ID = c(1, 2, 3, 4, 5, 6),
+                 Value2 = c(&amp;quot;one&amp;quot;, &amp;quot;two&amp;quot;, &amp;quot;three&amp;quot;, &amp;quot;four&amp;quot;, &amp;quot;five&amp;quot;, &amp;quot;six&amp;quot;)) %&amp;gt;%
+           as_tibble()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;letters&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;#&amp;gt; # A tibble: 6 x 2
+#&amp;gt;   ID    Value1
+#&amp;gt;   &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; 
+#&amp;gt; 1 1     A     
+#&amp;gt; 2 2     B     
+#&amp;gt; 3 3     C     
+#&amp;gt; 4 3     D     
+#&amp;gt; 5 1     E     
+#&amp;gt; 6 2     F&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;numbers&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;#&amp;gt; # A tibble: 6 x 2
+#&amp;gt;   ID    Value2
+#&amp;gt;   &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt; 
+#&amp;gt; 1 1     one   
+#&amp;gt; 2 2     two   
+#&amp;gt; 3 3     three 
+#&amp;gt; 4 4     four  
+#&amp;gt; 5 5     five  
+#&amp;gt; 6 6     six&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now that we have the two datasets I would like to point out that, as you can see, the &lt;em&gt;ID&lt;/em&gt; values in the &lt;em&gt;numbers&lt;/em&gt; dataset are unique and each is associated with a different value. In the first set, they are not, each appearing twice. Now let’s check the join. We will use the &lt;code&gt;left_join()&lt;/code&gt; function as it is the most common.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;letters %&amp;gt;%
+  left_join(numbers, by = &amp;quot;ID&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;#&amp;gt; # A tibble: 6 x 3
+#&amp;gt;   ID    Value1 Value2
+#&amp;gt;   &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt; 
+#&amp;gt; 1 1     A      one   
+#&amp;gt; 2 2     B      two   
+#&amp;gt; 3 3     C      three 
+#&amp;gt; 4 3     D      three 
+#&amp;gt; 5 1     E      one   
+#&amp;gt; 6 2     F      two&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;As we can see, the values from &lt;em&gt;numbers&lt;/em&gt; associated with a particular &lt;em&gt;ID&lt;/em&gt; have been added to the &lt;em&gt;letters&lt;/em&gt; table. Note that the values higher than three are missing because they do not have an associated &lt;em&gt;ID&lt;/em&gt; in the first dataset. Now let’s see what happens if we try to do it the other way around. Remember that we need the joined table to have unique &lt;em&gt;ID&lt;/em&gt; values and here is why.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;numbers %&amp;gt;%
+  left_join(letters, by = &amp;quot;ID&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;#&amp;gt; # A tibble: 9 x 3
+#&amp;gt;   ID    Value2 Value1
+#&amp;gt;   &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt; 
+#&amp;gt; 1 1     one    A     
+#&amp;gt; 2 1     one    E     
+#&amp;gt; 3 2     two    B     
+#&amp;gt; 4 2     two    F     
+#&amp;gt; 5 3     three  C     
+#&amp;gt; 6 3     three  D     
+#&amp;gt; 7 4     four   &amp;lt;NA&amp;gt;  
+#&amp;gt; 8 5     five   &amp;lt;NA&amp;gt;  
+#&amp;gt; 9 6     six    &amp;lt;NA&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Please notice that the function created additional rows for each time it encountered the needed &lt;em&gt;ID&lt;/em&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;pivoting-and-unpivoting-data&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Pivoting and Unpivoting Data&lt;/h3&gt;
+&lt;p&gt;Another useful function for a data analyst is to be able to pivot and un-pivot data. There are a couple of methods to do this. The simplest is using two functions &lt;code&gt;pivot_longer()&lt;/code&gt; and &lt;code&gt;pivot_wider()&lt;/code&gt;. The first function gathers multiple columns in one (makes a table longer) and the other function creates new columns using a previous column. The functionality is similar to that of a pivot_table in Excel.&lt;/p&gt;
+&lt;p&gt;Let’s take a look at it in the following examples:&lt;/p&gt;
+&lt;div id=&#34;pivot-wider&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Pivot wider&lt;/h4&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mtcars %&amp;gt;%
+  pivot_wider(names_from = cyl, values_from = mpg)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;#&amp;gt; # A tibble: 32 x 12
+#&amp;gt;     disp    hp  drat    wt  qsec    vs    am  gear  carb   `6`   `4`   `8`
+#&amp;gt;    &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
+#&amp;gt;  1  160    110  3.9   2.62  16.5     0     1     4     4  21    NA    NA  
+#&amp;gt;  2  160    110  3.9   2.88  17.0     0     1     4     4  21    NA    NA  
+#&amp;gt;  3  108     93  3.85  2.32  18.6     1     1     4     1  NA    22.8  NA  
+#&amp;gt;  4  258    110  3.08  3.22  19.4     1     0     3     1  21.4  NA    NA  
+#&amp;gt;  5  360    175  3.15  3.44  17.0     0     0     3     2  NA    NA    18.7
+#&amp;gt;  6  225    105  2.76  3.46  20.2     1     0     3     1  18.1  NA    NA  
+#&amp;gt;  7  360    245  3.21  3.57  15.8     0     0     3     4  NA    NA    14.3
+#&amp;gt;  8  147.    62  3.69  3.19  20       1     0     4     2  NA    24.4  NA  
+#&amp;gt;  9  141.    95  3.92  3.15  22.9     1     0     4     2  NA    22.8  NA  
+#&amp;gt; 10  168.   123  3.92  3.44  18.3     1     0     4     4  19.2  NA    NA  
+#&amp;gt; # ... with 22 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The function took the values from the &lt;strong&gt;cyl&lt;/strong&gt; column, created new columns with those values and filled them with the values from the &lt;strong&gt;mpg&lt;/strong&gt; column.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;pivot-longer&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Pivot Longer&lt;/h4&gt;
+&lt;p&gt;Pivot longer does the exact opposite. Let’s see.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mtcars %&amp;gt;%
+  pivot_wider(names_from = cyl, values_from = mpg) %&amp;gt;%
+  pivot_longer(cols = c(&amp;quot;4&amp;quot;, &amp;quot;6&amp;quot;, &amp;quot;8&amp;quot;), names_to = &amp;quot;cyl&amp;quot;, values_to = &amp;quot;mpg&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;#&amp;gt; # A tibble: 96 x 11
+#&amp;gt;     disp    hp  drat    wt  qsec    vs    am  gear  carb cyl     mpg
+#&amp;gt;    &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;dbl&amp;gt;
+#&amp;gt;  1   160   110  3.9   2.62  16.5     0     1     4     4 4      NA  
+#&amp;gt;  2   160   110  3.9   2.62  16.5     0     1     4     4 6      21  
+#&amp;gt;  3   160   110  3.9   2.62  16.5     0     1     4     4 8      NA  
+#&amp;gt;  4   160   110  3.9   2.88  17.0     0     1     4     4 4      NA  
+#&amp;gt;  5   160   110  3.9   2.88  17.0     0     1     4     4 6      21  
+#&amp;gt;  6   160   110  3.9   2.88  17.0     0     1     4     4 8      NA  
+#&amp;gt;  7   108    93  3.85  2.32  18.6     1     1     4     1 4      22.8
+#&amp;gt;  8   108    93  3.85  2.32  18.6     1     1     4     1 6      NA  
+#&amp;gt;  9   108    93  3.85  2.32  18.6     1     1     4     1 8      NA  
+#&amp;gt; 10   258   110  3.08  3.22  19.4     1     0     3     1 4      NA  
+#&amp;gt; # ... with 86 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now this created some extra rows, one for each extra column we previously created. We do not need three for each car considering that two of the are &lt;em&gt;NA’s&lt;/em&gt;. All we need to do in this situation is filter the data, eliminating the &lt;em&gt;NA&lt;/em&gt; values.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mtcars %&amp;gt;%
+  pivot_wider(names_from = cyl, values_from = mpg) %&amp;gt;%
+  pivot_longer(cols = c(&amp;quot;4&amp;quot;, &amp;quot;6&amp;quot;, &amp;quot;8&amp;quot;), names_to = &amp;quot;cyl&amp;quot;, values_to = &amp;quot;mpg&amp;quot;) %&amp;gt;%
+  filter(!is.na(mpg)) # notice the ! before the function in order to use the negative of the function&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;#&amp;gt; # A tibble: 32 x 11
+#&amp;gt;     disp    hp  drat    wt  qsec    vs    am  gear  carb cyl     mpg
+#&amp;gt;    &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;dbl&amp;gt;
+#&amp;gt;  1  160    110  3.9   2.62  16.5     0     1     4     4 6      21  
+#&amp;gt;  2  160    110  3.9   2.88  17.0     0     1     4     4 6      21  
+#&amp;gt;  3  108     93  3.85  2.32  18.6     1     1     4     1 4      22.8
+#&amp;gt;  4  258    110  3.08  3.22  19.4     1     0     3     1 6      21.4
+#&amp;gt;  5  360    175  3.15  3.44  17.0     0     0     3     2 8      18.7
+#&amp;gt;  6  225    105  2.76  3.46  20.2     1     0     3     1 6      18.1
+#&amp;gt;  7  360    245  3.21  3.57  15.8     0     0     3     4 8      14.3
+#&amp;gt;  8  147.    62  3.69  3.19  20       1     0     4     2 4      24.4
+#&amp;gt;  9  141.    95  3.92  3.15  22.9     1     0     4     2 4      22.8
+#&amp;gt; 10  168.   123  3.92  3.44  18.3     1     0     4     4 6      19.2
+#&amp;gt; # ... with 22 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And now we can use a select to rearrange the columns.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mtcars %&amp;gt;%
+  pivot_wider(names_from = cyl, values_from = mpg) %&amp;gt;%
+  pivot_longer(cols = c(&amp;quot;4&amp;quot;, &amp;quot;6&amp;quot;, &amp;quot;8&amp;quot;), names_to = &amp;quot;cyl&amp;quot;, values_to = &amp;quot;mpg&amp;quot;) %&amp;gt;%
+  filter(!is.na(mpg)) %&amp;gt;%
+  select(mpg, cyl, disp, hp, drat, wt, qsec, vs, am, gear, carb) %&amp;gt;%
+  head()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;#&amp;gt; # A tibble: 6 x 11
+#&amp;gt;     mpg cyl    disp    hp  drat    wt  qsec    vs    am  gear  carb
+#&amp;gt;   &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
+#&amp;gt; 1  21   6       160   110  3.9   2.62  16.5     0     1     4     4
+#&amp;gt; 2  21   6       160   110  3.9   2.88  17.0     0     1     4     4
+#&amp;gt; 3  22.8 4       108    93  3.85  2.32  18.6     1     1     4     1
+#&amp;gt; 4  21.4 6       258   110  3.08  3.22  19.4     1     0     3     1
+#&amp;gt; 5  18.7 8       360   175  3.15  3.44  17.0     0     0     3     2
+#&amp;gt; 6  18.1 6       225   105  2.76  3.46  20.2     1     0     3     1&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mtcars %&amp;gt;%
+  head()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;#&amp;gt;                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+#&amp;gt; Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+#&amp;gt; Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+#&amp;gt; Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+#&amp;gt; Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+#&amp;gt; Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+#&amp;gt; Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusions&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Conclusions&lt;/h1&gt;
+&lt;p&gt;As we could see in this article, &lt;em&gt;R&lt;/em&gt; is a tool that offers a lot of flexibility when it comes to data cleaning and data wrangling. Therefore I highly recommended that data analysts use this tool, or other automation tools, in their jobs as it will improve the data quality and it will reduce the time spent on frustrating or boring tasks.&lt;/p&gt;
+&lt;p&gt;I know it can be a bit of a headache at first since the learning curve for &lt;em&gt;R&lt;/em&gt; can be a bit steep, however, I consider it is worth it. When I first started using &lt;em&gt;R&lt;/em&gt; I was a bit intimidated by the fact that I did not know where to start implementing it into my job. Then I realised that it is enough to automate part of it, not everything at once and the results started to show immediately. All I needed to do was think of what were the steps I had to take in order to check something or create a report, and recreate those steps in &lt;em&gt;R&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;This is a very good first step. You will see that reports or tasks that can take hours or days can be done in a few seconds or minutes if you automate your work and let a script run.&lt;/p&gt;
+&lt;p&gt;Now that you have a lot more free time, you have the time to let me know how it went or if you encountered any problems.&lt;/p&gt;
+&lt;/div&gt;
+
+        
+      </description>
+    </item>
+    
+  </channel>
+</rss>

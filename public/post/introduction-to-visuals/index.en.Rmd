@@ -1,0 +1,375 @@
+---
+title: Introduction to Visuals with R
+author: Vlad Aluas
+date: '2021-02-11'
+slug: introduction-to-visuals
+categories: ["Tutorial"]
+tags: ["R", "plot", "ggplot2"]
+thumbnail: /images/Graph-Logo.png
+---
+
+</br>
+
+**"Like families, tidy datasets are all alike but every messy dataset is messy in its own way. Tidy datasets provide a standardized way to link the structure of a dataset (its physical layout) with its semantics (its meaning)" (Hadley Wickham, Chief Scientist RStudio)**
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "#>", collapse = TRUE, cache = TRUE, out.width = "100%")
+
+library(tidyverse)
+library(kableExtra)
+library(scales)
+```
+
+------------------------------------------------------------------------
+
+## Why R?
+
+**R** is a powerful programming language and free software environment used for statistical computing and data analysis and reporting. Since the **R** language was developed by and for statisticians it becomes a natural choice for data analysis and data science teams.
+
+Additionally, **R** comes with a very powerful integrated development environment (IDE) called **RStudio** that can allow a data science team to work, collaborate and create reports, all in one environment.
+
+Another great advantage of **R** over other programming languages is the wide range of tools they offer in tidying the data. In an **R** framework, *tidying* data refers to the process in which the data is transformed in such a way that the final dataset has each variable on a separate column and each row is a new observation. This approach makes it easier to extract information out of data and it makes it easier to reuse code or an analysis on a new dataset.
+
+> *"Like families, tidy datasets are all alike but every messy dataset is messy in its own way. Tidy datasets provide a standardized way to link the structure of a dataset (its physical layout) with its semantics (its meaning)"* (Hadley Wickham, Chief Scientist RStudio)
+
+The last advantage I would like to mention is the transparency and re usability of using using code over a point and click approach (*e.g.* using Microsoft Excel or a Business Intelligence software). When you have a report or an analysis written using code it can be run by anyone, they just need to run the code in the required order. If you have multiple datasets that require the same approach, transformation, summary, etc, you can do that with just one run of the code, as opposed to a point and click approach where most of the times you need to process the files one after the other. And the best thing about writing code for data analysis, it can be easily shared between team members and reused in multiple projects.
+
+## Visuals in R
+
+Graphics and visuals are a big part of data analysis and reporting. **R** offers a wide range of tools that can cover all data visualization needs any data analysis or data science might need. The most flexible and most widely used of these tools is the `ggplot2` package and that is the one we will use to demonstrate the power and flexibility of visuals in **R**.
+
+The power of `ggplot2` comes from the way in which it creates the graphs. `ggplot2` creates graphics in layers, at first it creates a canvas on which to display the visuals, then it adds different layers of visuals, one over the other.
+
+The canvas is simple enough, it just needs some parameters to know what values to display. This will be the **X** and **Y** axes and the values we need to declare are the columns we want to become the **X** and **Y** columns respectively.
+
+Once we have done that, we need to specify what geometrical shapes (geom) we want to represent the data. These are the visuals most people see and the ones that show the relationship between the data. The geom can be a point, a column, a bar, whatever we need to better display the data.
+
+Before we proceed I would like to explain why this approach is so powerful. By the simple fact that we basically add separate elements on top of another on a canvas, we can control each element as we please. If we just add a geometrical shape, the software will add it according to the **X** and **Y** axes on the canvas. However, if we want to display a different dataset, or an element that is on a different scale, we can do that.
+
+I know it sounds a bit complicated, but it is not and we will explore it in more detail below. Let's start with a basic plot. We can check the code and discuss it afterwards.
+
+```{r initial_graph}
+library(ggplot2)
+
+ggplot(data = mtcars, mapping = aes(x = hp, y = mpg)) +
+         geom_point()
+```
+
+Basically in the code above we have two main parts divided by a `+`. In the first part we have the function that creates the graph `ggplot`, the data we want to use `mtcars` (a dataset provided by **R**) and the columns we want to use for the **X** and **Y** axes. For the second part we have the geom we want to use, in this case a point.
+
+I know this can be confusing, so let's break the code apart and see if we can understand it better. I will explain it from a technical point of view at first, then we can write the code once more and see if we understand it better.
+
+When we use the graphic function (`ggplot()`), we are required to provide some details (we can find more about it by using the code `?ggplot` or pressing **F1** while your cursor is on the function). The details we needed to provide at first where:
+
+-   the dataset
+-   the **X Axis**
+-   the **Y Axis**
+
+Now let's discuss these particular parameters. In our case the dataset is quite simple, it the **mtcars** dataset and it looks like this:
+
+```{r mtcars_transformation, echo = FALSE}
+mtcars <- mtcars %>%
+  mutate(Model = rownames(mtcars), .before = mpg,
+         cyl = factor(cyl)) %>%
+  as_tibble()
+
+mtcars %>% 
+  kable(format = "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), fixed_thead = T) %>%
+  scroll_box(height = "400px")
+```
+
+Now that we see the data I think we can clarify better what we did above so let's try it. The function takes the dataset and using the `mapping =` function it can translate the values from columns in the dataset to the axes on the canvas. So, let's see the code one more time and break it down, than we can add more elements to see exactly how this works. I will comment each element by using a `#` before the comment.
+
+```{r mtcars_point}
+ggplot(
+  # The dataset we want to use
+  data = mtcars,
+  
+  # The next step is to map the columns from the data to the function
+  # aes() is a function required for the mapping function
+       mapping = aes(
+         
+          # We need to specify the two axes
+                     x = hp,
+                     y = mpg)) +
+  
+  # A geometrical form we want to use for displaying the data
+         geom_point()
+```
+
+I would like to explain a bit more the importance of `mapping`. This is just a way to assign values from the dataset to different dimensions of the canvas. The elements are not just the **X** and **Y** axes, they can be anything else that offers additional information, colour, titles, shapes, etc.
+
+In the example below I will add colours to the graph according to the number of cylinders (**cyl**). We will also add the model to make it easier to check the values and compare them in the table should we want to do so.
+
+```{r colour_mapping_true}
+ggplot(data = mtcars,
+       mapping = aes(
+         x = hp,
+         y = mpg,
+         colour = cyl,
+         label = Model
+       )) +
+  geom_point() +
+  geom_text(vjust = -0.5)
+```
+
+If we use the same line (`colour = cyl`) outside the `mapping` function we will get an error because **R** does not know where to find the `cyl` object. However, we can use the colour parameter outside `mapping`, if we want to use it as a global parameter for an aesthetic purpose. In `geom_point` we can pass the `colour =` argument with either a colour (*e.g.* red, blue, green) or a **HEX** code (*e.g.* \#2815E3)
+
+```{r coloured_graph}
+ggplot(data = mtcars,
+       mapping = aes(
+         x = hp,
+         y = mpg
+       )) +
+  geom_point(colour =  "#2815E3")
+```
+
+We can find more about the different geometrical forms that we can use [here](http://r-statistics.co/Complete-Ggplot2-Tutorial-Part1-With-R-Code.html).
+
+## Increasing complexity in visuals
+
+#### Pipelines
+
+Before we start I would like to show you another way to write code in **R** to make it easier to read. We will use an operator that will allow us to write the code in steps and make it easier to update and maintain said code. So, in **R** `ggplot(data = mtcars, mapping = aes(x = hp, y = mpg))` is the same as `mtcars %>% ggplot(mapping = aes(x = hp, y = mpg))`. It is not such a big change, however it makes a big difference in understanding the code. For the sake of simplicity, you can think of the `%>%` pipe operator (read "and then") as a operator that applies functions to a dataset and maps the dataset to those functions automatically. Let's see this at work.
+
+```{r pipline_code}
+library(dplyr)  # the library we need to transform the data
+                                
+# Dataset + pipe operator
+mtcars %>%
+  
+  # filter the data so only the rows that have the value 6 on the cyl column remain
+  filter(cyl == 6) %>%
+  
+  # keep just the two mentioned columns
+  select(Model, cyl) %>%
+  
+# Styling to make the table easier to see
+  kable(format = "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), fixed_thead = T)
+```
+
+The code above can be read as follows:
+
+-   take the `mtcars` dataset **AND THEN (%\>%)**
+-   filter the **cyl** column **AND THEN (%\>%)**
+-   select the **Model** and **cyl** columns **AND THEN (%\>%)**
+-   apply the **html** format from **kable** **AND THEN (%\>%)**
+-   specify the styling of the table
+
+The same result can be achieved if we write the code differently, however it is less easy to change along the way and less easy to read when we add more transformations to one dataset.
+
+```{r base_code}
+kable_styling(
+  kable(
+    select(
+      filter(mtcars, cyl ==6), Model, cyl
+      ), 
+    format = "html"), 
+  bootstrap_options = c("striped", "hover", "condensed", "responsive"), fixed_thead = T)
+```
+
+The first example of code might be counter-intuitive, however once you get used to it you will see that it's easier to read, easier to update and maintain. If we want to update the code, all we need to do is add or delete a line in the code. We can do that as well in the second example, if we write the code like above, however we still need to check where the parentheses close and delete that as well, so it's more of a bother.
+
+#### Dataset
+
+Now that we understand the main idea behind the grammar of graphics, mapping values from a dataset, I would like to show you how the layers of ggplot work and how we can start small and add different layers and complexity to a graphic to get more information out of it.
+
+In order to do so, I will use a different dataset, the [gapminder](https://www.gapminder.org/) data. The table looks like this.
+
+```{r gapminder_table, echo = FALSE}
+library(gapminder)
+
+gapminder %>%
+  kable(format = "html") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), fixed_thead = T) %>%
+  scroll_box(height = "400px")
+```
+
+</br>
+
+#### Visuals
+
+Let's get started by plotting the `gdpPercap` and `lifeExp` and use a scatter plot.
+
+```{r graph_base}
+gapminder %>%
+  ggplot(mapping = aes(x = gdpPercap, y = lifeExp)) +
+  geom_point()
+```
+
+We can clearly see that this graph is not helpful to anyone because we have a lot of countries with a low `gdpPercap` so they are all clustered together and we cannot see any individual differences. On the other side we have very few countries with a high `gdpPercap` and there we can see very clearly the individual differences. It would be very helpful if we would have the **X** axis expanded at lower values and contracted at high values, to see everything clearly.
+
+This can be easily done by scaling the **X** axis on a logarithmic scale. I think log~10~ should do the trick, all we need is a function called `scale_x_...`, in this case `log10`. We will also change the label format just to make it easier to read.
+
+```{r graph_log}
+gapminder %>%
+  ggplot(mapping = aes(x = gdpPercap, y = lifeExp)) +
+  geom_point() +
+  scale_x_log10(labels = label_number_si()) # The label is just to format the numbers in a more user friendly way
+```
+
+This tells us a bit more about the situation but I think we can do one better.
+
+Let's try to split the data by continent. We will do that by adding colour to the dots and just to help us differentiate the better we will add the country population as a variable. The population will be represented by the size of the point.
+
+```{r graph_colour_size}
+
+gapminder %>%
+  ggplot(mapping = aes(x = gdpPercap, 
+                       y = lifeExp, 
+                       colour = continent, 
+                       size = pop)) +
+  geom_point() +
+  scale_x_log10(labels = label_number_si())
+```
+
+Now we have more information, although it's a bit too much and is due for some refinement.
+
+Since a lot of the dots overlap we cannot see all of them. It would help to have them a bit more transparent and in that way, we will know that where we see higher opacity is because of multiple dots overlapping. The opacity of a geom can be controlled by using a parameter called `alpha` (this is used outside the mapping function in this case as we want to apply it to all dots uniformly). This parameter controls the opacity of the objects from 0 to 100 %.
+
+We will also eliminate the legend since it takes space. The parameters should be passed to the object (`geom_point`).
+
+```{r graph_alpha}
+
+gapminder %>%
+  ggplot(mapping = aes(x = gdpPercap, 
+                       y = lifeExp, 
+                       colour = continent, 
+                       size = pop)) +
+  geom_point(alpha = 0.4, show.legend = FALSE)  +
+  scale_x_log10(labels = label_number_si())
+```
+
+Looks better, however we can make it even better.
+
+At the moment the data shows multiple recordings for each country, however if we want to show the status quo, we just need the last record for each country. In here we will see the power of the pipe operator (%\>%). We will need to add some lines between the dataset and the `ggplot` function that will transform the data for us before displaying it. I will need to filter the data so it will display the last year on record for each country. Before filtering we will need to group the data and apply the filter just within the group.
+
+Also, let's make two aesthetic changes. The first change that we'll make is to change the colour scheme of the graph. These are just a personal preferences, however since the people that created the dataset were nice enough to code colours for each continent, we will take advantage of that.
+
+The second change is to make the **X** and **Y** labels more explicit:
+
+```{r graph_last_year}
+gapminder %>%
+  
+  # Prepare the groups in which to filter
+  group_by(country) %>%
+  
+  # The Filter
+  filter(year == max(year)) %>%
+  
+  # The plot
+  ggplot(mapping = aes(x = gdpPercap,                         
+                       y = lifeExp,                           
+                       colour = continent,                    
+                       size = pop)) +                         
+  geom_point(alpha = 0.4, show.legend = FALSE)  + 
+  
+  # The new colour scheme
+  scale_colour_manual(values = continent_colors) +
+  
+  # Axes Adjustments
+  labs(x = "GDP Per Capita", y = "Life Expectancy") +
+  scale_x_log10(labels = label_number_si())                     
+```
+
+Almost done! Although I think we can do better still. What if we want to split this graphic into multiple graphics, one for each continent so we can see the data better.
+
+We can do that, with just one line of code. In **R** this is done using `facets`. I will not go into a lot of details about them, however, it works like this.
+
+```{r graph_facets}
+gapminder %>%
+  group_by(country) %>%                    
+  filter(year == max(year)) %>%              
+  ggplot(mapping = aes(x = gdpPercap, 
+                       y = lifeExp,
+                       colour = continent,
+                       size = pop)) +
+  geom_point(alpha = 0.4, show.legend = FALSE)  +
+  scale_colour_manual(values = continent_colors) +
+  labs(x = "GDP Per Capita", y = "Life Expectancy") +
+  scale_x_log10(labels = label_number_si()) +
+  
+  # Splitting the graphs by Continent
+  facet_wrap(~ continent)
+
+```
+
+This graphic is quite useful as it shows us the relative situation on each continent and we can get quite a good idea about the average of each continent. But what if we would like to see where a specific country is situated as compared to its neighbours?
+
+There are multiple ways to do this, and depending on what we want to show and how we want to present the data. The first method we can use is to add labels to the points in the data. This will allow us to see where each country is located compared to its neighbours, however, I'm not a big fan of this approach since it can overwhelm the user with information and it can be hard to see the specific country the user might want to inspect.
+
+A more elegant approach is to highlight the specific country by simply adding a dot of a different colour over the original one. We can also add a label to it, however if we want to highlight just one country, it's a bit pointless.
+
+So, let's take this second approach and highlight Romania as compared to its European neighbours. As I said, we will add another `geom_point()` to the graphic and inside we will select a different dataset, one that contains just the data for the **last year** and **Romania**. We will also make the point red, just to differentiate it from the rest.
+
+```{r graph_romania}
+
+gapminder %>%
+  group_by(country) %>%                    
+  filter(year == max(year)) %>%              
+  ggplot(mapping = aes(x = gdpPercap,
+                       y = lifeExp,
+                       colour = continent,
+                       size = pop)) +
+  
+  # Data Points
+  geom_point(alpha = 0.4, show.legend = FALSE)  +
+  
+  # Highlighted point
+  geom_point(data = gapminder %>% filter(country == "Romania", year == max(year)),
+             colour = "red",
+             show.legend = FALSE) +
+  
+  # Graph Parameters
+  scale_colour_manual(values = continent_colors) +
+  labs(x = "GDP Per Capita", y = "Life Expectancy") +
+  scale_x_log10(labels = label_number_si()) +
+  facet_wrap(~ continent)
+
+```
+
+So this shows us exactly where the country of interest is compared to other countries both within continent and between continents in one simple graph. We can, of course, highlight more countries if we want to see how they are related to one another or how their group is related to other groups, however, we will need to find a way to distinguish between them. As mentioned above, a good method is to just add labels to the targeted countries.
+
+The above graphic is also a good example of the layers in a graphic that I mentioned in the beginning. In the code we have added the red dot after the original ones, however, if we would have reversed the order the red dot would have appeared under the green one. In this particular case we will still be able to see it slightly because the green one is transparent however it will not be as obvious. We can see this in the graph below:
+
+```{r graph_layers}
+gapminder %>%
+  group_by(country) %>%                    
+  filter(year == max(year)) %>%              
+  ggplot(mapping = aes(x = gdpPercap,
+                       y = lifeExp,
+                       colour = continent,
+                       size = pop)) +
+  
+  # Highlighted Point
+  geom_point(data = gapminder %>% filter(country == "Romania", year == max(year)),
+             colour = "red",
+             show.legend = FALSE) +
+  
+  # Data Points
+  geom_point(alpha = 0.4, show.legend = FALSE)  +
+  
+  # Graph parameters
+  scale_colour_manual(values = continent_colors) +
+  labs(x = "GDP Per Capita", y = "Life Expectancy") +
+  scale_x_log10(labels = label_number_si()) +
+  facet_wrap(~ continent)
+```
+
+Of course, we can add even more complexity to the graph and extract even more information depending on the level of detail you need from the information. Since this was just an introduction and the scope of the data was exploration, not prediction or other type of analysis, I will stop here.
+
+## Conclusion
+
+Visualizations can be a very powerful tool to transmit a lot of information in a simple way and with a high impact, the only limit is your imagination. Remember that we started our data exploration from here:
+
+```{r base_graph_2, echo=FALSE}
+gapminder %>%
+  ggplot(mapping = aes(x = gdpPercap, y = lifeExp)) +
+  geom_point()
+```
+
+In this introductory article I tried to explain how you can start from something simple and, by adding additional steps, you can increase the complexity in a simple way and hopefully I managed to explain the advantages of using a programming language as opposed to a point and click solution.
+
+Using code gives you more control over the visualizations and is easier to update it based on the requests from the business users. Code is also easier to share with your team and to be recycled from one project to another. You can just copy and paste pieces of code from one part to another, while with point and click, if you can't just change the source and refresh, you will need to create each pivot, or visual once more, you can't use just a part of a report.
