@@ -1,11 +1,11 @@
 
 [en]
-  title = "Clarity"
-  LanguageName = "English"
-  weight = 1
+  title            = "Caffee and Data"
+  LanguageName     = "English"
+  weight           = 1
 
-#[pt]
-#  title = "Claridade" # just for the sake of showing this is possible
-#  LanguageName = "Português"
-#  weight = 2
-  
+[ro]
+  title            = "Cafea si Date" # just for the sake of showing this is possible
+  introDescription = "Inginer de Date, Analist de Date, Psiholog Cognitiv și în general Om cu Păreri"
+  LanguageName     = "Română"
+  weight           = 2
