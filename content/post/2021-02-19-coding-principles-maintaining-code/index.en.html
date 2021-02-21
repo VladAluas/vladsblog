@@ -1,0 +1,374 @@
+---
+title: "Coding Principles: Updating and Maintaining Code"
+author: Vlad Aluas
+date: '2021-02-19'
+slug: data-cleaning
+categories: ["Tutorial"]
+tags: ["R", "tidyverse", "data cleaning"]
+thumbnail: /images/code-logo.png
+toc: true
+---
+
+<script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
+
+<div id="TOC">
+
+</div>
+
+<p></br></p>
+<blockquote>
+“Like families, tidy datasets are all alike but every messy dataset is messy in its own way.”
+<footer>
+<em>— Hadley Wickham, Chief Scientist at RStudio</em>
+</footer>
+</blockquote>
+<p>This article will try to show how we can link the structure of a dataset to it’s meaning and make sure the data is showing what we want to show.</p>
+<hr />
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>In this article I would like to take a look at some coding principles and best practices and discuss what can help you, as a data analyst, write and maintain code that can be easily shared and understood by other analysts or yourself, when you look at your code at a later time.</p>
+<p>I often found myself in the situation in which I had to come back and adjust some code I had written previously. Depending on how I’ve written my code, it could be a simple task that took 5-15 minutes or it could take the better part of my day.</p>
+<p>You might be thinking that the time it takes to review and update the code depends on the complexity of the code and the number of lines.</p>
+<p>This is indeed true, to some extent. If you have a lot of lines in your code, it can be problematic indeed to single out the one, or ones, that need changing. However, from my personal experience just as much time is spent trying to remember why you decided on one approach as opposed to another. This is even more evident when someone else needs to look at your code, or you need to check someone else’ code.</p>
+<p>Especially when you start coding, the first instinct is to automate what you do manually and basically recreate the manual tasks using code. This can result in a lot of lines and maybe it’s not the most efficient code.</p>
+<p>This is not a problem, even if it’s not the most efficient code, it is way better than doing the process manually.</p>
+<p>So, how do you avoid the two main problems mentioned above, reducing the lines of code you are using, and remembering the scope of the code?</p>
+<p>This can be done using two methods:</p>
+<ol style="list-style-type: decimal">
+<li>Using as many comments as possible in our code</li>
+<li>Observing the <em>WET</em> / <em>DRY</em> principle</li>
+</ol>
+<p>We will take a look at these two methods in more details below.</p>
+</div>
+<div id="using-comments-in-code" class="section level1">
+<h1>Using comments in code</h1>
+<p>Comments are a great way to communicate with either your colleagues or your future self about the purpose of the code you are using. Let’s check the example below in which we want to plot the <code>mtcars</code> dataset from the <code>ggplot2</code> package and we want to show the miles per gallon (<em>mpg</em>) as a distribution of the number of cylinders (<em>cyl</em>). Also we would like to show the name of the car. We can do this using the code below:</p>
+<pre class="r"><code>library(tidyverse)
+
+mtcars %&gt;%
+  mutate(car_names = rownames(mtcars),
+         cyl = as.factor(cyl)) %&gt;%
+  ggplot(mapping = aes(x = cyl, y = mpg)) +
+  geom_boxplot() +
+  geom_point() +
+  geom_text(mapping = aes(label = car_names), 
+            hjust = 0,
+            nudge_x = 0.05,
+            check_overlap = TRUE)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/uncommented_code-1.png" width="100%" />
+Now let’s take a look at the same code but with comments added and see if it makes more sense. You can comment a line in <em>R</em> by placing a <em>#</em> at the start of the comment, and the program will skip the rest of the line from the analysis.</p>
+<pre class="r"><code># We need the tidyverse library since it contains
+#   - the ggplot2 package for graphics
+#   - the mutate function for data transformation
+library(tidyverse)
+
+
+mtcars %&gt;%
+# We first need a column with the name of the cars.
+# In case we need to use it later it&#39;s easier to use the column not the whole function
+  mutate(car_names = rownames(mtcars), 
+# We need to transform the `cyl` column into a factor because the boxplot does not work with continuous values
+         cyl = as.factor(cyl)) %&gt;%
+  ggplot(mapping = aes(x = cyl, y = mpg)) +
+  
+# We will use a boxplot as it&#39;s the best ways to show comparisons between classes and the variance within a class
+  geom_boxplot() +
+# We will use points over the boxplots to show where each observation falls exactly
+  geom_point() +
+# The text is optional but a nice to have, so we will know which car is which
+  geom_text(mapping = aes(label = car_names),
+  
+# We will add some adjustments to the geom_text so the writing will not overlap the points
+            hjust = 0,
+            nudge_x = 0.05,
+            check_overlap = TRUE) # Eliminate the overlapping values for clarity</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/commented_code-1.png" width="100%" /></p>
+<p>As you can see, it is much easier for someone to look at the second example and understand why I have added the elements that I did and check if some of them are useful or not in the code, or the final product. Some of you might disagree with my choices, however, you know why I chose this approach and you can base your argument on that.</p>
+<p>The same goes for my future self. If I would try to recreate the code for a different project, I might lose some time trying to figure out why I chose to use a boxplot and not just a simple scatter plot, and why I chose to transform the <em>cyl</em> column into a factor and not just leave it like it is.</p>
+<p>In my first attempt I might end up with something like this:</p>
+<pre class="r"><code>library(tidyverse)
+mtcars %&gt;%
+  mutate(car_names = rownames(mtcars)) %&gt;%
+  ggplot(mapping = aes(x = cyl, y = mpg)) +
+  geom_point() +
+  geom_text(mapping = aes(label = car_names), hjust = 0, nudge_x = 0.05, check_overlap = TRUE)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/incomplete_reproduction-1.png" width="100%" /></p>
+<p>As we can see this is a rough approximation of the previous plot. So, I might think to myself, why not use a boxplot? And then I will see the following:</p>
+<pre class="r"><code>library(tidyverse)
+mtcars %&gt;%
+  mutate(car_names = rownames(mtcars)) %&gt;%
+  ggplot(mapping = aes(x = cyl, y = mpg)) +
+  geom_boxplot() +
+  geom_point() +
+  geom_text(mapping = aes(label = car_names), hjust = 0, nudge_x = 0.05, check_overlap = TRUE)</code></pre>
+<pre><code>#&gt; Warning: Continuous x aesthetic -- did you forget aes(group=...)?</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/complete_reproduction-1.png" width="100%" /></p>
+<p>You can see that this is not ideal. A boxplot needs a factor in order to create categories. A continuous value will not allow it to do so because it can have too many values. I will end up at the same conclusion I’ve done previously when I wrote it the first time. This could have been avoided if I would have taken a few minutes and inserted the comments into the code.</p>
+<p>I know this is not a very complicated piece of code and the five minutes do not seem like much, and you are right. However, if you have a larger project and hundreds of lines of code, you will find that what took five minutes here, can take some solid hours from your time. Or, if the code is particularly complicated and the changes are too many, you can find yourself in a situation in which you need to change the whole project and rewrite the code from scratch.</p>
+<p>It is good to review and update your code if you have some free time or consider that the old version of your project is too slow or throws too many errors. However, it can be really annoying to do this every time you need to make the slightest adjustment to the code and it defeats the purpose of having an automation project in the first place.</p>
+<p>Remember when commenting on code, it’s important to say <em>WHY</em> you are using an approach or the other, not just describe <em>WHAT</em> the code does. That should be self evident.</p>
+<p>Now that hopefully you see why comments are important when writing code, let’s see how you can simplify your code and reduce the number of lines of code you are using.</p>
+<p>We will do this in the next section.</p>
+</div>
+<div id="observing-the-wet-dry-principle" class="section level1">
+<h1>Observing the <em>WET</em> / <em>DRY</em> principle</h1>
+<p>No matter how well you comment your code, if there are too many lines of code, you will still spend a lot of time trying to update and maintain it. This is especially the case for chunks of code that are repeated multiple times in a project.</p>
+<p>In order to explain this better, I will go over some coding practices, specifically the <em>WET</em> / <em>DRY</em> coding practices.</p>
+<div id="wet-code-vs.-dry-code" class="section level2">
+<h2><em>WET</em> Code vs. <em>DRY</em> Code</h2>
+<p>As you most likely already guessed, <em>WET</em> and <em>DRY</em> are acronyms:</p>
+<ul>
+<li><em>DRY</em> stands for <em>Don’t repeat yourself</em></li>
+<li><em>WET</em> has multiple accepted meanings, some of my favourites being
+<ul>
+<li>We enjoy typing</li>
+<li>Write every time</li>
+<li>Write everything twice</li>
+<li>Waste everyone’s time (this being my favourite).</li>
+</ul></li>
+</ul>
+<p>As you can guess from the names it is preferable to have <em>DRY</em> code as opposed to <em>WET</em>. Usually this means that <em>DRY</em> code is not repeated over and over again, while <em>WET</em> code is found in your project more than 3-4 times.</p>
+<p>Observing this principle is important if you want to have a flexible project that will be easy to update if it will be required in the future. The chances for you to overlook something and break your code are lower if you have to change it in fewer places.</p>
+<p>Let’s check an example of <em>WET</em> and <em>DRY</em> code and discuss it afterwards.</p>
+<div id="wet-code" class="section level3">
+<h3><em>WET</em> Code</h3>
+<p>We will use the same data set as before and I will show you how it can be difficult to maintain <em>WET</em> code.</p>
+<pre class="r"><code># We will use tidyverse as it contains the required libraries
+library(tidyverse)
+
+# The first part will be the core of our code
+mtcars %&gt;%
+  mutate(car_names = rownames(mtcars),
+         cyl = as.factor(cyl)) %&gt;%
+  ggplot(mapping = aes(x = cyl, y = mpg)) +
+  
+# Now we will recreate the code we used previously to obtain the same graph
+  geom_boxplot() +
+  geom_point() +
+  geom_text(mapping = aes(label = car_names), hjust = 0, nudge_x = 0.05, check_overlap = TRUE)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/wet_code_core-1.png" width="100%" /></p>
+<p>Let’s say that we want to show a scatter plot that illustrates the relationship between horse power (<em>hp</em>) and miles per gallon (<em>mpg</em>) and use the number of cylinders (<em>cyl</em>) as a colour grouping.</p>
+<pre class="r"><code># We still need the same core as for the previous graph
+mtcars %&gt;%
+  mutate(car_names = rownames(mtcars),
+         cyl = as.factor(cyl)) %&gt;%
+  ggplot(mapping = aes(x = hp, y = mpg)) +
+  
+# Please note that we needed to change the mapping in the core code
+  geom_point(mapping = aes(colour = cyl)) +
+  geom_text(mapping = aes(label = car_names), hjust = 0, nudge_x = 5, check_overlap = TRUE)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/wet_code_scatter-1.png" width="100%" /></p>
+<p>Now let’s try one more example in order to have a clear image of the problem, and try to find a solution together. We will have another graph with the same core <em>ish</em> dataset, and we will use a bar chart to show the total horse power (<em>hp</em>) for each category by number of cylinders (<em>cyl</em>). We can see the code below:</p>
+<pre class="r"><code>mtcars %&gt;%
+  mutate(car_names = rownames(mtcars),
+         cyl = as.factor(cyl)) %&gt;%
+  ggplot(mapping = aes(x = cyl, y = hp)) +
+  
+# Please note that we needed to change the mapping in the core code -- AGAIN
+  geom_col()</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/wet_code_column-1.png" width="100%" /></p>
+<p>Besides the fact that it can be annoying as hell, I’m pretty sure that by now you have seen some problems with needing to repeat code over and over again. However, since it would be awkward to just finish the article here, I will spell it out.</p>
+<p>Every time you need to change a parameter, you need to</p>
+<ol style="list-style-type: decimal">
+<li>remember where you used that parameter</li>
+<li>replace it</li>
+<li>make sure you have not forgotten any previous use</li>
+</ol>
+<p>Also, due to the annoying phenomenon that is Murphy’s law, most times you will not be able to just use <em>Find and Replace</em> as you might only need to change that parameter in just a few code chunks, or everywhere but one code chunk.</p>
+<p>There are some ways in which you can avoid having this type of <em>WET</em> code.</p>
+</div>
+<div id="dry-code" class="section level3">
+<h3><em>DRY</em> Code</h3>
+<p>I am sure by now that you have seen the solution to the problems exposed previously: use <em>DRY</em> code. There, problem solved! However, how do we do that?</p>
+<p>There are a number of ways, and the one that will help us the most is the fact that <em>R</em> is an object-oriented language. That basically means that you can store anything in a variable and call on that variable as opposed to writing the whole expression over and over again.</p>
+<p>In the next section we will see this in practice. We will store the core of the graphs into a variable (<code>plt</code>) and we will add layers to it. In order to do so, we will use the code below:</p>
+<pre class="r"><code>plt &lt;- mtcars %&gt;%
+          mutate(car_names = rownames(mtcars),
+                 cyl = as.factor(cyl)) %&gt;%
+          ggplot(mapping = aes(x = cyl, y = mpg))</code></pre>
+<p>Now that we have the core of the plot stored into an object, let’s see how this can help us.</p>
+<pre class="r"><code># Our core plot
+plt +
+# As previously we just add the new objects to the plot
+  geom_boxplot() +
+  geom_point() +
+  geom_text(mapping = aes(label = car_names), hjust = 0, nudge_x = 0.05, check_overlap = TRUE)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/dry_code_boxplot-1.png" width="100%" /></p>
+<p>As you can see, whenever we want to use that core code, we just need to change it once and use the <code>plt</code> object for every other occurrence. Still, I am sure you have noticed a problem with my solution. What if we want to change the <code>x</code> and <code>y</code> axes? Wouldn’t we need to go back to the code and change it every time we want to change the axes.</p>
+<p>This complicates the situation o bit, however the solution is to include in the <code>plt</code> object just the desired code, and everything else that is changing is left out of the object. In this case, we will leave the <code>ggplot()</code> function out as well.</p>
+<pre class="r"><code>plt &lt;- mtcars %&gt;%
+          mutate(car_names = rownames(mtcars),
+                 cyl = as.factor(cyl))
+# The code becomes
+plt %&gt;%
+  ggplot(mapping = aes(x = cyl, y = mpg)) +
+  geom_boxplot() +
+  geom_point() +
+  geom_text(mapping = aes(label = car_names), hjust = 0, nudge_x = 0.05, check_overlap = TRUE)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/dry_code_df-1.png" width="100%" /></p>
+<p>As we can see this can help us reduce the number of lines of code. In this particular case not by much, however, if you have to type the 10 lines of code for one dataset transformation over and over again, it is very useful to store all those transformations is an object. In this particular case, that object would be another dataset.</p>
+<p>Although this particular example is a basic one, we just created a new dataset that is easier to work with, the true power of <em>R</em> being object oriented, and what helps the most in keeping your code <strong>DRY</strong> is what we will discuss in the next section, <em>custom functions</em>.</p>
+<div id="custom-functions" class="section level4">
+<h4>Custom Functions</h4>
+<p>Custom functions are another way to keep your code <strong>DRY</strong>. They are a powerful tool that can assist you keep your code easily maintainable and with fewer line of code.</p>
+<p>They allow you to store and standardise the steps you would normally apply a large range of objects, datasets, columns or even other functions.</p>
+<p>In order to understand this principle better, we will create a dataset from scratch to serve as a clear example of the usefulness of custom functions. You can create it as well using the code below:</p>
+<pre class="r"><code># We will set a seed for the random generator so we can get the same data should you chose to use the same code
+set.seed(123)
+# We need to generate some random data, so I will use the rnorm() function. You can use other functions if you like
+df &lt;-     # our data frame
+  cbind(  # It&#39;s easier to generate columns and bind them together
+    tibble(x = rnorm(10, 0, 2)),
+    tibble(y = rnorm(10, 4, 9)),
+    tibble(z = rnorm(10, 15, 1)),
+    tibble(q = rnorm(10, 2, 18))
+  )
+# Now we need some NA values. We will add them at the end
+df &lt;- 
+  rbind( # we will simply bind some rows at the end
+  df,
+  c(NA, NA, NA, NA),
+  c(NA, NA, NA, NA),
+  c(NA, NA, NA, NA),
+  c(NA, NA, NA, NA),
+  c(NA, NA, NA, NA))</code></pre>
+<p>Now that this dataset has some missing data, let’s say that you want to replace the missing data with some values. How do you do this? The most used practises just replace the missing values with the <em>mean</em> value or the <em>median</em> value.</p>
+<p>Let’s say you decide to use the <em>mean</em> value. In practice, you would do the following:</p>
+<pre class="r"><code>df %&gt;%
+  mutate(x = ifelse(is.na(x), mean(x, na.rm = T), x),
+         y = ifelse(is.na(y), mean(y, na.rm = T), y),
+         z = ifelse(is.na(z), mean(z, na.rm = T), z),
+         q = ifelse(is.na(q), mean(q, na.rm = T), q))</code></pre>
+<pre><code>#&gt;             x           y        z          q
+#&gt; 1  -1.1209513  15.0167362 13.93218  9.6763560
+#&gt; 2  -0.4603550   7.2383244 14.78203 -3.3112867
+#&gt; 3   3.1174166   7.6069431 13.97400 18.1122619
+#&gt; 4   0.1410168   4.9961444 14.27111 17.8064028
+#&gt; 5   0.2585755  -1.0025702 14.37496 16.7884595
+#&gt; 6   3.4301300  20.0822182 13.31331 14.3955246
+#&gt; 7   0.9218324   8.4806543 15.83779 11.9705178
+#&gt; 8  -2.5301225 -13.6995544 15.15337  0.8855892
+#&gt; 9  -1.3737057  10.3122031 13.86186 -3.5073279
+#&gt; 10 -0.8913239  -0.2551227 16.25381 -4.8484780
+#&gt; 11  0.1492513   5.8775976 14.57544  7.7968019
+#&gt; 12  0.1492513   5.8775976 14.57544  7.7968019
+#&gt; 13  0.1492513   5.8775976 14.57544  7.7968019
+#&gt; 14  0.1492513   5.8775976 14.57544  7.7968019
+#&gt; 15  0.1492513   5.8775976 14.57544  7.7968019</code></pre>
+<p>Remember what we mentioned earlier, that is a good idea to not repeat your code more than 3-4 times? In this example is all good since we only have four lines of code, however, even these four lines can be annoying to type. Also, if we need to change the function, it can be annoying to go and update all of them. And everything will get even more complicated with more lines of code.</p>
+<p>In order to resolve that we will create a function. Remember how I said that everything is an object in <em>R</em>? Here is where this is very useful. We can just store a function in an object.</p>
+<p>Basically we will just use the logic we used in the <code>mutate()</code> and store it like we do with everything else.</p>
+<pre class="r"><code># First we need to pick a name for the function. Since naming objects is not the scope of this article we will just pick something at random
+my_awesome_function &lt;- function(x){ # this tells R that it is a function and x is whatever we choose to include in there
+  
+  # The actual action that is done when calling this function
+  ifelse(is.na(x), mean(x, na.rm = T), x)
+}</code></pre>
+<p>Let’s check and see if the results are the same.</p>
+<pre class="r"><code>df %&gt;%
+  mutate(x = my_awesome_function(x),
+         y = my_awesome_function(y),
+         z = my_awesome_function(z),
+         q = my_awesome_function(q))</code></pre>
+<pre><code>#&gt;             x           y        z          q
+#&gt; 1  -1.1209513  15.0167362 13.93218  9.6763560
+#&gt; 2  -0.4603550   7.2383244 14.78203 -3.3112867
+#&gt; 3   3.1174166   7.6069431 13.97400 18.1122619
+#&gt; 4   0.1410168   4.9961444 14.27111 17.8064028
+#&gt; 5   0.2585755  -1.0025702 14.37496 16.7884595
+#&gt; 6   3.4301300  20.0822182 13.31331 14.3955246
+#&gt; 7   0.9218324   8.4806543 15.83779 11.9705178
+#&gt; 8  -2.5301225 -13.6995544 15.15337  0.8855892
+#&gt; 9  -1.3737057  10.3122031 13.86186 -3.5073279
+#&gt; 10 -0.8913239  -0.2551227 16.25381 -4.8484780
+#&gt; 11  0.1492513   5.8775976 14.57544  7.7968019
+#&gt; 12  0.1492513   5.8775976 14.57544  7.7968019
+#&gt; 13  0.1492513   5.8775976 14.57544  7.7968019
+#&gt; 14  0.1492513   5.8775976 14.57544  7.7968019
+#&gt; 15  0.1492513   5.8775976 14.57544  7.7968019</code></pre>
+<p>As you can see, the results are the same, with a lot less code written. This trick is also handy if you want to change the function in the future. All you need to do is change the original function and leave the rest code intact. Like this:</p>
+<pre class="r"><code>my_awesome_function &lt;- function(x){ 
+  
+  ifelse(is.na(x), median(x, na.rm = T), x)
+}
+
+
+df %&gt;%
+  mutate(x = my_awesome_function(x),
+         y = my_awesome_function(y),
+         z = my_awesome_function(z),
+         q = my_awesome_function(q))</code></pre>
+<pre><code>#&gt;             x           y        z          q
+#&gt; 1  -1.1209513  15.0167362 13.93218  9.6763560
+#&gt; 2  -0.4603550   7.2383244 14.78203 -3.3112867
+#&gt; 3   3.1174166   7.6069431 13.97400 18.1122619
+#&gt; 4   0.1410168   4.9961444 14.27111 17.8064028
+#&gt; 5   0.2585755  -1.0025702 14.37496 16.7884595
+#&gt; 6   3.4301300  20.0822182 13.31331 14.3955246
+#&gt; 7   0.9218324   8.4806543 15.83779 11.9705178
+#&gt; 8  -2.5301225 -13.6995544 15.15337  0.8855892
+#&gt; 9  -1.3737057  10.3122031 13.86186 -3.5073279
+#&gt; 10 -0.8913239  -0.2551227 16.25381 -4.8484780
+#&gt; 11 -0.1596691   7.4226337 14.32303 10.8234369
+#&gt; 12 -0.1596691   7.4226337 14.32303 10.8234369
+#&gt; 13 -0.1596691   7.4226337 14.32303 10.8234369
+#&gt; 14 -0.1596691   7.4226337 14.32303 10.8234369
+#&gt; 15 -0.1596691   7.4226337 14.32303 10.8234369</code></pre>
+<p>Please note that all you need to do if you want to use the <code>median()</code> and not the <code>mean()</code> is update one line of code, not four. Writing custom functions is a very powerful tool as it allows you to centralise your logic and make sure you are using the same operation across all variables that need it.</p>
+<p>Think of how easy would be to forget a <code>na.rm = TRUE</code> if you have 40 variables that require this operation, especially that you might not use this in one place in your project.</p>
+<p>If you want, you can give this function more flexibility and add the operation we want to use as a parameter to our awesome function.</p>
+<pre class="r"><code>my_awesome_function &lt;- function(x, .func){
+  ifelse(is.na(x), 
+         .func(x, na.rm = T),
+         x)
+}
+
+
+df %&gt;%
+  mutate(x = my_awesome_function(x, mean),
+         y = my_awesome_function(y, mean),
+         z = my_awesome_function(z, median),
+         q = my_awesome_function(q, sum))</code></pre>
+<pre><code>#&gt;             x           y        z          q
+#&gt; 1  -1.1209513  15.0167362 13.93218  9.6763560
+#&gt; 2  -0.4603550   7.2383244 14.78203 -3.3112867
+#&gt; 3   3.1174166   7.6069431 13.97400 18.1122619
+#&gt; 4   0.1410168   4.9961444 14.27111 17.8064028
+#&gt; 5   0.2585755  -1.0025702 14.37496 16.7884595
+#&gt; 6   3.4301300  20.0822182 13.31331 14.3955246
+#&gt; 7   0.9218324   8.4806543 15.83779 11.9705178
+#&gt; 8  -2.5301225 -13.6995544 15.15337  0.8855892
+#&gt; 9  -1.3737057  10.3122031 13.86186 -3.5073279
+#&gt; 10 -0.8913239  -0.2551227 16.25381 -4.8484780
+#&gt; 11  0.1492513   5.8775976 14.32303 77.9680190
+#&gt; 12  0.1492513   5.8775976 14.32303 77.9680190
+#&gt; 13  0.1492513   5.8775976 14.32303 77.9680190
+#&gt; 14  0.1492513   5.8775976 14.32303 77.9680190
+#&gt; 15  0.1492513   5.8775976 14.32303 77.9680190</code></pre>
+<p>As you can see, this version of the custom function allows more flexibility in deciding what operation we want to use on our variables. However, we also need to take into account that this will require us to change the operation in multiple places, if we want to change the default. If we want to use different operation on different columns, this would be the best approach.</p>
+<p>It all depends on your needs.</p>
+<p>With this said, I would like to show you a code example that will recreate the graphs we had earlier and allow us to change the <code>x</code> and <code>y</code> axes and the colour grouping.</p>
+<pre class="r"><code>my_plot &lt;- function(.data, x, y, colour, nudge){
+  x &lt;- enquo(x)
+  y &lt;- enquo(y)
+  colour &lt;- enquo(colour)
+  
+  ggplot(.data, mapping = aes(x = !!x, y = !!y, colour = !!colour)) +
+    geom_boxplot() +
+    geom_point() +
+    geom_text(mapping = aes(label = car_names), hjust = 0, nudge_x = nudge, check_overlap = TRUE)
+  
+}
+mtcars %&gt;%
+  mutate(car_names = rownames(mtcars),
+         cyl = as.factor(cyl)) %&gt;%
+  # Our custom function
+  my_plot(cyl, mpg, cyl, 0.05)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/custom_function_plot-1.png" width="100%" /></p>
+<p>I hope that I managed to impress upon you the utility and importance of custom functions in any data analysis project in <em>R</em>, if you want to be able to update and maintain the code easily and relatively fast.</p>
+<p>In this article I have only scratched the surface of what custom functions can do in <em>R</em> as the point of this article was to show you how you can write code that is easier to maintain and update. I plan on writing an article about functions and go into more detail, however, in the meantime, I would highly recommend checking out Hadley Wickham’s book <a href="http://adv-r.had.co.nz/Introduction.html">Advanced R</a>. It is amazing!</p>
+<p>Let me know if you found this article helpful in your data projects.</p>
+</div>
+</div>
+</div>
+</div>
