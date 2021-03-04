@@ -1,0 +1,250 @@
+---
+title: Decision making under uncertainty
+author: Vlad Aluas
+date: '2021-02-21'
+slug: decision-making-under-uncertainty
+categories: ["Opinion"]
+tags: ["Monte Carlo", "decision making", "uncertainty", "chance"]
+description: Article description.
+thumbnail: /images/chance-logo.png
+draft: true
+<<<<<<< HEAD
+bibliography: references.bib
+toc: true
+=======
+>>>>>>> 65fc79639679d3a4c1da58ccfabef750e85c3a26
+---
+
+<script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
+
+<<<<<<< HEAD
+<div id="TOC">
+
+</div>
+=======
+>>>>>>> 65fc79639679d3a4c1da58ccfabef750e85c3a26
+
+<blockquote>
+“I have lived a thousand lives and I’ve loved a thousand loves. I’ve walked on distant worlds and seen the end of time. Because I read.”
+<footer>
+<em>— George R. R. Martin</em>
+</footer>
+</blockquote>
+<hr />
+<p>As the quote above so elegantly suggests, we can live a thousand lives through books and we can learn a lot vicariously through the characters in the book. Unfortunately books are mostly escapists, we read them to experience a world not like our own. I imagine not may people would be interested in someone doing dishes and watching Netflix for two chapters. Although this way books are more entertaining, the chances for the situations in the book to help us with out real life decisions are slimmer. That is why I want to discuss a way in which you can actually live a thousand or a million possible lives and decide which one would be the best for you.</p>
+<p>This can be achieved using a <em>Monte Carlo</em> engine and I will explain below how it works.</p>
+<div id="monte-carlo-method" class="section level1">
+<h1>Monte Carlo Method</h1>
+<p>The Monte Carlo method is a way to experimentally test a hypothesis relying on random sampling. The main idea is to use randomly generated samples with properties similar with the population, to the best of our knowledge and study the different groups and decide based on that.</p>
+<hr />
+<p>People take all kind of decisions on a daily basis, with different levels of consequences and almost all of them are taken for unknown reasons. By this I mean that most of the decisions we take are taken by the emotional part of out cognitive system and rationalised by the rational part (Daniel Kahneman calls them <em>system 1</em> and <em>system 2</em>). I am not going to go into details about this, however I will point out some of the ways in which this phenomenon affects out decision making. If you want to go into details on the subject I highly recommend the book <em>Thinking Fast and Slow</em> by Daniel Kahneman.</p>
+<p>My purpose in this article is to show some of the ways in which we can reduce uncertainty when it comes to taking a decision and trying to take the outcome that is less likely to be influenced by chance.</p>
+</div>
+<div id="decision-consequences" class="section level1">
+<h1>Decision Consequences</h1>
+<p>I would like to begin with a brief by pointing out that not all decisions we make have the same consequences, or affect us in the same way. Your decision to have a pretzel for breakfast instead of a salad might have consequences later in life if you repeat this behaviour multiple times. Otherwise, you are quite safe to do so from time to time.</p>
+<p>Not the same can be said about a decision to bet all your savings on a race or a sports game. Considering your saving amount to a decent sum, your bet can leave you without anything you have saved or can increase your saving quite drastically.</p>
+<p>So, as we can see consequences can vary quite a lot in the outcome type (positive / negative) and in their magnitude. The focus of this article will be to check how we can better understand the consequences of our decisions, try to avoid large negative outcomes and should it be the case seek out large positive ones.</p>
+</div>
+<div id="distribution-types" class="section level1">
+<h1>Distribution Types</h1>
+<p>In order to be able to continue, I want to explain that not all things are as predictable as they seem and this is because not all things are distributed equally.</p>
+<p>What do I mean by that? Let’s give some examples to make it clear.</p>
+<p>Let’s say you go to a festival (I know, I wish it as well) of around 10.000 people. Considering the people who tend to frequent such gatherings, I will guess that the average age of the people there is between 22 and 27 years old. For the purpose of our example I will say 24.5.</p>
+<p>Now, think of the oldest person you have heard of, it can be anyone does not matter. Add their age to the calculation of the average. Does it make a bit difference? No, I does not. Even if you think of the oldest fictional person, Methuselah, with his age of 969 does not impact the average by much (I know some sumerian kings are supposed to have lived for thousands or tens of thousands of years, however they used a different counting system so we cannot be sure how they actually counted). So, let’s see the impact of Methuselah on the average age.</p>
+<<<<<<< HEAD
+<p><span class="math display">\[m_{age} = \frac{10.000 \times 24.5 + 969}{10.001} = 24.5944406\]</span></p>
+<p>Not such a big impact is it.</p>
+<p>For the second example of a distribution, I would like to see the average net worth of the crowd. I will assume that since the people at this festival are quite young, most of them do not have a lot o noteworthy possessions as of yet, however to compensate for those who do, I will say the average is around $65K. Now, following the logic we used above, if you think of the richest man you know of and add him or her (Oprah can just as easily skew the data) to the crowd, how much will the average change?</p>
+<p>I’m thinking of Elon Musk although at the time of writing this article he is work a measly $169B as opposed to Jeff Bezos’ $193B, however I’m a big fan of Musk so let’s check with his net worth.</p>
+<p><span class="math display">\[m_{net\_worth} = \frac{10.000 \times 65.000 + 169.000.000.000}{10.001} = 16.963.304\]</span></p>
+=======
+<p><span class="math display">\[average\_age = \frac{10.000 \times 24.5 + 969}{10.001} = 24.5944406\]</span> Not such a big impact is it.</p>
+<p>For the second example of a distribution, I would like to see the average net worth of the crowd. I will assume that since the people at this festival are quite young, most of them do not have a lot o noteworthy possessions as of yet, however to compensate for those who do, I will say the average is around $65K. Now, following the logic we used above, if you think of the richest man you know of and add him or her (Oprah can just as easily skew the data) to the crowd, how much will the average change?</p>
+<p>I’m thinking of Elon Musk although at the time of writing this article he is work a measly $169B as opposed to Jeff Bezos’ $193B, however I’m a big fan of Musk so let’s check with his net worth.</p>
+<p><span class="math display">\[average\_net\_worth = \frac{10.000 \times 65.000 + 169.000.000.000}{10.001} = 16.963.304\]</span></p>
+>>>>>>> 65fc79639679d3a4c1da58ccfabef750e85c3a26
+<p>Quite a difference, right?</p>
+<div id="normal-distribution" class="section level3">
+<h3>Normal Distribution</h3>
+<p>In the first example the data is not that impacted that strongly because it follows a <a href="https://en.wikipedia.org/wiki/Normal_distribution">normal distribution</a>. A normal distribution is a phenomenon observed by <a href="https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss">Carl Gauss</a> in which the characteristics of a population (of a variable to be more precise) tend to cluster towards the average value and the further you go from the average value, the less likely it is to happen.</p>
+<p>Basically, if we have a set of data that follows a normal distribution, we can be quite certain that outliers, or values that will significantly impact our outcome are highly unlikely to happen. In out example, you cannot point to a single person that can impact the average height of the festival, only if you find someone who is several kilometres tall.</p>
+<p>These types of data usually are the ones that measure natural phenomena, as mentioned earlier. They can include but not be limited to:</p>
+<ul>
+<li>height</li>
+<li>weight</li>
+<li>age</li>
+<li>reaction times</li>
+<li>average time spent playing video games</li>
+</ul>
+</div>
+<div id="power-law-distribution" class="section level3">
+<h3>Power Law Distribution</h3>
+<p>The other effect we can observe is called a power law and sometimes a <a href="https://en.wikipedia.org/wiki/Pareto_distribution">Pareto Distribution</a>, especially in finance, or the 80-20 rule. The last one is the best known and is usually formulated as 20% of individuals control 80% of the assets.</p>
+<p>As we could see in the example above, in such a distribution, just one observation can impact everything significantly and that is why we need to take the type of distribution into consideration when taking a decision. Not taking this into consideration we have a lot of people calling themselves actors, writers or singers and not what they actually do for a living, most likely bartenders, waiters or other job unrelated with their self-reported career.</p>
+<p>This is not meant as an insult for the people who do this, it is just to point out that in some fields, especially the ones that are scalable (once you create something it is easy to replicate without any effort from your part) this distribution tends to be very skewed and a few people control most of the resources.</p>
+</div>
+<div id="distributions-in-decision-making" class="section level3">
+<h3>Distributions in Decision Making</h3>
+<p>The most important thing to remember in regards to distributions is that if we have to make a decision in regards to a normal distribution, we can be pretty sure that the average of the distribution is quite indicative of what is happening. We can use a sample without any problem. Does not matter whom do we pick from a crowd to measure the average height, even if we get the average height wrong, it will be off by just a small margin.</p>
+<p>This cannot be said about a power law distribution. One individual is nothing like each other, you either have dwarves or giants and if you take a sample of dwarves you cannot measure the impact of a giant, and therefore an average of any measure from a sample of such a distribution is useless.</p>
+<p>So, how do we distinguish between the two kinds of distributions in the real world and how can we apply this knowledge in decision making? For this there is no straightforward answer, however, there are some methods that can help in evaluating the impact of different decisions.</p>
+<p>In the next section I will describe a problem, I will explain my reasoning in adding and analysing variables to it and I will show how you can use a <a href="https://en.wikipedia.org/wiki/Monte_Carlo_method#:~:text=Monte%20Carlo%20methods%2C%20or%20Monte,might%20be%20deterministic%20in%20principle.">Monte Carlo method</a> to make sure that you can take the best decision out of all of them. Or the one that is best suited for your needs, I should say.</p>
+</div>
+</div>
+<div id="the-problem" class="section level1">
+<h1>The problem</h1>
+<p>Let us imagine that you would like to choose a career. You are not really sure what you would like to choose because you don’t have a particular career for which you have a strong calling, however there are some that seem decent to you:</p>
+<ul>
+<li>The first option would be doctor. You have seen a lot of medical procedurals and it looks great and exciting, however it would be even better if you can set up your own practice and be the master of your own destiny. Also it would be better paid</li>
+<li>The second option would be to work in IT. It still seems like a great job because you can have a lot of puzzles with which to play and if you mess something up you don’t endanger someone’s life.</li>
+<li>The third option is to disregard all safe plans and go for something that will let you retire early. After all, you have seem many people win big at poker of blackjack and they are far from you cognitive prowess, therefore it might be riskier, however, if anyone has a chance of doing it, it’s you.</li>
+</ul>
+<p>However, all these options seem good and you can’t really choose out of any of them. So, how do you decide with which career you would end up better at retirement? For the sake of this example and to make it easy to understand and reproduce, we will only take into account the amount of money you will earn over your career, however using the same principles you can calculate as many variables as you like.</p>
+</div>
+<div id="the-method" class="section level1">
+<h1>The method</h1>
+<p>Since you are an amazing fellow, you can assume that you will not only outperform your peers in gambling, but you will do so even if you are a dentist or a programmer, so we will eliminate this from the equation since it is a constant. So in order to answer the question we will check how an average person performs the task.</p>
+<p>Since one example cannot tell us much about what might happen, we will set up some conditions for each of the career paths and generate some random numbers that abide by each condition.</p>
+<<<<<<< HEAD
+<p>This will simulate our outcome at retirement if we were to live multiple lives and work in each domain for some of those lives. After this we can simply check the results and see which one of the careers would give us the better chance for a retirement.</p>
+=======
+<p>This will simulate our outcome at retirement if we were to live multiple lives and work in each domenain for some of those lives. After this we can simply check the results and see which one of the careers would give us the better chance for a retirement.</p>
+>>>>>>> 65fc79639679d3a4c1da58ccfabef750e85c3a26
+</div>
+<div id="the-careers" class="section level1">
+<h1>The careers</h1>
+<p>In the next section I will describe each career, the variables that I will take into account and I will expose the code I will use to do so, if anyone wants to replicate it. The code is written in <em>R</em>.</p>
+<<<<<<< HEAD
+<div id="the-doctor-of-the-medicine-not-who-variety" class="section level2">
+<h2>The Doctor (of the medicine not Who variety)</h2>
+<p>I all societies doctors are well respected and well paid. However, not all doctors are paid the same. We can assume that a neurosurgeon is paid better than a internist although not as well as a plastic surgeon.</p>
+<p>I have found a data source that seems to have done a pretty good job in assesing the avearage salary for a doctor. The information was taken from the <a href="http://www.salaryexplorer.com/salary-survey.php?loc=178&amp;loctype=1&amp;job=13&amp;jobtype=2">salaryexplorer.com</a> website. The salary is expressed in the local currency of Romania (RON) and the salaries are expressed before tax. These two impediments are nothing too difficult as we can easily translate everything into Euro, and extract the taxes.</p>
+<p>According to the National Bank of Romania, the conversion rate is 1 RON for 0.20 €.</p>
+<p>In regards to the taxes, the Romanian government imposes taxes on the on the employee as follows:</p>
+<ul>
+<li>Social Security: 25%</li>
+<li>Health Insurance: 10%</li>
+</ul>
+<p>The remaining 65% is considered income and that is taxed with 10%.</p>
+<p>Let’s start by extracting the taxes out of the average salary for doctors of 21,100 RON.</p>
+<p><span class="math display">\[ m_{salary(RON)} = (21,100 - \frac{25}{100} \times 21,100 - \frac{10}{100} \times 21,100) \times \frac{90}{100} = 13,715 \times \frac{90}{100} = 12,343.50\]</span></p>
+<p>Now we can easily convert everything into Euro.</p>
+<p><span class="math display">\[ m_{salary(€)}  =  12,343.50 \times 0.2 = 2,468.70\]</span></p>
+<p>With this in mind, our average income on a monthly basis, if we were to live 10000 times would be distributed something like this.</p>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/dr_monthly_salary-1.png" width="100%" /></p>
+<p>Now, we will just need to calculate for how long does a doctor work and some other costs of being a doctor. In Romania, medical school is usually 7 years, and you usually need to spend extra 3 to 5 years for residency, although that is usually paid so I think we can just include the 7 years of study. If you finish high-school at 19 and you spend 7 years in medical school, you can start working and 26.</p>
+<p>If we want to retire at 65 and, that would give us 39 years of work or 468 months of works. So, all that we have to do is create a distribution with the mean salary after tax and multiply it by the number of months.</p>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/dr_lifelong_salary-1.png" width="100%" /></p>
+<p>Not bad, right?. Now let’s see how much would someone in IT make.</p>
+</div>
+<div id="part-of-the-it-crowd" class="section level2">
+<h2>Part of the IT Crowd</h2>
+<p>Romania has one of the most active IT sectors in Eastern Europe and it is expanding continuously which is a good thing because one will not have problems ending up in an IT job if he wants to. We will just need some data on the salaries of the IT crowd. A beautiful analysis on 1,267 salaries can be seen <a href="https://www.averagesalarysurvey.com/romania">here</a>.</p>
+<p>The sample is large enough to give us a good estimate of what the population actually looks like. We can see that the data is a bit skewed and slightly more people are just under the mean when it comes to income. This is due to the fact that managers and directors have very high salaries and they move the average up. This can be easily fixed, we just need to estimate what percentage of people working in IT are managers or directors and and account for that.</p>
+<p>The first table gives us most of the information we need regarding the salary distribution in Romania. There we can see that most people, over 58% earn more than 92,809 RON. This is not exactly the median of the distribution however it is close enough so we will use this to approximate the shape of the distribution. The median is the value exactly in the middle of the distribution.</p>
+<p>Once we have this, we will use it as an average value for a normal distribution that will contain most of the values in our population. This will be 85% percent of our lives, we will not be managers, therefore we will have salaries accordingly. In the rest of 15% of our 10,000 lives, we will be managers or directors so our salary will be accordingly.</p>
+<pre><code>#&gt; [1] 112429</code></pre>
+<p>We can see the average salary of our distribution is quite close to the one from the website, so we can say that our distribution closely resembles the sampled population from the site. Salary distribution looks like below:</p>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/it_yearly_salary-1.png" width="100%" /></p>
+<p>Not very normal, is it? There are a few people that have huge salaries compared to the rest of the population. So, if you manage to land yourself a management role in IT you’re all set. If not, let’s see how this translates in EURO and in lifetime earnings.</p>
+<p>The first thing would be to transform everything into net profit.</p>
+<p>At the time of this writing the IT workers were exempt from the income tax so the only two taxes required to be paid are:</p>
+<ul>
+<li>Social Security: 25%</li>
+<li>Health Insurance: 10%</li>
+</ul>
+<p>Afterwards, we will convert it to Euro.</p>
+<p>Now we have the yearly salary. So, for how long can someone work in this industry?</p>
+<p>Most people start while studying at university, however most of those positions are either very low paying or are unpaid internships so I will eliminate them. On the other hand, due to this, most people can find work right after finishing their studies. Assuming as we did previously that someone finishes high school at 19, they can study for 3-4 years, depends if you are studying in the Bologna system or not, you can start work at 22. However, since there are a lot of people working in IT who do not have specialisations in IT, I will consider that the most typical person will start at 25. This will account for those people as most people not from IT might start later.</p>
+<p>Considering that my goal is to retire at 65, I have 40 years of work ahead of me, so all I need to do is multiply everything by 40.</p>
+<pre><code>#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/it_sal_lifelong_income-1.png" width="100%" />
+This looks decent enough. Not as good as a doctors, however not bad at all. Now, I would like to take into account one more part.</p>
+<p>What if I develop an app and make it big with it?</p>
+<p>But how do I account for that?</p>
+<p>The answer is a bit more tricky, however</p>
+<hr />
+</div>
+<div id="poker-player" class="section level2">
+<h2>Poker player</h2>
+<p>Now let’s compute the outcome of ten thousand lives as a online poker player. For this we will need some additional information:</p>
+<ul>
+<li>What is the probability to make it as an professional online poker player</li>
+<li>How much or how little does an online poker player make in a year</li>
+<li>How is that money distributed</li>
+</ul>
+<p>These assumption can be estimated in multiple ways, although most of them are time consuming and the technical methods used are outside the scope of this article. However, I will briefly mention them if you are interested in such an endeavour.</p>
+<p><a href="https://statname.net/">Statname.net</a> is one of the multiple sites that offer statistics regarding player earnings on different platforms and strategies. You can get the data from there on the earnings of a player, the number of hands and compute how much he would have earned if you account for the blinds. Then you can set a cut-off point in which an earning is considered a living wage and you can compute the percentage of professional players. This will be your probability. The same can go for the other measures.</p>
+<p>Since getting the data can be a bit time consuming and this being just an example, I have decided to base my computations on the following <a href="https://www.blackrain79.com/">blog</a>. You can get a lot of useful information about online poker from here and I found it very useful, my understanding of poker being the as basic as it could be. From what I read here, and discussed this with people who know about the subject way more than I do, apparently one of the most successful strategies in online poker is to win blinds not large hands. The tables are also divided by the size of the blinds as follows:</p>
+<ul>
+<li>NL2 (also known as 2NL) = ¢1 / ¢2 blinds</li>
+<li>NL5 (also known as 5NL) = ¢2 / ¢5 blinds</li>
+<li>NL10 (also known as 10NL) = ¢5 / ¢10 blinds</li>
+<li>NL25 (also known as 25NL) = ¢10 / ¢25 blinds</li>
+<li>NL50 (also known as 50NL) = ¢25 / ¢50 blinds</li>
+<li>NL100 (also known as 100NL) = ¢50 / $1 blinds</li>
+</ul>
+<p>Now, how do we transform this into earnings? The formula is simple as seen below:</p>
+<p><span class="math display">\[ (winning\_big\_blinds\_chance \times big\_blind\_value) \times \frac{played\_hands}{100}  \]</span></p>
+<p>Let’s compute some and example. From what I could gather a professional player will play around 100.000 hands a month. So from here on I will use this as the number of hands a professional player will play so we can estimate the winnings. With this in mind, let’s see how much will a professional player make from a NL2 table with a 30% win rate. That will translate into the following formula:</p>
+<p><span class="math display">\[ (30 \times 2) \times \frac{100000}{100} = ¢60000\]</span></p>
+<p>We need to keep in mind that those are cents, adjusting to dollars, we see that you can earn around $600 a month playing low stakes poker, which is not bad. We also need to take into account that people can play multiple tables online and apparently most people do. So the probabilities that I am going to use here can be found in this <a href="https://www.blackrain79.com/2014/06/good-win-rates-for-micro-and-small_6.html">blog post</a> and are going to be just the ones for 1-8 tables since I already established that I will play around 100.000 hands a month so increasing the number of tables to 18+ cuts time but lower my attention and therefore the winning rate. If I want to maximise the number of hands, or increase the hourly payment I would increase the number of tables.</p>
+<p>I will compute the average for each type of table, however I will transform the cents into dollars directly</p>
+<p><span class="math display">\[ NL2   = (10 \times \frac{2}{100}) \times \frac{100000}{100} = \$200\]</span></p>
+<p><span class="math display">\[ NL5   = (6 \times \frac{5}{100}) \times \frac{100000}{100} = \$300\]</span></p>
+<p><span class="math display">\[ NL10  = (4 \times \frac{10}{100}) \times \frac{100000}{100} = \$400\]</span></p>
+<p><span class="math display">\[ NL25  = (3 \times \frac{25}{100}) \times \frac{100000}{100} = \$750\]</span></p>
+<p><span class="math display">\[ NL50  = (2 \times \frac{50}{100}) \times \frac{100000}{100} = \$1000 \]</span></p>
+<p><span class="math display">\[ NL100 = (2 \times 1) \times \frac{100000}{100} = \$2000 \]</span></p>
+<p>Now that we have some averages, I would like to see how much can the best players make using the same estimates from the articles.</p>
+<p><span class="math display">\[ NL2   = (30 \times \frac{2}{100}) \times \frac{100000}{100} = \$600\]</span></p>
+<p><span class="math display">\[ NL5   = (10 \times \frac{5}{100}) \times \frac{100000}{100} = \$900\]</span></p>
+<p><span class="math display">\[ NL10  = (12 \times \frac{10}{100}) \times \frac{100000}{100} = \$1200\]</span></p>
+<p><span class="math display">\[ NL25  = (10 \times \frac{25}{100}) \times \frac{100000}{100} = \$2500\]</span></p>
+<p><span class="math display">\[ NL50  = (9 \times \frac{50}{100}) \times \frac{100000}{100} = \$4500 \]</span></p>
+<p><span class="math display">\[ NL100 = (8 \times 1) \times \frac{100000}{100} = \$8000 \]</span></p>
+<p>We can see that this is not anywhere near a normal distribution. By the definition of professional players, we know that they are the ones that actually earn enough so that they can survive of this income. This leaves us with a skewed distribution. I think we can safely assume that most professional players are average players and the elite that earn as much as we have shown here are a small percent 10%. With that said, we can start creating the population of online poker players.</p>
+<p>Another assumption is that professional poker players will not spend all their time in NL2, NL5 and NL10 games, will most likely spend it on something that will provide more income. This is also consistent with the living wage assumption. I know $750 might not seem much in a month for most Western democracies, however, it is quite a decent income in second and third world countries. So, how are we going to do this?</p>
+<p>Simple, we will create two distributions that will reflect the average player and the elite player. The first one will be 90% of the population and the second one will be the other 10%</p>
+<pre><code>#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-2-1.png" width="100%" /></p>
+<p>This distribution seems legit for a power law distribution. And now, for the final touch, we will need to add the 10% chance to become a professional player. We will do this by using the list we have created earlier. For this we will create a binomial distribution with a 10% probability and a size 1. Basically we can create a random string of values, either 1 or 0 and about 10% are one. Let’s see it in practice.</p>
+<pre><code>#&gt; [1] 0.1007</code></pre>
+<p>Perfect, 10.07% is exactly what we would expect.</p>
+<p>Now all we need to do is multiply the two lists. When a value in the second list is 0 it will transform the earnings to 0, so we did not make it as a professional poker player. When it is 1 the result will not be affected.</p>
+<p>Now that we painfully and to the best of our knowledge created the populations, let’s proceed in analysing the data.</p>
+</div>
+</div>
+<div id="data-visualisations" class="section level1">
+<h1>Data Visualisations</h1>
+=======
+<div id="the-doctor-of-the-medicine-not-who-variety" class="section level3">
+<h3>The Doctor (of the medicine not Who variety)</h3>
+<p>I all societies doctors are well respected and well paid. However, not all doctors are paid the same. We can assume that a neurosurgent is paid better than a internist although not as well as a plastic surgeon.</p>
+<pre class="r"><code>sampl &lt;- rnorm(10000, mean = 1500, sd = 300)
+
+hist(sampl)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-1-1.png" width="100%" /></p>
+<pre class="r"><code>sampl_2 &lt;- rnorm(10000, mean = 1900, sd = 350)
+
+hist(sampl_2)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-2-1.png" width="100%" /></p>
+</div>
+<div id="poker-player" class="section level3">
+<h3>Poker player</h3>
+<p>For this is a bit more complicated than for the previous two jobs. This is basically an freelancing job and it’s not as easy to find data on it. However, I will try to estimate the success rate of a poker player by a combination of tournament possibilities and some estimates based on straight table winnings</p>
+<p>You can find more about some assumptions <a href="https://www.blackrain79.com/2019/09/what-percentage-of-poker-players-are.html#:~:text=It%20is%20likely%20that%20only,or%20can%20consider%20going%20pro">here</a>.</p>
+<p>For this section I will be a bit more abstract and for the sake of simplicity in this example I will focus on estimates from this <a href="https://www.blackrain79.com/">blog</a>. He seems to be focused on data and it will help with the example. If I were to actually make a life altering choice I would spend a few days or weeks sampling the data better.</p>
+<p>For example, in here I will take his <a href="https://www.blackrain79.com/2019/09/what-percentage-of-poker-players-are.html#:~:text=It%20is%20likely%20that%20only,or%20can%20consider%20going%20pro">estimate</a> of 10% of player can actually go pro as a fact. If I were to actually consider this situation for a living, I would spend more time in these estimation. For example in here, you cannot get a number from casinos and pallors as they usually don’t release the numbers of players and the amount who break even or are actually winning (this type of information usually get on potential players sensibilities and makes them avoid the offending places). A workaround to this conundrum is to check on an online poker community the amount of players and the top ranked ones. An app has the number of downloads available and if you pay attention to the ranking of players in the app, you can get a good idea of player success. From there, with some adjustments, you can make an approximation of the successful players in real life and their income.</p>
+<p>So, let us say that you only have a 10% chance to make it as a poker player. For this we will create a binomial distribution with a 10% probability and a size 1. Basically we can create a random string of values, either 1 or 0 and about 10% are one. Let’s see it in practice.</p>
+<pre class="r"><code>success_prob &lt;- rbinom(n = 10000, size = 1, prob = 0.1)
+
+print(sum(success_prob) / 10000)</code></pre>
+<pre><code>#&gt; [1] 0.102</code></pre>
+<p>Perfect, 10.20% is exactly what we would expect.</p>
+<p>Now, we will need try to create the population of successful players.</p>
+<p>For the sake of simplicity and so I will finish this article before I get too deep in poker wining distributions I will use some numbers from the following <a href="https://www.blackrain79.com/2014/06/good-win-rates-for-micro-and-small_6.html">article</a>. From here I will take the income estimates.</p>
+</div>
+>>>>>>> 65fc79639679d3a4c1da58ccfabef750e85c3a26
+</div>
