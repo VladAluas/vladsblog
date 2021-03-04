@@ -1,0 +1,122 @@
+---
+title: Decision making under uncertainty
+author: Vlad Aluas
+date: '2021-02-21'
+slug: decision-making-under-uncertainty
+categories: ["Opinion"]
+tags: ["Monte Carlo", "decision making", "uncertainty", "chance"]
+description: Article description.
+thumbnail: /images/chance-logo.png
+draft: true
+---
+
+<script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
+
+
+<blockquote>
+“I have lived a thousand lives and I’ve loved a thousand loves. I’ve walked on distant worlds and seen the end of time. Because I read.”
+<footer>
+<em>— George R. R. Martin</em>
+</footer>
+</blockquote>
+<hr />
+<p>As the quote above so elegantly suggests, we can live a thousand lives through books and we can learn a lot vicariously through the characters in the book. Unfortunately books are mostly escapists, we read them to experience a world not like our own. I imagine not may people would be interested in someone doing dishes and watching Netflix for two chapters. Although this way books are more entertaining, the chances for the situations in the book to help us with out real life decisions are slimmer. That is why I want to discuss a way in which you can actually live a thousand or a million possible lives and decide which one would be the best for you.</p>
+<p>This can be achieved using a <em>Monte Carlo</em> engine and I will explain below how it works.</p>
+<div id="monte-carlo-method" class="section level1">
+<h1>Monte Carlo Method</h1>
+<p>The Monte Carlo method is a way to experimentally test a hypothesis relying on random sampling. The main idea is to use randomly generated samples with properties similar with the population, to the best of our knowledge and study the different groups and decide based on that.</p>
+<hr />
+<p>People take all kind of decisions on a daily basis, with different levels of consequences and almost all of them are taken for unknown reasons. By this I mean that most of the decisions we take are taken by the emotional part of out cognitive system and rationalised by the rational part (Daniel Kahneman calls them <em>system 1</em> and <em>system 2</em>). I am not going to go into details about this, however I will point out some of the ways in which this phenomenon affects out decision making. If you want to go into details on the subject I highly recommend the book <em>Thinking Fast and Slow</em> by Daniel Kahneman.</p>
+<p>My purpose in this article is to show some of the ways in which we can reduce uncertainty when it comes to taking a decision and trying to take the outcome that is less likely to be influenced by chance.</p>
+</div>
+<div id="decision-consequences" class="section level1">
+<h1>Decision Consequences</h1>
+<p>I would like to begin with a brief by pointing out that not all decisions we make have the same consequences, or affect us in the same way. Your decision to have a pretzel for breakfast instead of a salad might have consequences later in life if you repeat this behaviour multiple times. Otherwise, you are quite safe to do so from time to time.</p>
+<p>Not the same can be said about a decision to bet all your savings on a race or a sports game. Considering your saving amount to a decent sum, your bet can leave you without anything you have saved or can increase your saving quite drastically.</p>
+<p>So, as we can see consequences can vary quite a lot in the outcome type (positive / negative) and in their magnitude. The focus of this article will be to check how we can better understand the consequences of our decisions, try to avoid large negative outcomes and should it be the case seek out large positive ones.</p>
+</div>
+<div id="distribution-types" class="section level1">
+<h1>Distribution Types</h1>
+<p>In order to be able to continue, I want to explain that not all things are as predictable as they seem and this is because not all things are distributed equally.</p>
+<p>What do I mean by that? Let’s give some examples to make it clear.</p>
+<p>Let’s say you go to a festival (I know, I wish it as well) of around 10.000 people. Considering the people who tend to frequent such gatherings, I will guess that the average age of the people there is between 22 and 27 years old. For the purpose of our example I will say 24.5.</p>
+<p>Now, think of the oldest person you have heard of, it can be anyone does not matter. Add their age to the calculation of the average. Does it make a bit difference? No, I does not. Even if you think of the oldest fictional person, Methuselah, with his age of 969 does not impact the average by much (I know some sumerian kings are supposed to have lived for thousands or tens of thousands of years, however they used a different counting system so we cannot be sure how they actually counted). So, let’s see the impact of Methuselah on the average age.</p>
+<p><span class="math display">\[average\_age = \frac{10.000 \times 24.5 + 969}{10.001} = 24.5944406\]</span> Not such a big impact is it.</p>
+<p>For the second example of a distribution, I would like to see the average net worth of the crowd. I will assume that since the people at this festival are quite young, most of them do not have a lot o noteworthy possessions as of yet, however to compensate for those who do, I will say the average is around $65K. Now, following the logic we used above, if you think of the richest man you know of and add him or her (Oprah can just as easily skew the data) to the crowd, how much will the average change?</p>
+<p>I’m thinking of Elon Musk although at the time of writing this article he is work a measly $169B as opposed to Jeff Bezos’ $193B, however I’m a big fan of Musk so let’s check with his net worth.</p>
+<p><span class="math display">\[average\_net\_worth = \frac{10.000 \times 65.000 + 169.000.000.000}{10.001} = 16.963.304\]</span></p>
+<p>Quite a difference, right?</p>
+<div id="normal-distribution" class="section level3">
+<h3>Normal Distribution</h3>
+<p>In the first example the data is not that impacted that strongly because it follows a <a href="https://en.wikipedia.org/wiki/Normal_distribution">normal distribution</a>. A normal distribution is a phenomenon observed by <a href="https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss">Carl Gauss</a> in which the characteristics of a population (of a variable to be more precise) tend to cluster towards the average value and the further you go from the average value, the less likely it is to happen.</p>
+<p>Basically, if we have a set of data that follows a normal distribution, we can be quite certain that outliers, or values that will significantly impact our outcome are highly unlikely to happen. In out example, you cannot point to a single person that can impact the average height of the festival, only if you find someone who is several kilometres tall.</p>
+<p>These types of data usually are the ones that measure natural phenomena, as mentioned earlier. They can include but not be limited to:</p>
+<ul>
+<li>height</li>
+<li>weight</li>
+<li>age</li>
+<li>reaction times</li>
+<li>average time spent playing video games</li>
+</ul>
+</div>
+<div id="power-law-distribution" class="section level3">
+<h3>Power Law Distribution</h3>
+<p>The other effect we can observe is called a power law and sometimes a <a href="https://en.wikipedia.org/wiki/Pareto_distribution">Pareto Distribution</a>, especially in finance, or the 80-20 rule. The last one is the best known and is usually formulated as 20% of individuals control 80% of the assets.</p>
+<p>As we could see in the example above, in such a distribution, just one observation can impact everything significantly and that is why we need to take the type of distribution into consideration when taking a decision. Not taking this into consideration we have a lot of people calling themselves actors, writers or singers and not what they actually do for a living, most likely bartenders, waiters or other job unrelated with their self-reported career.</p>
+<p>This is not meant as an insult for the people who do this, it is just to point out that in some fields, especially the ones that are scalable (once you create something it is easy to replicate without any effort from your part) this distribution tends to be very skewed and a few people control most of the resources.</p>
+</div>
+<div id="distributions-in-decision-making" class="section level3">
+<h3>Distributions in Decision Making</h3>
+<p>The most important thing to remember in regards to distributions is that if we have to make a decision in regards to a normal distribution, we can be pretty sure that the average of the distribution is quite indicative of what is happening. We can use a sample without any problem. Does not matter whom do we pick from a crowd to measure the average height, even if we get the average height wrong, it will be off by just a small margin.</p>
+<p>This cannot be said about a power law distribution. One individual is nothing like each other, you either have dwarves or giants and if you take a sample of dwarves you cannot measure the impact of a giant, and therefore an average of any measure from a sample of such a distribution is useless.</p>
+<p>So, how do we distinguish between the two kinds of distributions in the real world and how can we apply this knowledge in decision making? For this there is no straightforward answer, however, there are some methods that can help in evaluating the impact of different decisions.</p>
+<p>In the next section I will describe a problem, I will explain my reasoning in adding and analysing variables to it and I will show how you can use a <a href="https://en.wikipedia.org/wiki/Monte_Carlo_method#:~:text=Monte%20Carlo%20methods%2C%20or%20Monte,might%20be%20deterministic%20in%20principle.">Monte Carlo method</a> to make sure that you can take the best decision out of all of them. Or the one that is best suited for your needs, I should say.</p>
+</div>
+</div>
+<div id="the-problem" class="section level1">
+<h1>The problem</h1>
+<p>Let us imagine that you would like to choose a career. You are not really sure what you would like to choose because you don’t have a particular career for which you have a strong calling, however there are some that seem decent to you:</p>
+<ul>
+<li>The first option would be doctor. You have seen a lot of medical procedurals and it looks great and exciting, however it would be even better if you can set up your own practice and be the master of your own destiny. Also it would be better paid</li>
+<li>The second option would be to work in IT. It still seems like a great job because you can have a lot of puzzles with which to play and if you mess something up you don’t endanger someone’s life.</li>
+<li>The third option is to disregard all safe plans and go for something that will let you retire early. After all, you have seem many people win big at poker of blackjack and they are far from you cognitive prowess, therefore it might be riskier, however, if anyone has a chance of doing it, it’s you.</li>
+</ul>
+<p>However, all these options seem good and you can’t really choose out of any of them. So, how do you decide with which career you would end up better at retirement? For the sake of this example and to make it easy to understand and reproduce, we will only take into account the amount of money you will earn over your career, however using the same principles you can calculate as many variables as you like.</p>
+</div>
+<div id="the-method" class="section level1">
+<h1>The method</h1>
+<p>Since you are an amazing fellow, you can assume that you will not only outperform your peers in gambling, but you will do so even if you are a dentist or a programmer, so we will eliminate this from the equation since it is a constant. So in order to answer the question we will check how an average person performs the task.</p>
+<p>Since one example cannot tell us much about what might happen, we will set up some conditions for each of the career paths and generate some random numbers that abide by each condition.</p>
+<p>This will simulate our outcome at retirement if we were to live multiple lives and work in each domenain for some of those lives. After this we can simply check the results and see which one of the careers would give us the better chance for a retirement.</p>
+</div>
+<div id="the-careers" class="section level1">
+<h1>The careers</h1>
+<p>In the next section I will describe each career, the variables that I will take into account and I will expose the code I will use to do so, if anyone wants to replicate it. The code is written in <em>R</em>.</p>
+<div id="the-doctor-of-the-medicine-not-who-variety" class="section level3">
+<h3>The Doctor (of the medicine not Who variety)</h3>
+<p>I all societies doctors are well respected and well paid. However, not all doctors are paid the same. We can assume that a neurosurgent is paid better than a internist although not as well as a plastic surgeon.</p>
+<pre class="r"><code>sampl &lt;- rnorm(10000, mean = 1500, sd = 300)
+
+hist(sampl)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-1-1.png" width="100%" /></p>
+<pre class="r"><code>sampl_2 &lt;- rnorm(10000, mean = 1900, sd = 350)
+
+hist(sampl_2)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-2-1.png" width="100%" /></p>
+</div>
+<div id="poker-player" class="section level3">
+<h3>Poker player</h3>
+<p>For this is a bit more complicated than for the previous two jobs. This is basically an freelancing job and it’s not as easy to find data on it. However, I will try to estimate the success rate of a poker player by a combination of tournament possibilities and some estimates based on straight table winnings</p>
+<p>You can find more about some assumptions <a href="https://www.blackrain79.com/2019/09/what-percentage-of-poker-players-are.html#:~:text=It%20is%20likely%20that%20only,or%20can%20consider%20going%20pro">here</a>.</p>
+<p>For this section I will be a bit more abstract and for the sake of simplicity in this example I will focus on estimates from this <a href="https://www.blackrain79.com/">blog</a>. He seems to be focused on data and it will help with the example. If I were to actually make a life altering choice I would spend a few days or weeks sampling the data better.</p>
+<p>For example, in here I will take his <a href="https://www.blackrain79.com/2019/09/what-percentage-of-poker-players-are.html#:~:text=It%20is%20likely%20that%20only,or%20can%20consider%20going%20pro">estimate</a> of 10% of player can actually go pro as a fact. If I were to actually consider this situation for a living, I would spend more time in these estimation. For example in here, you cannot get a number from casinos and pallors as they usually don’t release the numbers of players and the amount who break even or are actually winning (this type of information usually get on potential players sensibilities and makes them avoid the offending places). A workaround to this conundrum is to check on an online poker community the amount of players and the top ranked ones. An app has the number of downloads available and if you pay attention to the ranking of players in the app, you can get a good idea of player success. From there, with some adjustments, you can make an approximation of the successful players in real life and their income.</p>
+<p>So, let us say that you only have a 10% chance to make it as a poker player. For this we will create a binomial distribution with a 10% probability and a size 1. Basically we can create a random string of values, either 1 or 0 and about 10% are one. Let’s see it in practice.</p>
+<pre class="r"><code>success_prob &lt;- rbinom(n = 10000, size = 1, prob = 0.1)
+
+print(sum(success_prob) / 10000)</code></pre>
+<pre><code>#&gt; [1] 0.102</code></pre>
+<p>Perfect, 10.20% is exactly what we would expect.</p>
+<p>Now, we will need try to create the population of successful players.</p>
+<p>For the sake of simplicity and so I will finish this article before I get too deep in poker wining distributions I will use some numbers from the following <a href="https://www.blackrain79.com/2014/06/good-win-rates-for-micro-and-small_6.html">article</a>. From here I will take the income estimates.</p>
+</div>
+</div>
