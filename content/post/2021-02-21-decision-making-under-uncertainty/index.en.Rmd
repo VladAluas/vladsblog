@@ -9,14 +9,18 @@ description: Article description.
 thumbnail: /images/chance-logo.png
 draft: true
 <<<<<<< HEAD
+<<<<<<< HEAD
 bibliography: references.bib
 toc: true
+=======
+>>>>>>> 65fc79639679d3a4c1da58ccfabef750e85c3a26
 =======
 >>>>>>> 65fc79639679d3a4c1da58ccfabef750e85c3a26
 ---
 
 > "I have lived a thousand lives and I've loved a thousand loves. I've walked on distant worlds and seen the end of time. Because I read." `r tufte::quote_footer('*--- George R. R. Martin*')`
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = FALSE, comment = "#>", collapse = FALSE, out.width = "100%")
@@ -50,10 +54,15 @@ ron_format <- function(.x){
   dollar_format(prefix = "", suffix = " RON")(.x)
 }
 =======
+=======
+>>>>>>> 65fc79639679d3a4c1da58ccfabef750e85c3a26
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, comment = "#>", collapse = FALSE, out.width = "100%")
 
 library(tidyverse)
+<<<<<<< HEAD
+>>>>>>> 65fc79639679d3a4c1da58ccfabef750e85c3a26
+=======
 >>>>>>> 65fc79639679d3a4c1da58ccfabef750e85c3a26
 ```
 
@@ -92,9 +101,13 @@ Let's say you go to a festival (I know, I wish it as well) of around 10.000 peop
 Now, think of the oldest person you have heard of, it can be anyone does not matter. Add their age to the calculation of the average. Does it make a bit difference? No, I does not. Even if you think of the oldest fictional person, Methuselah, with his age of 969 does not impact the average by much (I know some sumerian kings are supposed to have lived for thousands or tens of thousands of years, however they used a different counting system so we cannot be sure how they actually counted). So, let's see the impact of Methuselah on the average age.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 $$m_{age} = \frac{10.000 \times 24.5 + 969}{10.001} = `r (10000 * 24.5 + 969) / 10001`$$
 
 Not such a big impact is it.
+=======
+$$average\_age = \frac{10.000 \times 24.5 + 969}{10.001} = `r (10000 * 24.5 + 969) / 10001`$$ Not such a big impact is it.
+>>>>>>> 65fc79639679d3a4c1da58ccfabef750e85c3a26
 =======
 $$average\_age = \frac{10.000 \times 24.5 + 969}{10.001} = `r (10000 * 24.5 + 969) / 10001`$$ Not such a big impact is it.
 >>>>>>> 65fc79639679d3a4c1da58ccfabef750e85c3a26
@@ -104,7 +117,11 @@ For the second example of a distribution, I would like to see the average net wo
 I'm thinking of Elon Musk although at the time of writing this article he is work a measly \$169B as opposed to Jeff Bezos' \$193B, however I'm a big fan of Musk so let's check with his net worth.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 $$m_{net\_worth} = \frac{10.000 \times 65.000 + 169.000.000.000}{10.001} = 16.963.304$$
+=======
+$$average\_net\_worth = \frac{10.000 \times 65.000 + 169.000.000.000}{10.001} = 16.963.304$$
+>>>>>>> 65fc79639679d3a4c1da58ccfabef750e85c3a26
 =======
 $$average\_net\_worth = \frac{10.000 \times 65.000 + 169.000.000.000}{10.001} = 16.963.304$$
 >>>>>>> 65fc79639679d3a4c1da58ccfabef750e85c3a26
@@ -160,7 +177,11 @@ Since you are an amazing fellow, you can assume that you will not only outperfor
 Since one example cannot tell us much about what might happen, we will set up some conditions for each of the career paths and generate some random numbers that abide by each condition.
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 This will simulate our outcome at retirement if we were to live multiple lives and work in each domain for some of those lives. After this we can simply check the results and see which one of the careers would give us the better chance for a retirement.
+=======
+This will simulate our outcome at retirement if we were to live multiple lives and work in each domenain for some of those lives. After this we can simply check the results and see which one of the careers would give us the better chance for a retirement.
+>>>>>>> 65fc79639679d3a4c1da58ccfabef750e85c3a26
 =======
 This will simulate our outcome at retirement if we were to live multiple lives and work in each domenain for some of those lives. After this we can simply check the results and see which one of the careers would give us the better chance for a retirement.
 >>>>>>> 65fc79639679d3a4c1da58ccfabef750e85c3a26
@@ -169,6 +190,7 @@ This will simulate our outcome at retirement if we were to live multiple lives a
 
 In the next section I will describe each career, the variables that I will take into account and I will expose the code I will use to do so, if anyone wants to replicate it. The code is written in *R*.
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 ## The Doctor (of the medicine not Who variety)
 
@@ -394,6 +416,8 @@ Now that we painfully and to the best of our knowledge created the populations, 
 
 # Data Visualisations
 =======
+=======
+>>>>>>> 65fc79639679d3a4c1da58ccfabef750e85c3a26
 ### The Doctor (of the medicine not Who variety)
 
 I all societies doctors are well respected and well paid. However, not all doctors are paid the same. We can assume that a neurosurgent is paid better than a internist although not as well as a plastic surgeon.
@@ -478,4 +502,7 @@ For the sake of simplicity and so I will finish this article before I get too de
 
 
 
+<<<<<<< HEAD
+>>>>>>> 65fc79639679d3a4c1da58ccfabef750e85c3a26
+=======
 >>>>>>> 65fc79639679d3a4c1da58ccfabef750e85c3a26
