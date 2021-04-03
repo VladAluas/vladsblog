@@ -34,6 +34,8 @@ In this article I would like to show some methods that can reduce these types of
 
 # Decision Consequences
 
+
+
 I would like to begin with a brief by pointing out that not all decisions we make have the same consequences, or affect us in the same way. Your decision to have a pretzel for breakfast instead of a salad might have consequences later in life if you repeat this behaviour multiple times. Otherwise, you are quite safe to do so from time to time.
 
 Not the same can be said about a decision to bet all your savings on a race or a sports game. Considering your saving amount to a decent sum, your bet can leave you without anything you have saved or can increase your saving quite drastically.
@@ -104,11 +106,15 @@ However, all these options seem good and you can't really choose out of any of t
 
 # The method
 
-Since you are an amazing fellow, you can assume that you will not only outperform your peers in gambling, but you will do so even if you are a dentist or a programmer, so we will eliminate this from the equation since it is a constant. So in order to answer the question we will check how an average person performs the task.
+Everything in nature is subject to variety so we will assume that the income will vary as based on different factors. Therefore we cannot generate a single number and say *"There! this is the expected income if you choose this career!"*. 
 
-Since one example cannot tell us much about what might happen, we will set up some conditions for each of the career paths and generate some random numbers that abide by each condition.
+As an example, if I were to choose to study medicine, I might have an ideea of what kind of doctor I want to be, however that does not guarantee that I will end up in that particular field. I might not like the field once I go into the nitty gritty of it, or I might like another field more once I find out more about it. Since I cannot control that I will try to simulate multiple outcomes and see overall which career is the best taking into account its highs and lows. 
 
-This will simulate our outcome at retirement if we were to live multiple lives and work in each domain for some of those lives. After this we can simply check the results and see which one of the careers would give us the better chance for a retirement.
+*E.g.:* If I were to choose between being a janitor who just won the lottery and being a doctor, I would chose to be the janitor. However, if I were to chose between the two and live 10,000 I would choose the doctor because the other 9,999 time it is the better outcome.
+
+How do we do this?
+
+We will gather data on each of the three career paths we have chosen and we will analyse it to try and figure out which are the main characteristics of the three populations, doctors, IT workers, and poker players. We will try to find out what is the average salary, how much does it usually vary from there, and if there is a tendency of most salaries to e over or under that average. Once we have all this information, we will extract a sample of that data of 10,000 randomly chosen salaries.
 
 ## Coding examples
 
