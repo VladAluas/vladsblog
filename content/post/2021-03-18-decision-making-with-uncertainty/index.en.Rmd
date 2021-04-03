@@ -20,9 +20,17 @@ library(scales)
 
 ------------------------------------------------------------------------
 
-People make all kind of decisions on a daily basis, with different levels of consequences and almost all of them are taken for unknown reasons. By this I mean that most of the decisions we take are taken by the emotional part of out cognitive system and rationalised by the rational part (Daniel Kahneman calls them *system 1* and *system 2*). I am not going to go into details about this, however I will point out some of the ways in which this phenomenon affects out decision making. If you want to go into details on the subject I highly recommend the book *Thinking Fast and Slow* by Daniel Kahneman.
+People engage in decision making on a daily basis and although most of our decisions seem to derive from logical arguments, the truth is that exactly the opposite is true. Most of the decisions we make are due to [biases](https://en.wikipedia.org/wiki/List_of_cognitive_biases) and [heuristics](https://en.wikipedia.org/wiki/Heuristic) our minds have developed to respond to the environment around them faster.
 
-My purpose in this article is to show some of the ways in which we can reduce uncertainty when it comes to taking a decision and trying to take the outcome that is less likely to be influenced by chance.
+These tendencies have been first described and studied by [Amos Tversky](https://en.wikipedia.org/wiki/Amos_Tversky) and [Daniel Kahneman](https://scholar.princeton.edu/kahneman/home) and have been explained in Kahneman's excellent book *Thinking fast and slow*. I highly recommend the book since it is an excellent guide in where our minds tend to be error prone and mislead us. I will explain in brief however that our minds operate as two separate system called by Kahneman and Tversky *system 1* and *system 2*. 
+
+*System 1* is the default system of the mind, the one used for everyday activities. These activities include walking, breathing, detecting danger and avoiding it, eating, doing routine activities, and all activities that do not involve heavy cognitive effort. *System 1* is emotional, automatic, fast and uses no extra energy from our energy hungry brains.
+
+*System 2* is the exact opposite of *System 1*. It is rational, quite slow, and requires a large amount of energy and effort from our part. *System 2* allows you to analyse in detail every situation, however this is not always ideal. If a car would come speeding towards you, *System 2* would analyse the colour of the car, the brand and maybe the speed and approach vector, which is a nice thought exercise but might get hit by the car before *System 2* would act. *System 1* will not bother with all those details, it will just register car coming towards me with great speed, I need to move out of the way.
+
+The problem when making decisions is that there are situations moderated or mediated by the aforementioned biases and heuristics in which *System 1* might make the decision and our minds might think it is actually *System 2*. Otherwise said, we might make decisions for subjective reasons and have a high degree of confidence in then believing they are objective.
+
+In this article I would like to show some methods that can reduce these types of biases and help in engaging *System 2* in the decision making process.
 
 # Decision Consequences
 
