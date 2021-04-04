@@ -22,7 +22,7 @@ library(scales)
 
 People engage in decision making on a daily basis and although most of our decisions seem to derive from logical arguments, the truth is that exactly the opposite is true. Most of the decisions we make are due to [biases](https://en.wikipedia.org/wiki/List_of_cognitive_biases) and [heuristics](https://en.wikipedia.org/wiki/Heuristic) our minds have developed to respond to the environment around them faster.
 
-These tendencies have been first described and studied by [Amos Tversky](https://en.wikipedia.org/wiki/Amos_Tversky) and [Daniel Kahneman](https://scholar.princeton.edu/kahneman/home) and have been explained in Kahneman's excellent book *Thinking fast and slow*. I highly recommend the book since it is an excellent guide in where our minds tend to be error prone and mislead us. I will explain in brief however that our minds operate as two separate system called by Kahneman and Tversky *system 1* and *system 2*. 
+These tendencies have been first described and studied by [Amos Tversky](https://en.wikipedia.org/wiki/Amos_Tversky) and [Daniel Kahneman](https://scholar.princeton.edu/kahneman/home) and have been explained in Kahneman's excellent book *Thinking fast and slow*. I highly recommend the book since it is an excellent guide in where our minds tend to be error prone and mislead us. I will explain in brief however that our minds operate as two separate system called by Kahneman and Tversky *system 1* and *system 2*.
 
 *System 1* is the default system of the mind, the one used for everyday activities. These activities include walking, breathing, detecting danger and avoiding it, eating, doing routine activities, and all activities that do not involve heavy cognitive effort. *System 1* is emotional, automatic, fast and uses no extra energy from our energy hungry brains.
 
@@ -32,43 +32,41 @@ The problem when making decisions is that there are situations moderated or medi
 
 In this article I would like to show some methods that can reduce these types of biases and help in engaging *System 2* in the decision making process.
 
-# Decision Consequences
-
-
-
-I would like to begin with a brief by pointing out that not all decisions we make have the same consequences, or affect us in the same way. Your decision to have a pretzel for breakfast instead of a salad might have consequences later in life if you repeat this behaviour multiple times. Otherwise, you are quite safe to do so from time to time.
-
-Not the same can be said about a decision to bet all your savings on a race or a sports game. Considering your saving amount to a decent sum, your bet can leave you without anything you have saved or can increase your saving quite drastically.
-
-So, as we can see consequences can vary quite a lot in the outcome type (positive / negative) and in their magnitude. The focus of this article will be to check how we can better understand the consequences of our decisions, try to avoid large negative outcomes and should it be the case seek out large positive ones.
-
 # Distribution Types
 
-In order to be able to continue, I want to explain that not all things are as predictable as they seem and this is because not all things are distributed equally.
+I would like to start with some examples how some situations can seem similar on the surface and have massively different outcomes. This is one of the most common situations in which *System 1* makes the decision and we might not notice.
 
-What do I mean by that? Let's give some examples to make it clear.
+I would like to start with some examples as it is way easier. Let us say we are at a music festival (I know, I know...) together with 9,998 other people. We are lucky enough to have information about this crowd and we know that the average age is 24.5 years old. We also know that the average net income for the crowd is \$65K. With this information at our disposal we can play around with the impact of one person.
 
-Let's say you go to a festival (I know, I wish it as well) of around 10.000 people. Considering the people who tend to frequent such gatherings, I will guess that the average age of the people there is between 22 and 27 years old. For the purpose of our example I will say 24.5.
-
-Now, think of the oldest person you have heard of, it can be anyone does not matter. Add their age to the calculation of the average. Does it make a bit difference? No, I does not. Even if you think of the oldest fictional person, Methuselah, with his age of 969 does not impact the average by much (I know some sumerian kings are supposed to have lived for thousands or tens of thousands of years, however they used a different counting system so we cannot be sure how they actually counted). So, let's see the impact of Methuselah on the average age.
+Firstly, I would like you to think of the oldest person you know. It does not have to be alive any more. What would happen if we were to add their age to the average? Since I cannot read your mind, I will jump in with the oldest person that pops to my mind, Methuselah at a respectable 969 years old. So, let's see the impact of Methuselah on the average age.
 
 $$m_{age} = \frac{10,000 \times 24.5 + 969}{10,001} = `r (10000 * 24.5 + 969) / 10001`$$
 
-Not such a big impact is it.
+Not much of an impact, is it?
 
-For the second example of a distribution, I would like to see the average net worth of the crowd. I will assume that since the people at this festival are quite young, most of them do not have a lot o noteworthy possessions as of yet, however to compensate for those who do, I will say the average is around \$65K. Now, following the logic we used above, if you think of the richest man you know of and add him or her (Oprah can just as easily skew the data) to the crowd, how much will the average change?
+Secondly, let us try the same impact for net worth. Think of the richest person you know and try to figure out what would their impact be on the crowd, how much will the average change?
 
-I'm thinking of Elon Musk although at the time of writing this article he is work a measly \$169B as opposed to Jeff Bezos' \$193B, however I'm a big fan of Musk so let's check with his net worth.
+I'm thinking of Elon Musk although at the time of writing this article he is worth a measly \$169B as opposed to Jeff Bezos' \$193B. I'm a fan of Musk so let's check with his net worth.
 
-$$m_{net\_worth} = \frac{10,000 \times 65,000 + 169,000,000,000}{10,001} = \$16,963,304$$ Quite a difference, right? I'd say so.
+$$m_{net\_worth} = \frac{10,000 \times 65,000 + 169,000,000,000}{10,001} = \$16,963,304$$
 
-### Normal Distribution
+Quite a difference, right? I'd say so.
 
-In the first example the data is not that impacted that strongly because it follows a [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution). A normal distribution is a phenomenon observed by [Carl Gauss](https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss) in which the characteristics of a population (of a variable to be more precise) tend to cluster towards the average value and the further you go from the average value, the less likely it is to happen.
+This difference is because the two characteristics of the music enthusiasts population follow two different distribution types. The first example follows a normal distribution while the second one follows a power law distribution.
 
-Basically, if we have a set of data that follows a normal distribution, we can be quite certain that outliers, or values that will significantly impact our outcome are highly unlikely to happen. In out example, you cannot point to a single person that can impact the average height of the festival, only if you find someone who is several kilometres tall.
+Some basic characteristics of population distribution will be essential in our analysis, so I will take a few moments to explain the two types of distribution I mentioned earlier, although a distribution can have many other variations.
 
-These types of data usually are the ones that measure natural phenomena, as mentioned earlier. They can include but not be limited to:
+## Normal Distribution
+
+As mentioned above the age of the music enthusiasts is distributed [normally](https://en.wikipedia.org/wiki/Normal_distribution). A normal distribution is a phenomenon observed by [Carl Gauss](https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss) and it can help us a lot in our analysis due to its [properties.](https://www.statisticshowto.com/probability-and-statistics/normal-distributions/)
+
+A normal distribution means that most individuals in a population are close to the average and the further we go from the average the fewer individuals in the population. If we take height as an example, most people will be around average height in a population and the ones that are extremely tall or extremely short being a rarity. The more extreme the height (taller or shorter) the less likely to find someone with that height.
+
+If a population has an average height of 1.75m (5.74 ft), you will have an easier time finding someone who is 1.9m (6.2 ft) than someone who is 2.13m (7 ft). Also the chances of finding someone who is 7km (4.3 mi) tall is virtually zero.
+
+This is a good thing because it allows us to asses a population quite easy using a sample. Even if our estimates based on the sample are off, if the sample was not biased, we can be fairly certain that we will not be off by much.
+
+Data that falls under a normal distribution are usually the ones that measure natural phenomena. They can include but not be limited to:
 
 -   height
 -   weight
@@ -76,23 +74,29 @@ These types of data usually are the ones that measure natural phenomena, as ment
 -   reaction times
 -   average time spent playing video games
 
-### Power Law Distribution
+## Power Law Distribution
 
-The other effect we can observe is called a power law and sometimes a [Pareto Distribution](https://en.wikipedia.org/wiki/Pareto_distribution), especially in finance, or the 80-20 rule. The last one is the best known and is usually formulated as 20% of individuals control 80% of the assets.
+The other effect we have observed is called a power law distribution, or for those who work in the financial sector a [Pareto Distribution](https://en.wikipedia.org/wiki/Pareto_distribution), and I think it is best know as the *80-20 rule* most commonly remembered as: "20% of the people control 80% of the assets."
 
-As we could see in the example above, in such a distribution, just one observation can impact everything significantly and that is why we need to take the type of distribution into consideration when taking a decision. Not taking this into consideration we have a lot of people calling themselves actors, writers or singers and not what they actually do for a living, most likely bartenders, waiters or other job unrelated with their self-reported career.
+This type of distribution can masquerade itself as a normal distribution but is not. It has a lot of dwarves and a few giants and that is why you cannot make any estimations using any of the normal distribution indicators. If you take a sample of dwarves you cannot estimate the impact of a giant.
 
-This is not meant as an insult for the people who do this, it is just to point out that in some fields, especially the ones that are scalable (once you create something it is easy to replicate without any effort from your part) this distribution tends to be very skewed and a few people control most of the resources.
+Ignoring this fact is why we have a lot of people calling themselves actors, writers or singers and not what they actually do for a living, most likely bartenders, waiters or other job unrelated with their self-reported career.
 
-### Distributions in Decision Making
+## Distributions in Decision Making
 
-The most important thing to remember in regards to distributions is that if we have to make a decision in regards to a normal distribution, we can be pretty sure that the average of the distribution is quite indicative of what is happening. We can use a sample without any problem. Does not matter whom do we pick from a crowd to measure the average height, even if we get the average height wrong, it will be off by just a small margin.
+Here is where it is important to know a bit about distributions.
 
-This cannot be said about a power law distribution. One individual is nothing like each other, you either have dwarves or giants and if you take a sample of dwarves you cannot measure the impact of a giant, and therefore an average of any measure from a sample of such a distribution is useless.
+If I were to propose a bet in which you are allowed to sample 100 people from the festival mentioned earlier and give some information about the population based on that sample, in which bets you would engage?
 
-So, how do we distinguish between the two kinds of distributions in the real world and how can we apply this knowledge in decision making? For this there is no straightforward answer, however, there are some methods that can help in evaluating the impact of different decisions.
+1.  Education level
+2.  Number of cars owned
+3.  Amount of beer drunk weekly
 
-In the next section I will describe a problem, I will explain my reasoning in adding and analysing variables to it and I will show how you can use a [Monte Carlo method](https://en.wikipedia.org/wiki/Monte_Carlo_method#:~:text=Monte%20Carlo%20methods%2C%20or%20Monte,might%20be%20deterministic%20in%20principle.) to make sure that you can take the best decision out of all of them. Or the one that is best suited for your needs, I should say.
+I would go for education level since it is highly unlikely someone has spent 50 years in education. And even if it is so, the impact to 10,000 will be small. The same goes for amount of beer drunk weekly. If there is someone who drinks thousands of beer weekly you might be in trouble, but not as much as they are. I think you would be safe with that bet.
+
+But what about the amount of cars? Well, here it can get a bit tricky. Most people have one or two cars. But what happens if in the crowd is the Sultan of Brunei with a car collection of 7000 cars? Considering the low age of the crowd, it is possible that he owns more cars that the whole crowd put together. This would not be a problem if you can include him in the sample however a sample of 100 people out of 10,000 give you a chance of 1% to include him in it. This means that most 99 out of 100 times your sample will underestimate the average number of cars owned by the crowd.
+
+This is why it is important to try and figure out what kind of distribution has the population to which you are trying to make a decision and adjust your decision making accordingly. In the following section I will describe a problem which would be interesting to solve, what career would be best if I were to choose again, and see how we can take advantage of these distributions.
 
 # The problem
 
@@ -106,9 +110,9 @@ However, all these options seem good and you can't really choose out of any of t
 
 # The method
 
-Everything in nature is subject to variety so we will assume that the income will vary as based on different factors. Therefore we cannot generate a single number and say *"There! this is the expected income if you choose this career!"*. 
+Everything in nature is subject to variety so we will assume that the income will vary as based on different factors. Therefore we cannot generate a single number and say *"There! this is the expected income if you choose this career!"*.
 
-As an example, if I were to choose to study medicine, I might have an ideea of what kind of doctor I want to be, however that does not guarantee that I will end up in that particular field. I might not like the field once I go into the nitty gritty of it, or I might like another field more once I find out more about it. Since I cannot control that I will try to simulate multiple outcomes and see overall which career is the best taking into account its highs and lows. 
+As an example, if I were to choose to study medicine, I might have an ideea of what kind of doctor I want to be, however that does not guarantee that I will end up in that particular field. I might not like the field once I go into the nitty gritty of it, or I might like another field more once I find out more about it. Since I cannot control that I will try to simulate multiple outcomes and see overall which career is the best taking into account its highs and lows.
 
 *E.g.:* If I were to choose between being a janitor who just won the lottery and being a doctor, I would chose to be the janitor. However, if I were to chose between the two and live 10,000 I would choose the doctor because the other 9,999 time it is the better outcome.
 

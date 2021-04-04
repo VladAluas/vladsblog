@@ -20,28 +20,26 @@ draft: true
 <p><em>System 2</em> is the exact opposite of <em>System 1</em>. It is rational, quite slow, and requires a large amount of energy and effort from our part. <em>System 2</em> allows you to analyse in detail every situation, however this is not always ideal. If a car would come speeding towards you, <em>System 2</em> would analyse the colour of the car, the brand and maybe the speed and approach vector, which is a nice thought exercise but might get hit by the car before <em>System 2</em> would act. <em>System 1</em> will not bother with all those details, it will just register car coming towards me with great speed, I need to move out of the way.</p>
 <p>The problem when making decisions is that there are situations moderated or mediated by the aforementioned biases and heuristics in which <em>System 1</em> might make the decision and our minds might think it is actually <em>System 2</em>. Otherwise said, we might make decisions for subjective reasons and have a high degree of confidence in then believing they are objective.</p>
 <p>In this article I would like to show some methods that can reduce these types of biases and help in engaging <em>System 2</em> in the decision making process.</p>
-<div id="decision-consequences" class="section level1">
-<h1>Decision Consequences</h1>
-<p>I would like to begin with a brief by pointing out that not all decisions we make have the same consequences, or affect us in the same way. Your decision to have a pretzel for breakfast instead of a salad might have consequences later in life if you repeat this behaviour multiple times. Otherwise, you are quite safe to do so from time to time.</p>
-<p>Not the same can be said about a decision to bet all your savings on a race or a sports game. Considering your saving amount to a decent sum, your bet can leave you without anything you have saved or can increase your saving quite drastically.</p>
-<p>So, as we can see consequences can vary quite a lot in the outcome type (positive / negative) and in their magnitude. The focus of this article will be to check how we can better understand the consequences of our decisions, try to avoid large negative outcomes and should it be the case seek out large positive ones.</p>
-</div>
 <div id="distribution-types" class="section level1">
 <h1>Distribution Types</h1>
-<p>In order to be able to continue, I want to explain that not all things are as predictable as they seem and this is because not all things are distributed equally.</p>
-<p>What do I mean by that? Let’s give some examples to make it clear.</p>
-<p>Let’s say you go to a festival (I know, I wish it as well) of around 10.000 people. Considering the people who tend to frequent such gatherings, I will guess that the average age of the people there is between 22 and 27 years old. For the purpose of our example I will say 24.5.</p>
-<p>Now, think of the oldest person you have heard of, it can be anyone does not matter. Add their age to the calculation of the average. Does it make a bit difference? No, I does not. Even if you think of the oldest fictional person, Methuselah, with his age of 969 does not impact the average by much (I know some sumerian kings are supposed to have lived for thousands or tens of thousands of years, however they used a different counting system so we cannot be sure how they actually counted). So, let’s see the impact of Methuselah on the average age.</p>
+<p>I would like to start with some examples how some situations can seem similar on the surface and have massively different outcomes. This is one of the most common situations in which <em>System 1</em> makes the decision and we might not notice.</p>
+<p>I would like to start with some examples as it is way easier. Let us say we are at a music festival (I know, I know…) together with 9,998 other people. We are lucky enough to have information about this crowd and we know that the average age is 24.5 years old. We also know that the average net income for the crowd is $65K. With this information at our disposal we can play around with the impact of one person.</p>
+<p>Firstly, I would like you to think of the oldest person you know. It does not have to be alive any more. What would happen if we were to add their age to the average? Since I cannot read your mind, I will jump in with the oldest person that pops to my mind, Methuselah at a respectable 969 years old. So, let’s see the impact of Methuselah on the average age.</p>
 <p><span class="math display">\[m_{age} = \frac{10,000 \times 24.5 + 969}{10,001} = 24.5944406\]</span></p>
-<p>Not such a big impact is it.</p>
-<p>For the second example of a distribution, I would like to see the average net worth of the crowd. I will assume that since the people at this festival are quite young, most of them do not have a lot o noteworthy possessions as of yet, however to compensate for those who do, I will say the average is around $65K. Now, following the logic we used above, if you think of the richest man you know of and add him or her (Oprah can just as easily skew the data) to the crowd, how much will the average change?</p>
-<p>I’m thinking of Elon Musk although at the time of writing this article he is work a measly $169B as opposed to Jeff Bezos’ $193B, however I’m a big fan of Musk so let’s check with his net worth.</p>
-<p><span class="math display">\[m_{net\_worth} = \frac{10,000 \times 65,000 + 169,000,000,000}{10,001} = \$16,963,304\]</span> Quite a difference, right? I’d say so.</p>
-<div id="normal-distribution" class="section level3">
-<h3>Normal Distribution</h3>
-<p>In the first example the data is not that impacted that strongly because it follows a <a href="https://en.wikipedia.org/wiki/Normal_distribution">normal distribution</a>. A normal distribution is a phenomenon observed by <a href="https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss">Carl Gauss</a> in which the characteristics of a population (of a variable to be more precise) tend to cluster towards the average value and the further you go from the average value, the less likely it is to happen.</p>
-<p>Basically, if we have a set of data that follows a normal distribution, we can be quite certain that outliers, or values that will significantly impact our outcome are highly unlikely to happen. In out example, you cannot point to a single person that can impact the average height of the festival, only if you find someone who is several kilometres tall.</p>
-<p>These types of data usually are the ones that measure natural phenomena, as mentioned earlier. They can include but not be limited to:</p>
+<p>Not much of an impact, is it?</p>
+<p>Secondly, let us try the same impact for net worth. Think of the richest person you know and try to figure out what would their impact be on the crowd, how much will the average change?</p>
+<p>I’m thinking of Elon Musk although at the time of writing this article he is worth a measly $169B as opposed to Jeff Bezos’ $193B. I’m a fan of Musk so let’s check with his net worth.</p>
+<p><span class="math display">\[m_{net\_worth} = \frac{10,000 \times 65,000 + 169,000,000,000}{10,001} = \$16,963,304\]</span></p>
+<p>Quite a difference, right? I’d say so.</p>
+<p>This difference is because the two characteristics of the music enthusiasts population follow two different distribution types. The first example follows a normal distribution while the second one follows a power law distribution.</p>
+<p>Some basic characteristics of population distribution will be essential in our analysis, so I will take a few moments to explain the two types of distribution I mentioned earlier, although a distribution can have many other variations.</p>
+<div id="normal-distribution" class="section level2">
+<h2>Normal Distribution</h2>
+<p>As mentioned above the age of the music enthusiasts is distributed <a href="https://en.wikipedia.org/wiki/Normal_distribution">normally</a>. A normal distribution is a phenomenon observed by <a href="https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss">Carl Gauss</a> and it can help us a lot in our analysis due to its <a href="https://www.statisticshowto.com/probability-and-statistics/normal-distributions/">properties.</a></p>
+<p>A normal distribution means that most individuals in a population are close to the average and the further we go from the average the fewer individuals in the population. If we take height as an example, most people will be around average height in a population and the ones that are extremely tall or extremely short being a rarity. The more extreme the height (taller or shorter) the less likely to find someone with that height.</p>
+<p>If a population has an average height of 1.75m (5.74 ft), you will have an easier time finding someone who is 1.9m (6.2 ft) than someone who is 2.13m (7 ft). Also the chances of finding someone who is 7km (4.3 mi) tall is virtually zero.</p>
+<p>This is a good thing because it allows us to asses a population quite easy using a sample. Even if our estimates based on the sample are off, if the sample was not biased, we can be fairly certain that we will not be off by much.</p>
+<p>Data that falls under a normal distribution are usually the ones that measure natural phenomena. They can include but not be limited to:</p>
 <ul>
 <li>height</li>
 <li>weight</li>
@@ -50,18 +48,24 @@ draft: true
 <li>average time spent playing video games</li>
 </ul>
 </div>
-<div id="power-law-distribution" class="section level3">
-<h3>Power Law Distribution</h3>
-<p>The other effect we can observe is called a power law and sometimes a <a href="https://en.wikipedia.org/wiki/Pareto_distribution">Pareto Distribution</a>, especially in finance, or the 80-20 rule. The last one is the best known and is usually formulated as 20% of individuals control 80% of the assets.</p>
-<p>As we could see in the example above, in such a distribution, just one observation can impact everything significantly and that is why we need to take the type of distribution into consideration when taking a decision. Not taking this into consideration we have a lot of people calling themselves actors, writers or singers and not what they actually do for a living, most likely bartenders, waiters or other job unrelated with their self-reported career.</p>
-<p>This is not meant as an insult for the people who do this, it is just to point out that in some fields, especially the ones that are scalable (once you create something it is easy to replicate without any effort from your part) this distribution tends to be very skewed and a few people control most of the resources.</p>
+<div id="power-law-distribution" class="section level2">
+<h2>Power Law Distribution</h2>
+<p>The other effect we have observed is called a power law distribution, or for those who work in the financial sector a <a href="https://en.wikipedia.org/wiki/Pareto_distribution">Pareto Distribution</a>, and I think it is best know as the <em>80-20 rule</em> most commonly remembered as: “20% of the people control 80% of the assets.”</p>
+<p>This type of distribution can masquerade itself as a normal distribution but is not. It has a lot of dwarves and a few giants and that is why you cannot make any estimations using any of the normal distribution indicators. If you take a sample of dwarves you cannot estimate the impact of a giant.</p>
+<p>Ignoring this fact is why we have a lot of people calling themselves actors, writers or singers and not what they actually do for a living, most likely bartenders, waiters or other job unrelated with their self-reported career.</p>
 </div>
-<div id="distributions-in-decision-making" class="section level3">
-<h3>Distributions in Decision Making</h3>
-<p>The most important thing to remember in regards to distributions is that if we have to make a decision in regards to a normal distribution, we can be pretty sure that the average of the distribution is quite indicative of what is happening. We can use a sample without any problem. Does not matter whom do we pick from a crowd to measure the average height, even if we get the average height wrong, it will be off by just a small margin.</p>
-<p>This cannot be said about a power law distribution. One individual is nothing like each other, you either have dwarves or giants and if you take a sample of dwarves you cannot measure the impact of a giant, and therefore an average of any measure from a sample of such a distribution is useless.</p>
-<p>So, how do we distinguish between the two kinds of distributions in the real world and how can we apply this knowledge in decision making? For this there is no straightforward answer, however, there are some methods that can help in evaluating the impact of different decisions.</p>
-<p>In the next section I will describe a problem, I will explain my reasoning in adding and analysing variables to it and I will show how you can use a <a href="https://en.wikipedia.org/wiki/Monte_Carlo_method#:~:text=Monte%20Carlo%20methods%2C%20or%20Monte,might%20be%20deterministic%20in%20principle.">Monte Carlo method</a> to make sure that you can take the best decision out of all of them. Or the one that is best suited for your needs, I should say.</p>
+<div id="distributions-in-decision-making" class="section level2">
+<h2>Distributions in Decision Making</h2>
+<p>Here is where it is important to know a bit about distributions.</p>
+<p>If I were to propose a bet in which you are allowed to sample 100 people from the festival mentioned earlier and give some information about the population based on that sample, in which bets you would engage?</p>
+<ol style="list-style-type: decimal">
+<li>Education level</li>
+<li>Number of cars owned</li>
+<li>Amount of beer drunk weekly</li>
+</ol>
+<p>I would go for education level since it is highly unlikely someone has spent 50 years in education. And even if it is so, the impact to 10,000 will be small. The same goes for amount of beer drunk weekly. If there is someone who drinks thousands of beer weekly you might be in trouble, but not as much as they are. I think you would be safe with that bet.</p>
+<p>But what about the amount of cars? Well, here it can get a bit tricky. Most people have one or two cars. But what happens if in the crowd is the Sultan of Brunei with a car collection of 7000 cars? Considering the low age of the crowd, it is possible that he owns more cars that the whole crowd put together. This would not be a problem if you can include him in the sample however a sample of 100 people out of 10,000 give you a chance of 1% to include him in it. This means that most 99 out of 100 times your sample will underestimate the average number of cars owned by the crowd.</p>
+<p>This is why it is important to try and figure out what kind of distribution has the population to which you are trying to make a decision and adjust your decision making accordingly. In the following section I will describe a problem which would be interesting to solve, what career would be best if I were to choose again, and see how we can take advantage of these distributions.</p>
 </div>
 </div>
 <div id="the-problem" class="section level1">
@@ -140,7 +144,7 @@ it_sal_dist &lt;- c(it_sal_low, it_sal_high)
 
 # We want to make sure the mean of our distribution if not far off from the actual distribution
 mean(it_sal_dist)</code></pre>
-<pre><code>#&gt; [1] 112304.8</code></pre>
+<pre><code>#&gt; [1] 112381.4</code></pre>
 <p>We can see the average salary of our distribution is quite close to the one from the website, so we can say that our distribution closely resembles the sampled population from the site. Salary distribution looks like below:</p>
 <pre class="r"><code>it_sal_dist %&gt;% 
   histogram() +
@@ -227,8 +231,8 @@ poker_players &lt;- c(avg_player, elt_player)</code></pre>
 <p>This distribution seems legit for a power law distribution. And now, for the final touch, we will need to add the 10% chance to become a professional player. We will do this by using the list we have created earlier. For this we will create a binomial distribution with a 10% probability and a size 1. Basically we can create a random string of values, either 1 or 0 and about 10% are one. Let’s see it in practice.</p>
 <pre class="r"><code>success_prob &lt;- rbinom(n = 10000, size = 1, prob = 0.1)
 print(sum(success_prob) / 10000)</code></pre>
-<pre><code>#&gt; [1] 0.0951</code></pre>
-<p>Perfect, 9.51% is exactly what we would expect.</p>
+<pre><code>#&gt; [1] 0.1007</code></pre>
+<p>Perfect, 10.07% is exactly what we would expect.</p>
 <p>Now all we need to do is multiply the two lists. When a value in the second list is 0 it will transform the earnings to 0, so we did not make it as a professional poker player. When it is 1 the result will not be affected.</p>
 <pre class="r"><code>poker_players_final &lt;- poker_players * success_prob</code></pre>
 <p>Now that we painfully and to the best of our knowledge created the populations, let’s proceed in analysing the data.</p>
