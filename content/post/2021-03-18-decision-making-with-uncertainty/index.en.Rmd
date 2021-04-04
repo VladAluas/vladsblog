@@ -100,13 +100,17 @@ This is why it is important to try and figure out what kind of distribution has 
 
 # The problem
 
-Let us imagine that you would like to choose a career. You are not really sure what you would like to choose because you don't have a particular career for which you have a strong calling, however there are some that seem decent to you:
+In the next section I would like to explain show in brief what would be my thought process if I were to choose a career once more and assuming that I have the knowledge I have now. 
 
--   The first option would be doctor. You have seen a lot of medical procedurals and it looks great and exciting, however it would be even better if you can set up your own practice and be the master of your own destiny. Also it would be better paid
--   The second option would be to work in IT. It still seems like a great job because you can have a lot of puzzles with which to play and if you mess something up you don't endanger someone's life.
--   The third option is to disregard all safe plans and go for something that will let you retire early. After all, you have seem many people win big at poker of blackjack and they are far from you cognitive prowess, therefore it might be riskier, however, if anyone has a chance of doing it, it's you.
+First of all I would need to know what do I expect from a career, money, fame, free time, all of those? There can be multiple variables analysed here, however for the sake of simplicity I will keep it short and analyse just one. So, in this analysis the most important factor in choosing a career is how much income can this career generate during a person working life.
 
-However, all these options seem good and you can't really choose out of any of them. So, how do you decide with which career you would end up better at retirement? For the sake of this example and to make it easy to understand and reproduce, we will only take into account the amount of money you will earn over your career, however using the same principles you can calculate as many variables as you like.
+Now, what careers are on the short list?
+
+1.    The first option would be doctor. This is a good option in my opinion as it is supposed to be well paid, and one can find work almost everywhere. Wherever there are people, there are sick people and a doctor will always be in demand. A medical career offers a lot of variety in both specialities and type of practice which is always good to have.
+2.    The second career option would be one in IT. This is also rumoured to be well paid and besides that it can give one a lot of puzzles with which to play. I like challenges and spending time figuring out puzzles so this seems a good choice for me. As a bonus, any mistakes made as a programmer can be easily patched and fixed, and most mistakes made by programmers do not endanger anyone's life, as opposed to a doctor's mistake.
+3.    The third option is one that is highly appealing because it can generate a lot of income with minimal effort. This is on the surface and it remains to be seen when we analyse the data. The career is poker player. I like the idea to create my own schedule and work when I want from where I want. It remains to be seen if this is such an appealing option as it seems at first.
+
+How do we choose between these options?
 
 # The method
 
