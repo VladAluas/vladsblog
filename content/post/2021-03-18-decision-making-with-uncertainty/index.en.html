@@ -83,20 +83,44 @@ draft: true
 <div id="the-method" class="section level1">
 <h1>The method</h1>
 <p>Everything in nature is subject to variety so we will assume that the income will vary as based on different factors. Therefore we cannot generate a single number and say <em>“There! this is the expected income if you choose this career!”</em>.</p>
-<p>As an example, if I were to choose to study medicine, I might have an ideea of what kind of doctor I want to be, however that does not guarantee that I will end up in that particular field. I might not like the field once I go into the nitty gritty of it, or I might like another field more once I find out more about it. Since I cannot control that I will try to simulate multiple outcomes and see overall which career is the best taking into account its highs and lows.</p>
+<p>As an example, if I were to choose to study medicine, I might have an idea of what kind of doctor I want to be, however that does not guarantee that I will end up in that particular field. I might not like the field once I go into the nifty gritty of it, or I might like another field more once I find out more about it. Since I cannot control that I will try to simulate multiple outcomes and see overall which career is the best taking into account its highs and lows.</p>
 <p><em>E.g.:</em> If I were to choose between being a janitor who just won the lottery and being a doctor, I would chose to be the janitor. However, if I were to chose between the two and live 10,000 I would choose the doctor because the other 9,999 time it is the better outcome.</p>
 <p>How do we do this?</p>
 <p>We will gather data on each of the three career paths we have chosen and we will analyse it to try and figure out which are the main characteristics of the three populations, doctors, IT workers, and poker players. We will try to find out what is the average salary, how much does it usually vary from there, and if there is a tendency of most salaries to e over or under that average. Once we have all this information, we will extract a sample of that data of 10,000 randomly chosen salaries.</p>
 <div id="coding-examples" class="section level2">
 <h2>Coding examples</h2>
-<p>In order to better asses the situation, I will use some code. The code is written in <em>R</em>, however it can be ignored completely if you do not want to bother with it. I will try my best to comment the code properly so you can follow even if you are not familiar with <em>R</em>. If you want to learn more about this particular programming language, I would recommend <a href="https://r4ds.had.co.nz/">R for Data Science</a>, a brilliant book that is the perfect starting place.</p>
-<p>Let’s start coding. At first I would like to set up the variables that I will use in this article. I will explain later why I use these values, however I will use them repetedly so I will like to set them up now avoid changing them later in multiple places.</p>
-<p>Next I will like to write some custom function that will allow us to focus on the results, not on endless lines of code.</p>
+<p>Since we are analysing data we will need a tool that will allow us to do so. I will use <em>R</em> since it is a versatile tool that will allow us to create distributions and visualise then quite easily. The code can be completly ignored if you do not want to reproduce or analyse it, you can just focus on the graphs and the results. If you want to learn more about <em>R</em> I would recommend <a href="https://r4ds.had.co.nz/">R for Data Science</a>, a brilliant book that is the perfect starting place.</p>
+<p>Let’s start coding. At first I would like to set up the variables that I will use in this article. Since we will use these values multiple times in the article, I will store them here and if we need to adjust them at a later date, I can just change the values once, in here.</p>
+<p>The first values we want to encode are the average salaries. At the moment you can ignore the values, they will make sense when we come to the analysis itself.</p>
+<pre class="r"><code># Medical Salaries
+dr_sal_mean &lt;- 21100
+
+# IT Salaries
+it_sal_med_high &lt;- 225000 # Median Salary for Managers and Directors in IT
+it_sal_med_low  &lt;- 92809  # Median Salary for the everyone else working in IT </code></pre>
+<p>The salaries are encoded in here not later when we are analysing the careers themselves because it is a good practice to keep the variables in one place and the same goes for custom function. I will add some in here as well. This functions just store some lines of code that we will need to repeat over and over again and it is good coding practice to store such lines of code in one function so you can avoid having too many lines of code. Also, if we want to change something at a later date, we just need to adjust everything in one place.</p>
+<pre class="r"><code># Graphical function to avoid writing the same lines over and over
+histogram &lt;- function(.df){
+  
+  .df %&gt;% 
+    tibble() %&gt;% 
+    ggplot(aes(.)) +
+    geom_histogram(colour = &quot;white&quot;, fill = &quot;#2484cc&quot;) +
+    labs(x = &quot;Income&quot;, y = &quot;&quot;) +
+    scale_x_continuous(labels = label_dollar(prefix = &quot;€&quot;))
+}
+
+# Just a simple function to format the Romanian currency so I can used stored variables.
+ron_format &lt;- function(.x){
+  require(scales)
+  
+  dollar_format(prefix = &quot;&quot;, suffix = &quot; RON&quot;)(.x)
+}</code></pre>
+<p>With this out of the way, we have everything we need set up. The only thing that remains is to start analysing each career and then comparing them.</p>
 </div>
 </div>
 <div id="the-careers" class="section level1">
 <h1>The careers</h1>
-<p>In the next section I will describe each career, the variables that I will take into account and I will expose the code I will use to do so, if anyone wants to replicate it. The code is written in <em>R</em>.</p>
 <div id="the-doctor-of-the-medicine-not-who-variety" class="section level2">
 <h2>The Doctor (of the medicine not Who variety)</h2>
 <p>I all societies doctors are well respected and well paid. However, not all doctors are paid the same. We can assume that a neurosurgeon is paid better than a internist although not as well as a plastic surgeon.</p>
@@ -146,7 +170,7 @@ it_sal_dist &lt;- c(it_sal_low, it_sal_high)
 
 # We want to make sure the mean of our distribution if not far off from the actual distribution
 mean(it_sal_dist)</code></pre>
-<pre><code>#&gt; [1] 112526.1</code></pre>
+<pre><code>#&gt; [1] 112490.5</code></pre>
 <p>We can see the average salary of our distribution is quite close to the one from the website, so we can say that our distribution closely resembles the sampled population from the site. Salary distribution looks like below:</p>
 <pre class="r"><code>it_sal_dist %&gt;% 
   histogram() +
@@ -233,8 +257,8 @@ poker_players &lt;- c(avg_player, elt_player)</code></pre>
 <p>This distribution seems legit for a power law distribution. And now, for the final touch, we will need to add the 10% chance to become a professional player. We will do this by using the list we have created earlier. For this we will create a binomial distribution with a 10% probability and a size 1. Basically we can create a random string of values, either 1 or 0 and about 10% are one. Let’s see it in practice.</p>
 <pre class="r"><code>success_prob &lt;- rbinom(n = 10000, size = 1, prob = 0.1)
 print(sum(success_prob) / 10000)</code></pre>
-<pre><code>#&gt; [1] 0.0998</code></pre>
-<p>Perfect, 9.98% is exactly what we would expect.</p>
+<pre><code>#&gt; [1] 0.0979</code></pre>
+<p>Perfect, 9.79% is exactly what we would expect.</p>
 <p>Now all we need to do is multiply the two lists. When a value in the second list is 0 it will transform the earnings to 0, so we did not make it as a professional poker player. When it is 1 the result will not be affected.</p>
 <pre class="r"><code>poker_players_final &lt;- poker_players * success_prob</code></pre>
 <p>Now that we painfully and to the best of our knowledge created the populations, let’s proceed in analysing the data.</p>
