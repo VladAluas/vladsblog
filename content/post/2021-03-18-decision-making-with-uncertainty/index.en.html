@@ -70,7 +70,7 @@ draft: true
 </div>
 <div id="the-problem" class="section level1">
 <h1>The problem</h1>
-<p>In the next section I would like to explain show in brief what would be my thought process if I were to choose a career once more and assuming that I have the knowledge I have now.</p>
+<p>In the next section I would like to show in brief what would be my thought process if I were to choose a career once more and assuming that I have the knowledge I have now.</p>
 <p>First of all I would need to know what do I expect from a career, money, fame, free time, all of those? There can be multiple variables analysed here, however for the sake of simplicity I will keep it short and analyse just one. So, in this analysis the most important factor in choosing a career is how much income can this career generate during a person working life.</p>
 <p>Now, what careers are on the short list?</p>
 <ol style="list-style-type: decimal">
@@ -78,7 +78,6 @@ draft: true
 <li>The second career option would be one in IT. This is also rumoured to be well paid and besides that it can give one a lot of puzzles with which to play. I like challenges and spending time figuring out puzzles so this seems a good choice for me. As a bonus, any mistakes made as a programmer can be easily patched and fixed, and most mistakes made by programmers do not endanger anyone’s life, as opposed to a doctor’s mistake.</li>
 <li>The third option is one that is highly appealing because it can generate a lot of income with minimal effort. This is on the surface and it remains to be seen when we analyse the data. The career is poker player. I like the idea to create my own schedule and work when I want from where I want. It remains to be seen if this is such an appealing option as it seems at first.</li>
 </ol>
-<p>How do we choose between these options?</p>
 </div>
 <div id="the-method" class="section level1">
 <h1>The method</h1>
@@ -87,9 +86,10 @@ draft: true
 <p><em>E.g.:</em> If I were to choose between being a janitor who just won the lottery and being a doctor, I would chose to be the janitor. However, if I were to chose between the two and live 10,000 I would choose the doctor because the other 9,999 time it is the better outcome.</p>
 <p>How do we do this?</p>
 <p>We will gather data on each of the three career paths we have chosen and we will analyse it to try and figure out which are the main characteristics of the three populations, doctors, IT workers, and poker players. We will try to find out what is the average salary, how much does it usually vary from there, and if there is a tendency of most salaries to e over or under that average. Once we have all this information, we will extract a sample of that data of 10,000 randomly chosen salaries.</p>
+<p>The salary information will be from the Romanian job market since I am based in Tomania.</p>
 <div id="coding-examples" class="section level2">
 <h2>Coding examples</h2>
-<p>Since we are analysing data we will need a tool that will allow us to do so. I will use <em>R</em> since it is a versatile tool that will allow us to create distributions and visualise then quite easily. The code can be completly ignored if you do not want to reproduce or analyse it, you can just focus on the graphs and the results. If you want to learn more about <em>R</em> I would recommend <a href="https://r4ds.had.co.nz/">R for Data Science</a>, a brilliant book that is the perfect starting place.</p>
+<p>Since we are analysing data we will need a tool that will allow us to do so. I will use <em>R</em> since it is a versatile tool that will allow us to create distributions and visualise then quite easily. The code can be completely ignored if you do not want to reproduce or analyse it, you can just focus on the graphs and the results. If you want to learn more about <em>R</em> I would recommend <a href="https://r4ds.had.co.nz/">R for Data Science</a>, a brilliant book that is the perfect starting place.</p>
 <p>Let’s start coding. At first I would like to set up the variables that I will use in this article. Since we will use these values multiple times in the article, I will store them here and if we need to adjust them at a later date, I can just change the values once, in here.</p>
 <p>The first values we want to encode are the average salaries. At the moment you can ignore the values, they will make sense when we come to the analysis itself.</p>
 <pre class="r"><code># Medical Salaries
@@ -108,9 +108,11 @@ histogram &lt;- function(.df){
     geom_histogram(colour = &quot;white&quot;, fill = &quot;#2484cc&quot;) +
     labs(x = &quot;Income&quot;, y = &quot;&quot;) +
     scale_x_continuous(labels = label_dollar(prefix = &quot;€&quot;))
-}
-
-# Just a simple function to format the Romanian currency so I can used stored variables.
+    #theme_void()+
+    #theme(plot.background = element_rect(fill = &quot;#1A2E40&quot;, color = NA),
+    #      strip.text.x = element_text(family = &quot;oswald&quot;, face = &quot;bold&quot;, size = 12, color = &quot;#D8E6F2&quot;))
+}</code></pre>
+<pre class="r"><code># Just a simple function to format the Romanian currency so I can used stored variables.
 ron_format &lt;- function(.x){
   require(scales)
   
@@ -123,42 +125,60 @@ ron_format &lt;- function(.x){
 <h1>The careers</h1>
 <div id="the-doctor-of-the-medicine-not-who-variety" class="section level2">
 <h2>The Doctor (of the medicine not Who variety)</h2>
-<p>I all societies doctors are well respected and well paid. However, not all doctors are paid the same. We can assume that a neurosurgeon is paid better than a internist although not as well as a plastic surgeon.</p>
-<p>I have found a data source that seems to have done a pretty good job in assessing the average salary for a doctor. The information was taken from the <a href="http://www.salaryexplorer.com/salary-survey.php?loc=178&amp;loctype=1&amp;job=13&amp;jobtype=2">salaryexplorer.com</a> website. The salary is expressed in the local currency of Romania (RON) and the salaries are expressed before tax. These two impediments are nothing too difficult as we can easily translate everything into Euro, and extract the taxes.</p>
-<p>According to the National Bank of Romania, the conversion rate is 1 RON for 0.20 €.</p>
-<p>In regards to the taxes, the Romanian government imposes taxes on the on the employee as follows:</p>
-<ul>
-<li>Social Security: 25%</li>
-<li>Health Insurance: 10%</li>
-</ul>
-<p>The remaining 65% is considered income and that is taxed with 10%.</p>
-<p>Let’s start by extracting the taxes out of the average salary for doctors of 21,100 RON.</p>
-<p><span class="math display">\[ m_{salary(RON)} = (21,100 - \frac{25}{100} \times 21,100 - \frac{10}{100} \times 21,100) \times \frac{90}{100} = 13,715 \times \frac{90}{100} = 12,343.50\]</span></p>
-<p>Now we can easily convert everything into Euro.</p>
-<p><span class="math display">\[ m_{salary(€)}  =  12,343.50 \times 0.2 = 2,468.70\]</span></p>
-<p>With this in mind, our average income on a monthly basis, if we were to live 10000 times would be distributed something like this.</p>
-<pre class="r"><code>dr_sal_euro &lt;- ((dr_sal_mean - dr_sal_mean * 0.25 - dr_sal_mean * 0.1) * 0.9) * 0.2
-
-dr_sal_dist &lt;- rnorm(10000, mean = dr_sal_euro, sd = 600)
+<p>Being a doctor is a well respected career in all societies and it tends to be well paid and our target job market, Romania, is not exception to this.</p>
+<p>Even though doctors are well paid in Romania, their income varies depending on different factors like the speciality, experience, degree level and many more. My purpose in the next section is to figure out:</p>
+<ol style="list-style-type: decimal">
+<li>What is the average salary for a doctor in Romania</li>
+<li>What is the variation from the average</li>
+<li>What is the distribution of those salaries</li>
+</ol>
+<p>After I have this information, I can apply all the necessary transformations to have the lifetime earnings of a doctor expressed in Euro(€).</p>
+<p>Before I can do all that I will need a data source and finding it can get frustrating. Although there are a lot of websites that offer this information, they are not always reliable, so I prefer to use official databases (<em>e.g.</em> <a href="https://ec.europa.eu/eurostat">eurostat</a>), scholarly articles, or websites that offer transparency regarding their sources.</p>
+<p>For this particular situation, I have found <a href="http://www.salaryexplorer.com/salary-survey.php?loc=178&amp;loctype=1&amp;job=13&amp;jobtype=2">salaryexplorer.com</a>. I believe they are reliable in their claims and their sources can be seen at the bottom of the <a href="http://www.salaryexplorer.com/">page.</a>. The displayed salaries are in the local Romanian currency, RON, before tax. Applying the tax and converting to € will be easy once I have determined the larger problems mentioned earlier, <em>average salary</em>, <em>variation</em>, and <em>distribution.</em></p>
+<p>The first part is the easiest to figure out. The average salary is mentioned in the beginning of the article, 21,100 RON.</p>
+<p>Fortunately, due to the website the second and third questions are quite easily answered as well. Most salaries vary between 7,750 RON and 35,600 RON. Now, all I need to do is figure out the distribution of those salaries.</p>
+<p>The fact that the salaries are between 7,750 RON and 35,600 RON and taking a look at the list provided with the salaries for specific jobs I can conclude that the salaries are not distributed according to a power law so they are distributed normally, or as close as normal as to make not much of a difference. Since I am not dealing with a power law I can be pretty confident that even if I am off, I will not be off by much.</p>
+<p>With this said, let’s create our sample and take a look at it.</p>
+<pre class="r"><code>dr_sal_dist &lt;- rnorm(10000, dr_sal_mean, sd = 5000)
 
 dr_sal_dist %&gt;% 
-   histogram() +
-   labs(title = &quot;Monthly Income Distribution&quot;,
-        subtitle = &quot;Medical Care Workers&quot;)</code></pre>
-<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/dr_monthly_salary-1.png" width="100%" /></p>
-<p>Now, we will just need to calculate for how long does a doctor work and some other costs of being a doctor. In Romania, medical school is usually 7 years, and you usually need to spend extra 3 to 5 years for residency, although that is usually paid so I think we can just include the 7 years of study. If you finish high-school at 19 and you spend 7 years in medical school, you can start working and 26.</p>
-<p>If we want to retire at 65 and, that would give us 39 years of work or 468 months of works. So, all that we have to do is create a distribution with the mean salary after tax and multiply it by the number of months.</p>
-<pre class="r"><code>dr_sal_dist_total &lt;- dr_sal_dist * 468
+    histogram() +
+    labs(title = &quot;Monthly Income Distribution&quot;,
+         subtitle = &quot;Medical Professionals&quot;) + 
+    scale_x_continuous(labels = label_dollar(prefix = &quot;&quot;, suffix = &quot;RON&quot;))</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-1-1.png" width="100%" /></p>
+<p>The graphic above is a simple representation of how many people earn a specific amount on a monthly basis. As it is expected from a normal, or near normal distribution, most people earn close to the average while a few have extremely high earnings or extremely low earnings.</p>
+<p>Now that I have the distribution simulated, I can proceed with the transformation of the data so I will have the salaries in € and calculate the earnings for a lifetime. For that I will need to:</p>
+<ol style="list-style-type: decimal">
+<li>Deduce the taxes on these salaries</li>
+<li>Determine how many salaries does a doctor receive in a lifetime</li>
+<li>Convert everything to €</li>
+</ol>
+<p>The Romanian government imposes taxes on the on the employee as follows:</p>
+<ul>
+<li>Retirement Tax: 25%</li>
+<li>Health Insurance: 10%</li>
+<li>Income tax on the remainder of 65% of the Gross salary: 10%</li>
+</ul>
+<p>This will be translated as follows:</p>
+<p><span class="math display">\[ m_{salary(RON)} = (21,100 - \frac{25}{100} \times 21,100 - \frac{10}{100} \times 21,100) \times \frac{90}{100} = 13,715 \times \frac{90}{100} = 12,343.50\]</span>
+This give me the net salary received by a doctor in Romania. All there is now to do is calculate how many such salaries one doctor receives. In Romania medical school lasts for 7 years and afterwards one needs to spend 3 to 5 years in residency. Since residency is paid I will include it in my analysis and I will consider that a doctor starts working when they start their residency. Since most people finish high-school at 19 and med school is 7 years, I will consider that one starts working at 26.</p>
+<p>Since I do not plan to work more than I need to, I plan on retiring with the first chance I get. In Romania the retirement age is 65 so I will plan for that. From 26 to 65 there are 39 years of work, multiply that by 12 months I can expect to work for around 468 months.</p>
+<p>And for the conversion to €, that is quite easy. According to the National Bank of Romania, the conversion rate is 1 RON for 0.20 € so all I need to do is divide the number by 5. So, let’s code everything:</p>
+<pre class="r"><code># First, I will need to extract the taxes so I can compare just the NET salaries
+dr_sal_final &lt;- (dr_sal_dist * 0.65) * 0.9
 
-dr_sal_dist_total %&gt;% 
-   histogram() +
-   labs(title = &quot;Lifelong Income Distribution&quot;,
-        subtitle = &quot;Medical Care Workers&quot;)</code></pre>
-<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/dr_lifelong_salary-1.png" width="100%" /></p>
-<p>Not bad, right?. Now let’s see how much would someone in IT make.</p>
+# Now I want to transform them in LIFELONG earnings
+dr_sal_final &lt;- dr_sal_final * 468
+
+# And finally, the conversion to €
+dr_sal_final &lt;- dr_sal_final / 5  </code></pre>
+<p>I will take a look at the numbers in the analysis part, this si just the preparation of the data. Now, let’s see if we can estimate how much does an IT professional earn.</p>
 </div>
 <div id="part-of-the-it-crowd" class="section level2">
 <h2>Part of the IT Crowd</h2>
+<p>Fortnately for me, Romania has one of the most active IT sectors in this part of Europe and it is expanding continuously. This is a good thing for someone looking to start on this career path because it offers a lot of opportunities</p>
+<hr />
 <p>Romania has one of the most active IT sectors in Eastern Europe and it is expanding continuously which is a good thing because one will not have problems ending up in an IT job if he wants to. We will just need some data on the salaries of the IT crowd. A beautiful analysis on 1,267 salaries can be seen <a href="https://www.averagesalarysurvey.com/romania">here</a>.</p>
 <p>The sample is large enough to give us a good estimate of what the population actually looks like. We can see that the data is a bit skewed and slightly more people are just under the mean when it comes to income. This is due to the fact that managers and directors have very high salaries and they move the average up. This can be easily fixed, we just need to estimate what percentage of people working in IT are managers or directors and and account for that.</p>
 <p>The first table gives us most of the information we need regarding the salary distribution in Romania. There we can see that most people, over 58% earn more than 92,809 RON. This is not exactly the median of the distribution however it is close enough so we will use this to approximate the shape of the distribution. The median is the value exactly in the middle of the distribution.</p>
@@ -170,7 +190,7 @@ it_sal_dist &lt;- c(it_sal_low, it_sal_high)
 
 # We want to make sure the mean of our distribution if not far off from the actual distribution
 mean(it_sal_dist)</code></pre>
-<pre><code>#&gt; [1] 112490.5</code></pre>
+<pre><code>#&gt; [1] 112857.7</code></pre>
 <p>We can see the average salary of our distribution is quite close to the one from the website, so we can say that our distribution closely resembles the sampled population from the site. Salary distribution looks like below:</p>
 <pre class="r"><code>it_sal_dist %&gt;% 
   histogram() +
@@ -253,12 +273,12 @@ poker_players &lt;- c(avg_player, elt_player)</code></pre>
   labs(title = &quot;Monthly Income Distribution&quot;,
        subtitle = &quot;Professional Poker Players&quot;)</code></pre>
 <pre><code>#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-2-1.png" width="100%" /></p>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-3-1.png" width="100%" /></p>
 <p>This distribution seems legit for a power law distribution. And now, for the final touch, we will need to add the 10% chance to become a professional player. We will do this by using the list we have created earlier. For this we will create a binomial distribution with a 10% probability and a size 1. Basically we can create a random string of values, either 1 or 0 and about 10% are one. Let’s see it in practice.</p>
 <pre class="r"><code>success_prob &lt;- rbinom(n = 10000, size = 1, prob = 0.1)
 print(sum(success_prob) / 10000)</code></pre>
-<pre><code>#&gt; [1] 0.0979</code></pre>
-<p>Perfect, 9.79% is exactly what we would expect.</p>
+<pre><code>#&gt; [1] 0.0985</code></pre>
+<p>Perfect, 9.85% is exactly what we would expect.</p>
 <p>Now all we need to do is multiply the two lists. When a value in the second list is 0 it will transform the earnings to 0, so we did not make it as a professional poker player. When it is 1 the result will not be affected.</p>
 <pre class="r"><code>poker_players_final &lt;- poker_players * success_prob</code></pre>
 <p>Now that we painfully and to the best of our knowledge created the populations, let’s proceed in analysing the data.</p>
