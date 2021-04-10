@@ -177,7 +177,7 @@ dr_sal_final &lt;- dr_sal_final / 5  </code></pre>
 </div>
 <div id="part-of-the-it-crowd" class="section level2">
 <h2>Part of the IT Crowd</h2>
-<p>Fortnately for me, Romania has one of the most active IT sectors in this part of Europe and it is expanding continuously. This is a good thing for someone looking to start on this career path because it offers a lot of opportunities</p>
+<p>Fortnately for me, Romania has one of the most active IT sectors in this part of Europe and it is expanding continuously. This is a good thing for someone looking to start on this career path because it offers a lot of opportunities.</p>
 <hr />
 <p>Romania has one of the most active IT sectors in Eastern Europe and it is expanding continuously which is a good thing because one will not have problems ending up in an IT job if he wants to. We will just need some data on the salaries of the IT crowd. A beautiful analysis on 1,267 salaries can be seen <a href="https://www.averagesalarysurvey.com/romania">here</a>.</p>
 <p>The sample is large enough to give us a good estimate of what the population actually looks like. We can see that the data is a bit skewed and slightly more people are just under the mean when it comes to income. This is due to the fact that managers and directors have very high salaries and they move the average up. This can be easily fixed, we just need to estimate what percentage of people working in IT are managers or directors and and account for that.</p>
@@ -190,7 +190,7 @@ it_sal_dist &lt;- c(it_sal_low, it_sal_high)
 
 # We want to make sure the mean of our distribution if not far off from the actual distribution
 mean(it_sal_dist)</code></pre>
-<pre><code>#&gt; [1] 112857.7</code></pre>
+<pre><code>#&gt; [1] 112908</code></pre>
 <p>We can see the average salary of our distribution is quite close to the one from the website, so we can say that our distribution closely resembles the sampled population from the site. Salary distribution looks like below:</p>
 <pre class="r"><code>it_sal_dist %&gt;% 
   histogram() +
@@ -277,8 +277,8 @@ poker_players &lt;- c(avg_player, elt_player)</code></pre>
 <p>This distribution seems legit for a power law distribution. And now, for the final touch, we will need to add the 10% chance to become a professional player. We will do this by using the list we have created earlier. For this we will create a binomial distribution with a 10% probability and a size 1. Basically we can create a random string of values, either 1 or 0 and about 10% are one. Let’s see it in practice.</p>
 <pre class="r"><code>success_prob &lt;- rbinom(n = 10000, size = 1, prob = 0.1)
 print(sum(success_prob) / 10000)</code></pre>
-<pre><code>#&gt; [1] 0.0985</code></pre>
-<p>Perfect, 9.85% is exactly what we would expect.</p>
+<pre><code>#&gt; [1] 0.0974</code></pre>
+<p>Perfect, 9.74% is exactly what we would expect.</p>
 <p>Now all we need to do is multiply the two lists. When a value in the second list is 0 it will transform the earnings to 0, so we did not make it as a professional poker player. When it is 1 the result will not be affected.</p>
 <pre class="r"><code>poker_players_final &lt;- poker_players * success_prob</code></pre>
 <p>Now that we painfully and to the best of our knowledge created the populations, let’s proceed in analysing the data.</p>

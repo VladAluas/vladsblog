@@ -6,7 +6,7 @@ slug: decision-making-under-uncertainty
 categories: ["Opinion"]
 tags: ["Monte Carlo", "decision making", "uncertainty", "chance"]
 thumbnail: /images/chance-logo.png
-draft: true
+draft: false
 ---
 
 **Insert Lead paragraph here.**
@@ -244,7 +244,7 @@ I will take a look at the numbers in the analysis part, this si just the prepara
 
 ## Part of the IT Crowd
 
-Fortnately for me, Romania has one of the most active IT sectors in this part of Europe and it is expanding continuously. This is a good thing for someone looking to start on this career path because it offers a lot of opportunities
+Fortnately for me, Romania has one of the most active IT sectors in this part of Europe and it is expanding continuously. This is a good thing for someone looking to start on this career path because it offers a lot of opportunities. 
 
 ---------------------------------------------------
 
