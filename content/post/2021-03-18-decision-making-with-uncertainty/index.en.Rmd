@@ -7,6 +7,7 @@ categories: ["Opinion"]
 tags: ["Monte Carlo", "decision making", "uncertainty", "chance"]
 thumbnail: /images/chance-logo.png
 draft: true
+code_folding: show
 ---
 
 **Insert Lead paragraph here.**
@@ -122,7 +123,7 @@ How do we do this?
 
 We will gather data on each of the three career paths we have chosen and we will analyse it to try and figure out which are the main characteristics of the three populations, doctors, IT workers, and poker players. We will try to find out what is the average salary, how much does it usually vary from there, and if there is a tendency of most salaries to e over or under that average. Once we have all this information, we will extract a sample of that data of 10,000 randomly chosen salaries.
 
-The salary information will be from the Romanian job market since I am based in Tomania.
+The salary information will be from the Romanian job market since I am based in Romania.
 
 ## Coding examples
 
@@ -244,13 +245,21 @@ I will take a look at the numbers in the analysis part, this si just the prepara
 
 ## Part of the IT Crowd
 
-Fortnately for me, Romania has one of the most active IT sectors in this part of Europe and it is expanding continuously. This is a good thing for someone looking to start on this career path because it offers a lot of opportunities. 
+Fortunately for me, Romania has one of the most active IT sectors in this part of Europe and it is expanding continuously. This is a good thing for someone looking to start on this career path because it offers a lot of opportunities. All I need now is to check if those opportunities are worth it or not. For this I have found a beautiful analysis on 1,267 salaries for IT professionals that can be seen [here](https://www.averagesalarysurvey.com/romania).
 
----------------------------------------------------
+The sample used in the analysis is large enough to give me a good estimate of how the salaries are distributed in the IT sector. The data is a bit skewed and slightly more than half the people have an income level slightly below the average. This effect is most likely caused by the income of the managers and directors as they have significantly higher income. The higher income raises the average salary value, however this is not a problem, I will just need to estimate the amount of managers and directors and account for that.
 
-Romania has one of the most active IT sectors in Eastern Europe and it is expanding continuously which is a good thing because one will not have problems ending up in an IT job if he wants to. We will just need some data on the salaries of the IT crowd. A beautiful analysis on 1,267 salaries can be seen [here](https://www.averagesalarysurvey.com/romania).
+As for the medical salaries, I will like first to figure out:
 
-The sample is large enough to give us a good estimate of what the population actually looks like. We can see that the data is a bit skewed and slightly more people are just under the mean when it comes to income. This is due to the fact that managers and directors have very high salaries and they move the average up. This can be easily fixed, we just need to estimate what percentage of people working in IT are managers or directors and and account for that.
+1.  What is the average salary for an IT professional
+2.  What is the variation from the average
+3.  What is the distribution of those salaries
+
+The fisrt part as for the previous section is quite easy, `r ron_format(11200)`.
+
+If I am to look at the average income across all levels and the fact that managers and directors earn significantly more than everyone else, we can approximate that around 15% of the IT professionals are managers and directors. Otherwise said, I can rephrase this as the following statement: Assuming that I am at an average skill level for the IT industry, by seer luck I will end up in a management position 15% of the time, if I were to live 10,000 lives.
+
+###---------------------------------------------------
 
 The first table gives us most of the information we need regarding the salary distribution in Romania. There we can see that most people, over 58% earn more than `r ron_format(it_sal_med_low)`. This is not exactly the median of the distribution however it is close enough so we will use this to approximate the shape of the distribution. The median is the value exactly in the middle of the distribution.
 
@@ -317,6 +326,8 @@ Honestly, I checked for relevant statistics regarding the success of an app. You
 This is kinda outside the scope of what I want to do so I will not include it in my final outcome.
 
 ## Poker player
+
+--------------------------------------------------------
 
 Now let's compute the outcome of ten thousand lives as a online poker player. For this we will need some additional information:
 

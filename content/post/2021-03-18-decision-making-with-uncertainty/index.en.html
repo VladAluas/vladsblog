@@ -7,6 +7,7 @@ categories: ["Opinion"]
 tags: ["Monte Carlo", "decision making", "uncertainty", "chance"]
 thumbnail: /images/chance-logo.png
 draft: true
+code_folding: show
 ---
 
 <script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
@@ -86,7 +87,7 @@ draft: true
 <p><em>E.g.:</em> If I were to choose between being a janitor who just won the lottery and being a doctor, I would chose to be the janitor. However, if I were to chose between the two and live 10,000 I would choose the doctor because the other 9,999 time it is the better outcome.</p>
 <p>How do we do this?</p>
 <p>We will gather data on each of the three career paths we have chosen and we will analyse it to try and figure out which are the main characteristics of the three populations, doctors, IT workers, and poker players. We will try to find out what is the average salary, how much does it usually vary from there, and if there is a tendency of most salaries to e over or under that average. Once we have all this information, we will extract a sample of that data of 10,000 randomly chosen salaries.</p>
-<p>The salary information will be from the Romanian job market since I am based in Tomania.</p>
+<p>The salary information will be from the Romanian job market since I am based in Romania.</p>
 <div id="coding-examples" class="section level2">
 <h2>Coding examples</h2>
 <p>Since we are analysing data we will need a tool that will allow us to do so. I will use <em>R</em> since it is a versatile tool that will allow us to create distributions and visualise then quite easily. The code can be completely ignored if you do not want to reproduce or analyse it, you can just focus on the graphs and the results. If you want to learn more about <em>R</em> I would recommend <a href="https://r4ds.had.co.nz/">R for Data Science</a>, a brilliant book that is the perfect starting place.</p>
@@ -177,10 +178,16 @@ dr_sal_final &lt;- dr_sal_final / 5  </code></pre>
 </div>
 <div id="part-of-the-it-crowd" class="section level2">
 <h2>Part of the IT Crowd</h2>
-<p>Fortnately for me, Romania has one of the most active IT sectors in this part of Europe and it is expanding continuously. This is a good thing for someone looking to start on this career path because it offers a lot of opportunities.</p>
-<hr />
-<p>Romania has one of the most active IT sectors in Eastern Europe and it is expanding continuously which is a good thing because one will not have problems ending up in an IT job if he wants to. We will just need some data on the salaries of the IT crowd. A beautiful analysis on 1,267 salaries can be seen <a href="https://www.averagesalarysurvey.com/romania">here</a>.</p>
-<p>The sample is large enough to give us a good estimate of what the population actually looks like. We can see that the data is a bit skewed and slightly more people are just under the mean when it comes to income. This is due to the fact that managers and directors have very high salaries and they move the average up. This can be easily fixed, we just need to estimate what percentage of people working in IT are managers or directors and and account for that.</p>
+<p>Fortunately for me, Romania has one of the most active IT sectors in this part of Europe and it is expanding continuously. This is a good thing for someone looking to start on this career path because it offers a lot of opportunities. All I need now is to check if those opportunities are worth it or not. For this I have found a beautiful analysis on 1,267 salaries for IT professionals that can be seen <a href="https://www.averagesalarysurvey.com/romania">here</a>.</p>
+<p>The sample used in the analysis is large enough to give me a good estimate of how the salaries are distributed in the IT sector. The data is a bit skewed and slightly more than half the people have an income level slightly below the average. This effect is most likely caused by the income of the managers and directors as they have significantly higher income. The higher income raises the average salary value, however this is not a problem, I will just need to estimate the amount of managers and directors and account for that.</p>
+<p>As for the medical salaries, I will like first to figure out:</p>
+<ol style="list-style-type: decimal">
+<li>What is the average salary for an IT professional</li>
+<li>What is the variation from the average</li>
+<li>What is the distribution of those salaries</li>
+</ol>
+<p>If I am to look at the average income across all levels and the fact that managers and directors earn significantly more than everyone else, we can approximate that around 15% of the IT professionals are managers and directors. Otherwise said, I can rephrase this as the following statement: Assuming that I am at an average skill level for the IT industry, by seer luck I will end up in a management position 15% of the time, if I were to live 10,000 lives.</p>
+<p>###—————————————————</p>
 <p>The first table gives us most of the information we need regarding the salary distribution in Romania. There we can see that most people, over 58% earn more than 92,809 RON. This is not exactly the median of the distribution however it is close enough so we will use this to approximate the shape of the distribution. The median is the value exactly in the middle of the distribution.</p>
 <p>Once we have this, we will use it as an average value for a normal distribution that will contain most of the values in our population. This will be 85% percent of our lives, we will not be managers, therefore we will have salaries accordingly. In the rest of 15% of our 10,000 lives, we will be managers or directors so our salary will be accordingly.</p>
 <pre class="r"><code>it_sal_low &lt;- rnorm(8500, it_sal_med_low, 25000)
@@ -190,7 +197,7 @@ it_sal_dist &lt;- c(it_sal_low, it_sal_high)
 
 # We want to make sure the mean of our distribution if not far off from the actual distribution
 mean(it_sal_dist)</code></pre>
-<pre><code>#&gt; [1] 112908</code></pre>
+<pre><code>#&gt; [1] 112124.1</code></pre>
 <p>We can see the average salary of our distribution is quite close to the one from the website, so we can say that our distribution closely resembles the sampled population from the site. Salary distribution looks like below:</p>
 <pre class="r"><code>it_sal_dist %&gt;% 
   histogram() +
@@ -226,6 +233,7 @@ it_sal_dist_net_eur %&gt;%
 </div>
 <div id="poker-player" class="section level2">
 <h2>Poker player</h2>
+<hr />
 <p>Now let’s compute the outcome of ten thousand lives as a online poker player. For this we will need some additional information:</p>
 <ul>
 <li>What is the probability to make it as an professional online poker player</li>
@@ -277,8 +285,8 @@ poker_players &lt;- c(avg_player, elt_player)</code></pre>
 <p>This distribution seems legit for a power law distribution. And now, for the final touch, we will need to add the 10% chance to become a professional player. We will do this by using the list we have created earlier. For this we will create a binomial distribution with a 10% probability and a size 1. Basically we can create a random string of values, either 1 or 0 and about 10% are one. Let’s see it in practice.</p>
 <pre class="r"><code>success_prob &lt;- rbinom(n = 10000, size = 1, prob = 0.1)
 print(sum(success_prob) / 10000)</code></pre>
-<pre><code>#&gt; [1] 0.0974</code></pre>
-<p>Perfect, 9.74% is exactly what we would expect.</p>
+<pre><code>#&gt; [1] 0.0984</code></pre>
+<p>Perfect, 9.84% is exactly what we would expect.</p>
 <p>Now all we need to do is multiply the two lists. When a value in the second list is 0 it will transform the earnings to 0, so we did not make it as a professional poker player. When it is 1 the result will not be affected.</p>
 <pre class="r"><code>poker_players_final &lt;- poker_players * success_prob</code></pre>
 <p>Now that we painfully and to the best of our knowledge created the populations, let’s proceed in analysing the data.</p>
