@@ -174,7 +174,7 @@ dr_sal_final &lt;- dr_sal_final * 468
 
 # And finally, the conversion to €
 dr_sal_final &lt;- dr_sal_final / 5  </code></pre>
-<p>I will take a look at the numbers in the analysis part, this si just the preparation of the data. Now, let’s see if we can estimate how much does an IT professional earn.</p>
+<p>I will take a look at the numbers in the analysis part, this is just the preparation of the data. Now, let’s see if we can estimate how much does an IT professional earn.</p>
 </div>
 <div id="part-of-the-it-crowd" class="section level2">
 <h2>Part of the IT Crowd</h2>
@@ -186,50 +186,47 @@ dr_sal_final &lt;- dr_sal_final / 5  </code></pre>
 <li>What is the variation from the average</li>
 <li>What is the distribution of those salaries</li>
 </ol>
-<p>If I am to look at the average income across all levels and the fact that managers and directors earn significantly more than everyone else, we can approximate that around 15% of the IT professionals are managers and directors. Otherwise said, I can rephrase this as the following statement: Assuming that I am at an average skill level for the IT industry, by seer luck I will end up in a management position 15% of the time, if I were to live 10,000 lives.</p>
-<p>###—————————————————</p>
-<p>The first table gives us most of the information we need regarding the salary distribution in Romania. There we can see that most people, over 58% earn more than 92,809 RON. This is not exactly the median of the distribution however it is close enough so we will use this to approximate the shape of the distribution. The median is the value exactly in the middle of the distribution.</p>
-<p>Once we have this, we will use it as an average value for a normal distribution that will contain most of the values in our population. This will be 85% percent of our lives, we will not be managers, therefore we will have salaries accordingly. In the rest of 15% of our 10,000 lives, we will be managers or directors so our salary will be accordingly.</p>
-<pre class="r"><code>it_sal_low &lt;- rnorm(8500, it_sal_med_low, 25000)
+<p>The first part as for the previous section is quite easy, 11,200 RON.</p>
+<p>If I am to look at the average income across all levels and the fact that managers and directors earn significantly more than everyone else, we can approximate that around 15% of the IT professionals are managers and directors. In short, I can rephrase this as the following statement: Assuming that my skill level for the IT industry is average, by seer luck I will end up in a management position 15% of the time, if I were to live 10,000 lives.</p>
+<pre class="r"><code># Distribution of IT salaries for software engineers
+it_sal_low &lt;- rnorm(8500, it_sal_med_low, 25000)
+# Distribution of IT salaries for IT managers and Directors
 it_sal_high &lt;- rnorm(1500, it_sal_med_high, 50000)
 
+# The sample of my income across all lives will be the two distributions put together
 it_sal_dist &lt;- c(it_sal_low, it_sal_high)
 
-# We want to make sure the mean of our distribution if not far off from the actual distribution
+# The average of my salary distribution should be similar to that on the website
 mean(it_sal_dist)</code></pre>
-<pre><code>#&gt; [1] 112124.1</code></pre>
-<p>We can see the average salary of our distribution is quite close to the one from the website, so we can say that our distribution closely resembles the sampled population from the site. Salary distribution looks like below:</p>
+<pre><code>#&gt; [1] 112611</code></pre>
+<p>From what I can see the distribution I have created has the same average salary as the population on the website so I can safely assume that the distribution I have created more or less resembles the population I want to recreate. The distribution looks like this:</p>
 <pre class="r"><code>it_sal_dist %&gt;% 
   histogram() +
   labs(title = &quot;Yearly Income Distribution&quot;,
        subtitle = &quot;IT Workers&quot;) + 
   scale_x_continuous(labels = label_dollar(prefix = &quot;&quot;, suffix = &quot;RON&quot;))</code></pre>
 <p><img src="{{< blogdown/postref >}}index.en_files/figure-html/it_yearly_salary-1.png" width="100%" /></p>
-<p>Not very normal, is it? There are a few people that have huge salaries compared to the rest of the population. So, if you manage to land yourself a management role in IT you’re all set. If not, let’s see how this translates in EURO and in lifetime earnings.</p>
-<p>The first thing would be to transform everything into net profit.</p>
-<p>At the time of this writing the IT workers were exempt from the income tax so the only two taxes required to be paid are:</p>
+<p>This is not a normal distribution, but that was to be expected, however it is not a power law distribution either. This can become a power law if I take into account if I consider developing an app and make it big.</p>
+<p>It is a bit complicated to get data on what is the success rate of an app. An interesting and comprehensive summary can be found in this <a href="https://venturebeat.com/2017/09/24/your-chances-of-making-a-successful-mobile-app-are-almost-nil/">article</a>. I can see that I will need €25,000 as initial investment and I need to make a full time job out of it and afterwards you need to invest in marketing and spend a lot of time adjusting ASO. For me this would have been a potential career if it would have been possible to spend some weekends creating the app, uploading it to an app store and be done with it.</p>
+<p>From what I’ve seen there is virtually no chance of that and I do not plan on spending all the effort needed for a successful app so I will not include this in the analysis.</p>
+<p>With this in mind, I will assume that the salaries are as shown in the graph above. The mentioned salaries are annual salaries in RON before tax. Now I will just need to adjust them to something more useful.</p>
+<p>First of all, I will need to extract the taxes. At the time of this writing IT professionals are exempt from the income tax, so all I would need to pay would be:</p>
 <ul>
 <li>Social Security: 25%</li>
 <li>Health Insurance: 10%</li>
 </ul>
-<p>Afterwards, we will convert it to Euro.</p>
-<pre class="r"><code>it_sal_dist_net &lt;- it_sal_dist - (it_sal_dist * 0.25) - (it_sal_dist * 0.1)
+<p>Secondly, I need to convert everything into €. As before, we will use the conversion rate from above.</p>
+<pre class="r"><code># Net salary
+it_sal_dist_net &lt;- it_sal_dist - (it_sal_dist * 0.25) - (it_sal_dist * 0.1)
 
-it_sal_dist_net_eur &lt;- it_sal_dist_net * 0.2</code></pre>
-<p>Now we have the yearly salary. So, for how long can someone work in this industry?</p>
-<p>Most people start while studying at university, however most of those positions are either very low paying or are unpaid internships so I will eliminate them. On the other hand, due to this, most people can find work right after finishing their studies. Assuming as we did previously that someone finishes high school at 19, they can study for 3-4 years, depends if you are studying in the Bologna system or not, you can start work at 22. However, since there are a lot of people working in IT who do not have specialisations in IT, I will consider that the most typical person will start at 25. This will account for those people as most people not from IT might start later.</p>
+# The salary converted to €
+it_sal_dist_net_eur &lt;- it_sal_dist_net / 5</code></pre>
+<p>Now all is left is to see for how long I would expect to work in the industry?</p>
+<p>Most people working in the IT industry start working while studying at university. I will not count these jobs because most of them are really low paying or they are unpaid internships. This situation allows people to get a proper job right after finishing university or even a bit before graduation. I will keep my assumption that I will finish high school at 19 so I have a starting point.</p>
+<p>If you are studying software engineering, in Romania, you can either study for three or four years, depending if the university follows the Bologna system or not. This does not really matter because it is not the only way to get to work in IT. There are a lot of people who attend a professional conversion and they usually do this at a latter age. So, if I were to accont for that as well, I think it would be pretty safe to assume that I would start work around 25.</p>
 <p>Considering that my goal is to retire at 65, I have 40 years of work ahead of me, so all I need to do is multiply everything by 40.</p>
-<pre class="r"><code>it_sal_dist_net_eur &lt;- it_sal_dist_net_eur * 40
-
-it_sal_dist_net_eur %&gt;% 
-  histogram() +
-  labs(title = &quot;Lifelong Income Distribution&quot;,
-       subtitle = &quot;IT Workers&quot;)</code></pre>
-<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/it_sal_lifelong_income-1.png" width="100%" /></p>
-<p>This looks decent enough. Not as good as a doctors, however not bad at all. Now, I would like to take into account one more part.</p>
-<p>What if I develop an app and make it big with it?</p>
-<p>Honestly, I checked for relevant statistics regarding the success of an app. You can read a very interesting summary in this <a href="https://venturebeat.com/2017/09/24/your-chances-of-making-a-successful-mobile-app-are-almost-nil/">article</a>. From here and other sources it shows that to actually develop an app you need an initial investment of at least €25,000 and make it a full time job. Afterwards you need to invest in marketing and spend a lot of time adjusting ASO.</p>
-<p>This is kinda outside the scope of what I want to do so I will not include it in my final outcome.</p>
+<pre class="r"><code>it_sal_dist_net_eur &lt;- it_sal_dist_net_eur * 40</code></pre>
+<p>As in the first part, I will check the data once everything is prepared. First, I would like to see if my idea of making a living as a poker player is feasible.</p>
 </div>
 <div id="poker-player" class="section level2">
 <h2>Poker player</h2>
@@ -285,8 +282,8 @@ poker_players &lt;- c(avg_player, elt_player)</code></pre>
 <p>This distribution seems legit for a power law distribution. And now, for the final touch, we will need to add the 10% chance to become a professional player. We will do this by using the list we have created earlier. For this we will create a binomial distribution with a 10% probability and a size 1. Basically we can create a random string of values, either 1 or 0 and about 10% are one. Let’s see it in practice.</p>
 <pre class="r"><code>success_prob &lt;- rbinom(n = 10000, size = 1, prob = 0.1)
 print(sum(success_prob) / 10000)</code></pre>
-<pre><code>#&gt; [1] 0.0984</code></pre>
-<p>Perfect, 9.84% is exactly what we would expect.</p>
+<pre><code>#&gt; [1] 0.1015</code></pre>
+<p>Perfect, 10.15% is exactly what we would expect.</p>
 <p>Now all we need to do is multiply the two lists. When a value in the second list is 0 it will transform the earnings to 0, so we did not make it as a professional poker player. When it is 1 the result will not be affected.</p>
 <pre class="r"><code>poker_players_final &lt;- poker_players * success_prob</code></pre>
 <p>Now that we painfully and to the best of our knowledge created the populations, let’s proceed in analysing the data.</p>
