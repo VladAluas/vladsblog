@@ -241,7 +241,36 @@ dr_sal_final <- dr_sal_final * 468
 dr_sal_final <- dr_sal_final / 5  
 ```
 
-I will take a look at the numbers in the analysis part, this si just the preparation of the data. Now, let's see if we can estimate how much does an IT professional earn.
+One more thing I would like to add, I would like to know which is the potential success rate of me becoming a doctor? This is a bit tricky to find out for certain but I will try. Before that I think it is a good idea to write down my thought process and then I can crunch the numbers.
+
+Since applying for medical school requires quite a brutal exam, I will assume that no one applies for it without being serious about it and without having the discipline and study to pass the exam. This information is relevant because it allows me to safely assume that the a student once admitted is highly likely to become a doctor. 
+
+This is acquired by two mechanisms. The first mechanism is the fact that the extra preparation for the exam allows potential students see the effort required and if they are not willing to put in the effort they can change their mind before the admission exam. The second mechanism keeping student from quitting is the [sunk cost fallacy.](https://en.wikipedia.org/wiki/Sunk_cost) For this reason, I will only take into account the admittance rate and that can be taken from the university's website.
+
+In this case I will use the [2020 admissions](http://www.umfcluj.ro/component/content/article/8-ro/595-rezultate-admitere-2020_?Itemid=216) for the University of Medicine and Pharmacy in Cluj-Napoca. The admittance rate is simple, how many people were admitted over how many applied. The admitted numbers were as follows:
+
+1.    318 - General Medicine Budget
+2.    60  - General Medicine Tax
+3.    81  - Dental Medicine Budget
+4.    17  - Dental Medicine Tax
+5.    591 - Rejected
+
+$$admit\_rate = \frac{318 + 60 + 80 + 17}{318 + 60 + 80 + 17 + 591} = `r (318 + 60 + 81 + 17)/(318 + 60 + 80 + 17 + 591)` $$
+There, my chances are 45%. Now I will code this chance by simply generating a list of 10,000 elements which are either 0 or 1 and 4500 of them are 1. Then I will simply multiply the two lists. If a salary is multiplied by a 0 it will signify that I did not make it as a doctor.
+
+```{r dr_admittance_rate}
+# The list that will show me if I have made it or not
+admittance_rate <- rbinom(n = 10000, size = 1, prob = 0.45)
+
+# Now I will add the chance to the previous list
+dr_sal_final <- dr_sal_final * admittance_rate
+
+# Just to be sure, I would like to see the rate
+print(sum(admittance_rate) / 10000)
+```
+
+
+I will take a look at the numbers in the analysis part, this is just the preparation of the data. Now, let's see if we can estimate how much does an IT professional earn.
 
 ## Part of the IT Crowd
 
@@ -255,27 +284,24 @@ As for the medical salaries, I will like first to figure out:
 2.  What is the variation from the average
 3.  What is the distribution of those salaries
 
-The fisrt part as for the previous section is quite easy, `r ron_format(11200)`.
+The first part as for the previous section is quite easy, `r ron_format(11200)`.
 
-If I am to look at the average income across all levels and the fact that managers and directors earn significantly more than everyone else, we can approximate that around 15% of the IT professionals are managers and directors. Otherwise said, I can rephrase this as the following statement: Assuming that I am at an average skill level for the IT industry, by seer luck I will end up in a management position 15% of the time, if I were to live 10,000 lives.
-
-###---------------------------------------------------
-
-The first table gives us most of the information we need regarding the salary distribution in Romania. There we can see that most people, over 58% earn more than `r ron_format(it_sal_med_low)`. This is not exactly the median of the distribution however it is close enough so we will use this to approximate the shape of the distribution. The median is the value exactly in the middle of the distribution.
-
-Once we have this, we will use it as an average value for a normal distribution that will contain most of the values in our population. This will be 85% percent of our lives, we will not be managers, therefore we will have salaries accordingly. In the rest of 15% of our 10,000 lives, we will be managers or directors so our salary will be accordingly.
+If I am to look at the average income across all levels and the fact that managers and directors earn significantly more than everyone else, we can approximate that around 15% of the IT professionals are managers and directors. In short, I can rephrase this as the following statement: Assuming that my skill level for the IT industry is average, by seer luck I will end up in a management position 15% of the time, if I were to live 10,000 lives.
 
 ```{r it_salary_distribution}
+# Distribution of IT salaries for software engineers
 it_sal_low <- rnorm(8500, it_sal_med_low, 25000)
+# Distribution of IT salaries for IT managers and Directors
 it_sal_high <- rnorm(1500, it_sal_med_high, 50000)
 
+# The sample of my income across all lives will be the two distributions put together
 it_sal_dist <- c(it_sal_low, it_sal_high)
 
-# We want to make sure the mean of our distribution if not far off from the actual distribution
+# The average of my salary distribution should be similar to that on the website
 mean(it_sal_dist)
 ```
 
-We can see the average salary of our distribution is quite close to the one from the website, so we can say that our distribution closely resembles the sampled population from the site. Salary distribution looks like below:
+From what I can see the distribution I have created has the same average salary as the population on the website so I can safely assume that the distribution I have created more or less resembles the population I want to recreate. The distribution looks like this:
 
 ```{r it_yearly_salary, message = FALSE}
 it_sal_dist %>% 
@@ -285,61 +311,60 @@ it_sal_dist %>%
   scale_x_continuous(labels = label_dollar(prefix = "", suffix = "RON"))
 ```
 
-Not very normal, is it? There are a few people that have huge salaries compared to the rest of the population. So, if you manage to land yourself a management role in IT you're all set. If not, let's see how this translates in EURO and in lifetime earnings.
+This is not a normal distribution, but that was to be expected, however it is not a power law distribution either. This can become a power law if I take into account if I consider developing an app and make it big.
 
-The first thing would be to transform everything into net profit.
+It is a bit complicated to get data on what is the success rate of an app. An interesting and comprehensive summary can be found in this  [article](https://venturebeat.com/2017/09/24/your-chances-of-making-a-successful-mobile-app-are-almost-nil/). I can see that I will need €25,000 as initial investment and I need to make a full time job out of it and afterwards you need to invest in marketing and spend a lot of time adjusting ASO. For me this would have been a potential career if it would have been possible to spend some weekends creating the app, uploading it to an app store and be done with it.
 
-At the time of this writing the IT workers were exempt from the income tax so the only two taxes required to be paid are:
+From what I've seen there is virtually no chance of that and I do not plan on spending all the effort needed for a successful app so I will not include this in the analysis.
+
+With this in mind, I will assume that the salaries are as shown in the graph above. The mentioned salaries are annual salaries in RON before tax. Now I will just need to adjust them to something more useful.
+
+First of all, I will need to extract the taxes. At the time of this writing IT professionals are exempt from the income tax, so all I would need to pay would be:
 
 -   Social Security: 25%
 -   Health Insurance: 10%
 
-Afterwards, we will convert it to Euro.
+Secondly, I need to convert everything into €. As before, we will use the conversion rate from above.
 
 ```{r it_sal_dist_net}
+# Net salary
 it_sal_dist_net <- it_sal_dist - (it_sal_dist * 0.25) - (it_sal_dist * 0.1)
 
-it_sal_dist_net_eur <- it_sal_dist_net * 0.2
+# The salary converted to €
+it_sal_dist_net_eur <- it_sal_dist_net / 5
 ```
 
-Now we have the yearly salary. So, for how long can someone work in this industry?
+Now all is left is to see for how long I would expect to work in the industry?
 
-Most people start while studying at university, however most of those positions are either very low paying or are unpaid internships so I will eliminate them. On the other hand, due to this, most people can find work right after finishing their studies. Assuming as we did previously that someone finishes high school at 19, they can study for 3-4 years, depends if you are studying in the Bologna system or not, you can start work at 22. However, since there are a lot of people working in IT who do not have specialisations in IT, I will consider that the most typical person will start at 25. This will account for those people as most people not from IT might start later.
+Most people working in the IT industry start working while studying at university. I will not count these jobs because most of them are really low paying or they are unpaid internships. This situation allows people to get a proper job right after finishing university or even a bit before graduation. I will keep my assumption that I will finish high school at 19 so I have a starting point. 
+
+If you are studying software engineering, in Romania, you can either study for three or four years, depending if the university follows the Bologna system or not. This does not really matter because it is not the only way to get to work in IT. There are a lot of people who attend a professional conversion and they usually do this at a latter age. So, if I were to account for that as well, I think it would be pretty safe to assume that I would start work around 25.
 
 Considering that my goal is to retire at 65, I have 40 years of work ahead of me, so all I need to do is multiply everything by 40.
 
 ```{r it_sal_lifelong_income, message = FALSE}
 it_sal_dist_net_eur <- it_sal_dist_net_eur * 40
-
-it_sal_dist_net_eur %>% 
-  histogram() +
-  labs(title = "Lifelong Income Distribution",
-       subtitle = "IT Workers")
 ```
 
-This looks decent enough. Not as good as a doctors, however not bad at all. Now, I would like to take into account one more part.
+As in the first part, I will check the data once everything is prepared. First, I would like to see if my idea of making a living as a poker player is feasible.
 
-What if I develop an app and make it big with it?
+## Poker Star
 
-Honestly, I checked for relevant statistics regarding the success of an app. You can read a very interesting summary in this [article](https://venturebeat.com/2017/09/24/your-chances-of-making-a-successful-mobile-app-are-almost-nil/). From here and other sources it shows that to actually develop an app you need an initial investment of at least €25,000 and make it a full time job. Afterwards you need to invest in marketing and spend a lot of time adjusting ASO.
+This was one of the most exhausting researches I've done so far. There are some huge problems problems I encountered while trying to gather data for this career path. This is to be expected as I imagine that casinos are not willing to let everyone what are the real chances of winning by revealing the numbers. This was to be expected, however I had hoped that I will be able to find some kind of information regarding this but no luck in this.
 
-This is kinda outside the scope of what I want to do so I will not include it in my final outcome.
+So I decided to change my tune and see if an online poker career would be better suited? Going online has one additional advantage although that is of no moment, it requires less funds with which to start.
 
-## Poker player
+With that being said, in the next section I will like to answer the following questions:
 
---------------------------------------------------------
+-   What is the probability to make it as an professional online poker player?
+-   How much should I expect to make should I make is as a player?
+-   How is that money distributed? Is it more likely to win big constantly or is it highly unlikely? 
 
-Now let's compute the outcome of ten thousand lives as a online poker player. For this we will need some additional information:
+For online poker statistics, as for real life poker, there are no public databases therefore all the information I can access is just the one the online poker sites choose to display. I could use them to make some assumptions, however it can get overly complicated real fast. Most of them have token currencies, not real money so it is hard to account for the money. Also, most of them show the amount earned by a player over his whole time as a player so it is difficult to see who does not have a lot earned because they have just created the account or because they are a poor player.
 
--   What is the probability to make it as an professional online poker player
--   How much or how little does an online poker player make in a year
--   How is that money distributed
+With that said, I have found the following [blog](https://www.blackrain79.com/) that offers some details about the world of online poker and some data gathered by himself. I know this is not the most reliable dataset, however it is all I have to go with. And I would also like to mention that the data presented by online poker sites is just as unreliable. While the data I am using might be flawed because of unconscious bias, the one presented by websites most likely is biased to make you play. I have also asked people who are involved with online poker to take a look and they said that nothing suspicious pops up, so I will choose to trust the data.
 
-These assumption can be estimated in multiple ways, although most of them are time consuming and the technical methods used are outside the scope of this article. However, I will briefly mention them if you are interested in such an endeavour.
-
-[Statname.net](https://statname.net/) is one of the multiple sites that offer statistics regarding player earnings on different platforms and strategies. You can get the data from there on the earnings of a player, the number of hands and compute how much he would have earned if you account for the blinds. Then you can set a cut-off point in which an earning is considered a living wage and you can compute the percentage of professional players. This will be your probability. The same can go for the other measures.
-
-Since getting the data can be a bit time consuming and this being just an example, I have decided to base my computations on the following [blog](https://www.blackrain79.com/). You can get a lot of useful information about online poker from here and I found it very useful, my understanding of poker being the as basic as it could be. From what I read here, and discussed this with people who know about the subject way more than I do, apparently one of the most successful strategies in online poker is to win blinds not large hands. The tables are also divided by the size of the blinds as follows:
+From what I could read in the article, online poker is more grind based and less exposed to chance than it's face to face counterpart. By that I mean that a player will focus on winning blinds not big hands and over time it will prove successful. The tables are also divided by the size of the blinds as follows:
 
 -   NL2 (also known as 2NL) = ¢1 / ¢2 blinds
 -   NL5 (also known as 5NL) = ¢2 / ¢5 blinds
@@ -348,44 +373,41 @@ Since getting the data can be a bit time consuming and this being just an exampl
 -   NL50 (also known as 50NL) = ¢25 / ¢50 blinds
 -   NL100 (also known as 100NL) = ¢50 / \$1 blinds
 
-Now, how do we transform this into earnings? The formula is simple as seen below:
+Considering that I would have to focus on winning big blinds and not hands, my winnings will be influenced by the value of the big blind. The formula can be seen below:
 
-$$ (winning\_big\_blinds\_chance \times big\_blind\_value) \times \frac{played\_hands}{100}  $$
+$$ (winning\_chance \times blind\_value) \times \frac{played\_hands}{100}  $$
+Usually a professional poker player will play around 100,000 hands a month. I think that would be a fair number for my approximations. I am going for this career out of laziness, the opportunity of easy money, and the possibility to make my own hours so I will not overdo it. The next thing that I will need will be the winning rates for each type of table. I will use the probabilities from this [blog post](https://www.blackrain79.com/2014/06/good-win-rates-for-micro-and-small_6.html) and since I have already decided that I will play a fixed number of hands each month, I will use the higher win rates in the tables. Now I will compute the monthly win rate for each table. I will transform them into dollars directly.
 
-Let's compute some and example. From what I could gather a professional player will play around 100.000 hands a month. So from here on I will use this as the number of hands a professional player will play so we can estimate the winnings. With this in mind, let's see how much will a professional player make from a NL2 table with a 30% win rate. That will translate into the following formula:
+$$ Avg\_NL2   = (10 \times \frac{2}{100}) \times \frac{100000}{100} = \$`r (10 * 2/100) * 1000`$$
 
-$$ (30 \times 2) \times \frac{100000}{100} = ¢60000$$
+$$ Avg\_NL5   = (6 \times \frac{5}{100}) \times \frac{100000}{100} = \$`r (6 * 5/100) * 1000`$$
 
-We need to keep in mind that those are cents, adjusting to dollars, we see that you can earn around \$600 a month playing low stakes poker, which is not bad. We also need to take into account that people can play multiple tables online and apparently most people do. So the probabilities that I am going to use here can be found in this [blog post](https://www.blackrain79.com/2014/06/good-win-rates-for-micro-and-small_6.html) and are going to be just the ones for 1-8 tables since I already established that I will play around 100.000 hands a month so increasing the number of tables to 18+ cuts time but lower my attention and therefore the winning rate. If I want to maximise the number of hands, or increase the hourly payment I would increase the number of tables.
+$$ Avg\_NL10  = (4 \times \frac{10}{100}) \times \frac{100000}{100} = \$`r (4 * 10/100) * 1000`$$
 
-I will compute the average for each type of table, however I will transform the cents into dollars directly
+$$ Avg\_NL25  = (3 \times \frac{25}{100}) \times \frac{100000}{100} = \$`r (3 * 25/100) * 1000`$$
 
-$$ NL2   = (10 \times \frac{2}{100}) \times \frac{100000}{100} = \$`r (10 * 2/100) * 1000`$$
+$$ Avg\_NL50  = (2 \times \frac{50}{100}) \times \frac{100000}{100} = \$`r (2 * 50/100) * 1000` $$
 
-$$ NL5   = (6 \times \frac{5}{100}) \times \frac{100000}{100} = \$`r (6 * 5/100) * 1000`$$
+$$ Avg\_NL100 = (2 \times 1) \times \frac{100000}{100} = \$`r (2 * 1) * 1000` $$
 
-$$ NL10  = (4 \times \frac{10}{100}) \times \frac{100000}{100} = \$`r (4 * 10/100) * 1000`$$
+These are the estimates for most professional players, however elite players have a different bracket. I am curious to see how much an elite player make and see how we can distribute the earnings in the population.
 
-$$ NL25  = (3 \times \frac{25}{100}) \times \frac{100000}{100} = \$`r (3 * 25/100) * 1000`$$
+$$ Elite\_NL2   = (30 \times \frac{2}{100}) \times \frac{100000}{100} = \$`r (30 * 2/100) * 1000`$$
 
-$$ NL50  = (2 \times \frac{50}{100}) \times \frac{100000}{100} = \$`r (2 * 50/100) * 1000` $$
+$$ Elite\_NL5   = (10 \times \frac{5}{100}) \times \frac{100000}{100} = \$`r (18 * 5/100) * 1000`$$
 
-$$ NL100 = (2 \times 1) \times \frac{100000}{100} = \$`r (2 * 1) * 1000` $$
+$$ Elite\_NL10  = (12 \times \frac{10}{100}) \times \frac{100000}{100} = \$`r (12 * 10/100) * 1000`$$
 
-Now that we have some averages, I would like to see how much can the best players make using the same estimates from the articles.
+$$ Elite\_NL25  = (10 \times \frac{25}{100}) \times \frac{100000}{100} = \$`r (10 * 25/100) * 1000`$$
 
-$$ NL2   = (30 \times \frac{2}{100}) \times \frac{100000}{100} = \$`r (30 * 2/100) * 1000`$$
+$$ Elite\_NL50  = (9 \times \frac{50}{100}) \times \frac{100000}{100} = \$`r (9  * 50/100) * 1000` $$
 
-$$ NL5   = (10 \times \frac{5}{100}) \times \frac{100000}{100} = \$`r (18 * 5/100) * 1000`$$
+$$ Elite\_NL100 = (8 \times 1) \times \frac{100000}{100} = \$`r (8 * 1) * 1000` $$
 
-$$ NL10  = (12 \times \frac{10}{100}) \times \frac{100000}{100} = \$`r (12 * 10/100) * 1000`$$
+There seems to be quite a gap between the two brackets. Here we can see that we encounter the same problem as with did with the IT crowd. Elite player earn significantly more that average professional players and they are way fewer. Fortunately for us this is also not a power law distribution because a player is limited on how much he can earn on one hand just from blinds and he can play just so many hours in a month, therefore it is highly unlikely to see someone earn in the millions in one month. These population of elite players is around 10%.
 
-$$ NL25  = (10 \times \frac{25}{100}) \times \frac{100000}{100} = \$`r (10 * 25/100) * 1000`$$
-
-$$ NL50  = (9 \times \frac{50}{100}) \times \frac{100000}{100} = \$`r (9  * 50/100) * 1000` $$
-
-$$ NL100 = (8 \times 1) \times \frac{100000}{100} = \$`r (8 * 1) * 1000` $$
-
+=============================================================
+  
 We can see that this is not anywhere near a normal distribution. By the definition of professional players, we know that they are the ones that actually earn enough so that they can survive of this income. This leaves us with a skewed distribution. I think we can safely assume that most professional players are average players and the elite that earn as much as we have shown here are a small percent 10%. With that said, we can start creating the population of online poker players.
 
 Another assumption is that professional poker players will not spend all their time in NL2, NL5 and NL10 games, will most likely spend it on something that will provide more income. This is also consistent with the living wage assumption. I know \$750 might not seem much in a month for most Western democracies, however, it is quite a decent income in second and third world countries. So, how are we going to do this?
