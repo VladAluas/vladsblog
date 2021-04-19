@@ -174,7 +174,8 @@ dr_sal_final &lt;- dr_sal_final * 468
 
 # And finally, the conversion to €
 dr_sal_final &lt;- dr_sal_final / 5  </code></pre>
-<p>One more thing I would like to add, I would like to know which is the potential success rate of me becoming a doctor? This is a bit tricky to find out for certain but I will try. Before that I think it is a good idea to write down my thought process and then I can crunch the numbers.</p>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+One more thing I would like to add, I would like to know which is the potential success rate of me becoming a doctor? This is a bit tricky to find out for certain but I will try. Before that I think it is a good idea to write down my thought process and then I can crunch the numbers.</p>
 <p>Since applying for medical school requires quite a brutal exam, I will assume that no one applies for it without being serious about it and without having the discipline and study to pass the exam. This information is relevant because it allows me to safely assume that the a student once admitted is highly likely to become a doctor.</p>
 <p>This is acquired by two mechanisms. The first mechanism is the fact that the extra preparation for the exam allows potential students see the effort required and if they are not willing to put in the effort they can change their mind before the admission exam. The second mechanism keeping student from quitting is the <a href="https://en.wikipedia.org/wiki/Sunk_cost">sunk cost fallacy.</a> For this reason, I will only take into account the admittance rate and that can be taken from the university’s website.</p>
 <p>In this case I will use the <a href="http://www.umfcluj.ro/component/content/article/8-ro/595-rezultate-admitere-2020_?Itemid=216">2020 admissions</a> for the University of Medicine and Pharmacy in Cluj-Napoca. The admittance rate is simple, how many people were admitted over how many applied. The admitted numbers were as follows:</p>
@@ -195,8 +196,10 @@ dr_sal_final &lt;- dr_sal_final * admittance_rate
 
 # Just to be sure, I would like to see the rate
 print(sum(admittance_rate) / 10000)</code></pre>
-<pre><code>#&gt; [1] 0.4469</code></pre>
-<p>I will take a look at the numbers in the analysis part, this is just the preparation of the data. Now, let’s see if we can estimate how much does an IT professional earn.</p>
+<pre><code>#&gt; [1] 0.4509</code></pre>
+<p>=======
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; d1c1ead9f59f46e37ee33d223f6ebec8215dd033
+I will take a look at the numbers in the analysis part, this is just the preparation of the data. Now, let’s see if we can estimate how much does an IT professional earn.</p>
 </div>
 <div id="part-of-the-it-crowd" class="section level2">
 <h2>Part of the IT Crowd</h2>
@@ -220,7 +223,7 @@ it_sal_dist &lt;- c(it_sal_low, it_sal_high)
 
 # The average of my salary distribution should be similar to that on the website
 mean(it_sal_dist)</code></pre>
-<pre><code>#&gt; [1] 112814.4</code></pre>
+<pre><code>#&gt; [1] 113000.5</code></pre>
 <p>From what I can see the distribution I have created has the same average salary as the population on the website so I can safely assume that the distribution I have created more or less resembles the population I want to recreate. The distribution looks like this:</p>
 <pre class="r"><code>it_sal_dist %&gt;% 
   histogram() +
@@ -228,11 +231,31 @@ mean(it_sal_dist)</code></pre>
        subtitle = &quot;IT Workers&quot;) + 
   scale_x_continuous(labels = label_dollar(prefix = &quot;&quot;, suffix = &quot;RON&quot;))</code></pre>
 <p><img src="{{< blogdown/postref >}}index.en_files/figure-html/it_yearly_salary-1.png" width="100%" /></p>
-<p>This is not a normal distribution, but that was to be expected, however it is not a power law distribution either. This can become a power law if I take into account if I consider developing an app and make it big.</p>
+<p>This is not a normal distribution, but that was to be expected, however it is not a power law distribution either. This can become a power law if I take into account if I consider developing an app and make it big.
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
 <p>It is a bit complicated to get data on what is the success rate of an app. An interesting and comprehensive summary can be found in this <a href="https://venturebeat.com/2017/09/24/your-chances-of-making-a-successful-mobile-app-are-almost-nil/">article</a>. I can see that I will need €25,000 as initial investment and I need to make a full time job out of it and afterwards you need to invest in marketing and spend a lot of time adjusting ASO. For me this would have been a potential career if it would have been possible to spend some weekends creating the app, uploading it to an app store and be done with it.</p>
 <p>From what I’ve seen there is virtually no chance of that and I do not plan on spending all the effort needed for a successful app so I will not include this in the analysis.</p>
 <p>With this in mind, I will assume that the salaries are as shown in the graph above. The mentioned salaries are annual salaries in RON before tax. Now I will just need to adjust them to something more useful.</p>
-<p>First of all, I will need to extract the taxes. At the time of this writing IT professionals are exempt from the income tax, so all I would need to pay would be:</p>
+<p>=======</p>
+<p>It is a bit complicated to get data on what is the success rate of an app. An interesting and comprehensive summary can be found in this <a href="https://venturebeat.com/2017/09/24/your-chances-of-making-a-successful-mobile-app-are-almost-nil/">article</a>. I can see that I will need €25,000 as initial investment and I need to make a full time job out of it and afterwards you need to invest in marketing and spend a lot of time adjusting ASO. For me this would have been a potential career if it would have been possible to spend some weekends creating the app, uploading it to an app store and be done with it.</p>
+<p>From what I’ve seen there is virtually no chance of that and I do not plan on spending all the effort needed for a successful app so I will not include this in the analysis.</p>
+<p>With this in mind, I will assume that the salaries are as shown in the graph above. The mentioned salaries are annual salaries in RON before tax. Now I will just need to adjust them to something more useful.</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>d1c1ead9f59f46e37ee33d223f6ebec8215dd033
+First of all, I will need to extract the taxes. At the time of this writing IT professionals are exempt from the income tax, so all I would need to pay would be:</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
 <ul>
 <li>Social Security: 25%</li>
 <li>Health Insurance: 10%</li>
@@ -243,17 +266,42 @@ it_sal_dist_net &lt;- it_sal_dist - (it_sal_dist * 0.25) - (it_sal_dist * 0.1)
 
 # The salary converted to €
 it_sal_dist_net_eur &lt;- it_sal_dist_net / 5</code></pre>
-<p>Now all is left is to see for how long I would expect to work in the industry?</p>
+<p>Now all is left is to see for how long I would expect to work in the industry?
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
 <p>Most people working in the IT industry start working while studying at university. I will not count these jobs because most of them are really low paying or they are unpaid internships. This situation allows people to get a proper job right after finishing university or even a bit before graduation. I will keep my assumption that I will finish high school at 19 so I have a starting point.</p>
-<p>If you are studying software engineering, in Romania, you can either study for three or four years, depending if the university follows the Bologna system or not. This does not really matter because it is not the only way to get to work in IT. There are a lot of people who attend a professional conversion and they usually do this at a latter age. So, if I were to account for that as well, I think it would be pretty safe to assume that I would start work around 25.</p>
+</div>
+</div>
+<div id="if-you-are-studying-software-engineering-in-romania-you-can-either-study-for-three-or-four-years-depending-if-the-university-follows-the-bologna-system-or-not.-this-does-not-really-matter-because-it-is-not-the-only-way-to-get-to-work-in-it.-there-are-a-lot-of-people-who-attend-a-professional-conversion-and-they-usually-do-this-at-a-latter-age.-so-if-i-were-to-account-for-that-as-well-i-think-it-would-be-pretty-safe-to-assume-that-i-would-start-work-around-25." class="section level1">
+<h1>If you are studying software engineering, in Romania, you can either study for three or four years, depending if the university follows the Bologna system or not. This does not really matter because it is not the only way to get to work in IT. There are a lot of people who attend a professional conversion and they usually do this at a latter age. So, if I were to account for that as well, I think it would be pretty safe to assume that I would start work around 25.</h1>
+<p>Most people working in the IT industry start working while studying at university. I will not count these jobs because most of them are really low paying or they are unpaid internships. This situation allows people to get a proper job right after finishing university or even a bit before graduation. I will keep my assumption that I will finish high school at 19 so I have a starting point.</p>
+<p>If you are studying software engineering, in Romania, you can either study for three or four years, depending if the university follows the Bologna system or not. This does not really matter because it is not the only way to get to work in IT. There are a lot of people who attend a professional conversion and they usually do this at a latter age. So, if I were to accont for that as well, I think it would be pretty safe to assume that I would start work around 25.
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; d1c1ead9f59f46e37ee33d223f6ebec8215dd033</p>
 <p>Considering that my goal is to retire at 65, I have 40 years of work ahead of me, so all I need to do is multiply everything by 40.</p>
 <pre class="r"><code>it_sal_dist_net_eur &lt;- it_sal_dist_net_eur * 40</code></pre>
-<p>As in the first part, I will check the data once everything is prepared. First, I would like to see if my idea of making a living as a poker player is feasible.</p>
-</div>
+<p>As in the first part, I will check the data once everything is prepared. First, I would like to see if my idea of making a living as a poker player is feasible.
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
 <div id="poker-star" class="section level2">
 <h2>Poker Star</h2>
 <p>This was one of the most exhausting researches I’ve done so far. There are some huge problems problems I encountered while trying to gather data for this career path. This is to be expected as I imagine that casinos are not willing to let everyone what are the real chances of winning by revealing the numbers. This was to be expected, however I had hoped that I will be able to find some kind of information regarding this but no luck in this.</p>
-<p>So I decided to change my tune and see if an online poker career would be better suited? Going online has one additional advantage although that is of no moment, it requires less funds with which to start.</p>
+</div>
+</div>
+<div id="so-i-decided-to-change-my-tune-and-see-if-an-online-poker-career-would-be-better-suited-going-online-has-one-additional-advantage-although-that-is-of-no-moment-it-requires-less-funds-with-which-to-start." class="section level1">
+<h1>So I decided to change my tune and see if an online poker career would be better suited? Going online has one additional advantage although that is of no moment, it requires less funds with which to start.</h1>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>d1c1ead9f59f46e37ee33d223f6ebec8215dd033</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
 <p>With that being said, in the next section I will like to answer the following questions:</p>
 <ul>
 <li>What is the probability to make it as an professional online poker player?</li>
@@ -304,10 +352,9 @@ poker_players &lt;- c(avg_player, elt_player)</code></pre>
 <p>This distribution seems legit for a power law distribution. And now, for the final touch, we will need to add the 10% chance to become a professional player. We will do this by using the list we have created earlier. For this we will create a binomial distribution with a 10% probability and a size 1. Basically we can create a random string of values, either 1 or 0 and about 10% are one. Let’s see it in practice.</p>
 <pre class="r"><code>success_prob &lt;- rbinom(n = 10000, size = 1, prob = 0.1)
 print(sum(success_prob) / 10000)</code></pre>
-<pre><code>#&gt; [1] 0.0989</code></pre>
-<p>Perfect, 9.89% is exactly what we would expect.</p>
+<pre><code>#&gt; [1] 0.1043</code></pre>
+<p>Perfect, 10.43% is exactly what we would expect.</p>
 <p>Now all we need to do is multiply the two lists. When a value in the second list is 0 it will transform the earnings to 0, so we did not make it as a professional poker player. When it is 1 the result will not be affected.</p>
 <pre class="r"><code>poker_players_final &lt;- poker_players * success_prob</code></pre>
 <p>Now that we painfully and to the best of our knowledge created the populations, let’s proceed in analysing the data.</p>
-</div>
 </div>
