@@ -16,7 +16,7 @@ code_folding: show
 <p><strong>Insert Lead paragraph here.</strong></p>
 <hr />
 <p>People engage in decision making on a daily basis and although most of our decisions seem to derive from logical arguments, the truth is that exactly the opposite is true. Most of the decisions we make are due to <a href="https://en.wikipedia.org/wiki/List_of_cognitive_biases">biases</a> and <a href="https://en.wikipedia.org/wiki/Heuristic">heuristics</a> our minds have developed to respond to the environment around them faster.</p>
-<p>These tendencies have been first described and studied by <a href="https://en.wikipedia.org/wiki/Amos_Tversky">Amos Tversky</a> and <a href="https://scholar.princeton.edu/kahneman/home">Daniel Kahneman</a> and have been explained in Kahneman’s excellent book <em>Thinking fast and slow</em>. I highly recommend the book since it is an excellent guide in where our minds tend to be error prone and mislead us. I will explain in brief however that our minds operate as two separate system called by Kahneman and Tversky <em>system 1</em> and <em>system 2</em>.</p>
+<p>These tendencies have been first described and studied by <a href="https://en.wikipedia.org/wiki/Amos_Tversky">Amos Tversky</a> and <a href="https://scholar.princeton.edu/kahneman/home">Daniel Kahneman</a> and have been explained in Kahneman’s excellent book: <strong>Thinking fast and slow</strong>. I highly recommend the book since it is an excellent guide in where our minds tend to be error prone and mislead us. I will explain in brief however that our minds operate as two separate system called by Kahneman and Tversky <em>system 1</em> and <em>system 2</em>.</p>
 <p><em>System 1</em> is the default system of the mind, the one used for everyday activities. These activities include walking, breathing, detecting danger and avoiding it, eating, doing routine activities, and all activities that do not involve heavy cognitive effort. <em>System 1</em> is emotional, automatic, fast and uses no extra energy from our energy hungry brains.</p>
 <p><em>System 2</em> is the exact opposite of <em>System 1</em>. It is rational, quite slow, and requires a large amount of energy and effort from our part. <em>System 2</em> allows you to analyse in detail every situation, however this is not always ideal. If a car would come speeding towards you, <em>System 2</em> would analyse the colour of the car, the brand and maybe the speed and approach vector, which is a nice thought exercise but might get hit by the car before <em>System 2</em> would act. <em>System 1</em> will not bother with all those details, it will just register car coming towards me with great speed, I need to move out of the way.</p>
 <p>The problem when making decisions is that there are situations moderated or mediated by the aforementioned biases and heuristics in which <em>System 1</em> might make the decision and our minds might think it is actually <em>System 2</em>. Otherwise said, we might make decisions for subjective reasons and have a high degree of confidence in then believing they are objective.</p>
@@ -162,8 +162,7 @@ dr_sal_dist %&gt;%
 <li>Income tax on the remainder of 65% of the Gross salary: 10%</li>
 </ul>
 <p>This will be translated as follows:</p>
-<p><span class="math display">\[ m_{salary(RON)} = (21,100 - \frac{25}{100} \times 21,100 - \frac{10}{100} \times 21,100) \times \frac{90}{100} = 13,715 \times \frac{90}{100} = 12,343.50\]</span>
-This give me the net salary received by a doctor in Romania. All there is now to do is calculate how many such salaries one doctor receives. In Romania medical school lasts for 7 years and afterwards one needs to spend 3 to 5 years in residency. Since residency is paid I will include it in my analysis and I will consider that a doctor starts working when they start their residency. Since most people finish high-school at 19 and med school is 7 years, I will consider that one starts working at 26.</p>
+<p><span class="math display">\[ m_{salary(RON)} = (21,100 - \frac{25}{100} \times 21,100 - \frac{10}{100} \times 21,100) \times \frac{90}{100} = 13,715 \times \frac{90}{100} = 12,343.50\]</span> This give me the net salary received by a doctor in Romania. All there is now to do is calculate how many such salaries one doctor receives. In Romania medical school lasts for 7 years and afterwards one needs to spend 3 to 5 years in residency. Since residency is paid I will include it in my analysis and I will consider that a doctor starts working when they start their residency. Since most people finish high-school at 19 and med school is 7 years, I will consider that one starts working at 26.</p>
 <p>Since I do not plan to work more than I need to, I plan on retiring with the first chance I get. In Romania the retirement age is 65 so I will plan for that. From 26 to 65 there are 39 years of work, multiply that by 12 months I can expect to work for around 468 months.</p>
 <p>And for the conversion to €, that is quite easy. According to the National Bank of Romania, the conversion rate is 1 RON for 0.20 € so all I need to do is divide the number by 5. So, let’s code everything:</p>
 <pre class="r"><code># First, I will need to extract the taxes so I can compare just the NET salaries
@@ -174,8 +173,7 @@ dr_sal_final &lt;- dr_sal_final * 468
 
 # And finally, the conversion to €
 dr_sal_final &lt;- dr_sal_final / 5  </code></pre>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
-One more thing I would like to add, I would like to know which is the potential success rate of me becoming a doctor? This is a bit tricky to find out for certain but I will try. Before that I think it is a good idea to write down my thought process and then I can crunch the numbers.</p>
+<p>One more thing I would like to add, I would like to know which is the potential success rate of me becoming a doctor? This is a bit tricky to find out for certain but I will try. Before that I think it is a good idea to write down my thought process and then I can crunch the numbers.</p>
 <p>Since applying for medical school requires quite a brutal exam, I will assume that no one applies for it without being serious about it and without having the discipline and study to pass the exam. This information is relevant because it allows me to safely assume that the a student once admitted is highly likely to become a doctor.</p>
 <p>This is acquired by two mechanisms. The first mechanism is the fact that the extra preparation for the exam allows potential students see the effort required and if they are not willing to put in the effort they can change their mind before the admission exam. The second mechanism keeping student from quitting is the <a href="https://en.wikipedia.org/wiki/Sunk_cost">sunk cost fallacy.</a> For this reason, I will only take into account the admittance rate and that can be taken from the university’s website.</p>
 <p>In this case I will use the <a href="http://www.umfcluj.ro/component/content/article/8-ro/595-rezultate-admitere-2020_?Itemid=216">2020 admissions</a> for the University of Medicine and Pharmacy in Cluj-Napoca. The admittance rate is simple, how many people were admitted over how many applied. The admitted numbers were as follows:</p>
@@ -186,8 +184,7 @@ One more thing I would like to add, I would like to know which is the potential 
 <li>17 - Dental Medicine Tax</li>
 <li>591 - Rejected</li>
 </ol>
-<p><span class="math display">\[admit\_rate = \frac{318 + 60 + 80 + 17}{318 + 60 + 80 + 17 + 591} = 0.4465291 \]</span>
-There, my chances are 45%. Now I will code this chance by simply generating a list of 10,000 elements which are either 0 or 1 and 4500 of them are 1. Then I will simply multiply the two lists. If a salary is multiplied by a 0 it will signify that I did not make it as a doctor.</p>
+<p><span class="math display">\[admit\_rate = \frac{318 + 60 + 80 + 17}{318 + 60 + 80 + 17 + 591} = 0.4465291 \]</span> There, my chances are 45%. Now I will code this chance by simply generating a list of 10,000 elements which are either 0 or 1 and 4500 of them are 1. Then I will simply multiply the two lists. If a salary is multiplied by a 0 it will signify that I did not make it as a doctor.</p>
 <pre class="r"><code># The list that will show me if I have made it or not
 admittance_rate &lt;- rbinom(n = 10000, size = 1, prob = 0.45)
 
@@ -196,13 +193,11 @@ dr_sal_final &lt;- dr_sal_final * admittance_rate
 
 # Just to be sure, I would like to see the rate
 print(sum(admittance_rate) / 10000)</code></pre>
-<pre><code>#&gt; [1] 0.4479</code></pre>
-<p>=======
-&gt;&gt;&gt;&gt;&gt;&gt;&gt; d1c1ead9f59f46e37ee33d223f6ebec8215dd033
-I will take a look at the numbers in the analysis part, this is just the preparation of the data. Now, let’s see if we can estimate how much does an IT professional earn.</p>
+<pre><code>#&gt; [1] 0.4525</code></pre>
+<p>I will take a look at the numbers in the analysis part, this is just the preparation of the data. Now, let’s see if we can estimate how much does an IT professional earn.</p>
 </div>
-<div id="part-of-the-it-crowd" class="section level2">
-<h2>Part of the IT Crowd</h2>
+<div id="the-it-crowd" class="section level2">
+<h2>The IT Crowd</h2>
 <p>Fortunately for me, Romania has one of the most active IT sectors in this part of Europe and it is expanding continuously. This is a good thing for someone looking to start on this career path because it offers a lot of opportunities. All I need now is to check if those opportunities are worth it or not. For this I have found a beautiful analysis on 1,267 salaries for IT professionals that can be seen <a href="https://www.averagesalarysurvey.com/romania">here</a>.</p>
 <p>The sample used in the analysis is large enough to give me a good estimate of how the salaries are distributed in the IT sector. The data is a bit skewed and slightly more than half the people have an income level slightly below the average. This effect is most likely caused by the income of the managers and directors as they have significantly higher income. The higher income raises the average salary value, however this is not a problem, I will just need to estimate the amount of managers and directors and account for that.</p>
 <p>As for the medical salaries, I will like first to figure out:</p>
@@ -223,7 +218,7 @@ it_sal_dist &lt;- c(it_sal_low, it_sal_high)
 
 # The average of my salary distribution should be similar to that on the website
 mean(it_sal_dist)</code></pre>
-<pre><code>#&gt; [1] 112496.3</code></pre>
+<pre><code>#&gt; [1] 112842.7</code></pre>
 <p>From what I can see the distribution I have created has the same average salary as the population on the website so I can safely assume that the distribution I have created more or less resembles the population I want to recreate. The distribution looks like this:</p>
 <pre class="r"><code>it_sal_dist %&gt;% 
   histogram() +
@@ -275,8 +270,7 @@ it_sal_dist_net_eur &lt;- it_sal_dist_net / 5</code></pre>
 <li>NL100 (also known as 100NL) = ¢50 / $1 blinds</li>
 </ul>
 <p>Considering that I would have to focus on winning big blinds and not hands, my winnings will be influenced by the value of the big blind. The formula can be seen below:</p>
-<p><span class="math display">\[ (winning\_chance \times blind\_value) \times \frac{played\_hands}{100}  \]</span>
-Usually a professional poker player will play around 100,000 hands a month. I think that would be a fair number for my approximations. I am going for this career out of laziness, the opportunity of easy money, and the possibility to make my own hours so I will not overdo it. The next thing that I will need will be the winning rates for each type of table. I will use the probabilities from this <a href="https://www.blackrain79.com/2014/06/good-win-rates-for-micro-and-small_6.html">blog post</a> and since I have already decided that I will play a fixed number of hands each month, I will use the higher win rates in the tables. Now I will compute the monthly win rate for each table. I will transform them into dollars directly.</p>
+<p><span class="math display">\[ (winning\_chance \times blind\_value) \times \frac{played\_hands}{100}  \]</span> Usually a professional poker player will play around 100,000 hands a month. I think that would be a fair number for my approximations. I am going for this career out of laziness, the opportunity of easy money, and the possibility to make my own hours so I will not overdo it. The next thing that I will need will be the winning rates for each type of table. I will use the probabilities from this <a href="https://www.blackrain79.com/2014/06/good-win-rates-for-micro-and-small_6.html">blog post</a> and since I have already decided that I will play a fixed number of hands each month, I will use the higher win rates in the tables. Now I will compute the monthly win rate for each table. I will transform them into dollars directly.</p>
 <p><span class="math display">\[ Avg\_NL2   = (10 \times \frac{2}{100}) \times \frac{100000}{100} = \$200\]</span></p>
 <p><span class="math display">\[ Avg\_NL5   = (6 \times \frac{5}{100}) \times \frac{100000}{100} = \$300\]</span></p>
 <p><span class="math display">\[ Avg\_NL10  = (4 \times \frac{10}{100}) \times \frac{100000}{100} = \$400\]</span></p>
@@ -290,13 +284,11 @@ Usually a professional poker player will play around 100,000 hands a month. I th
 <p><span class="math display">\[ Elite\_NL25  = (10 \times \frac{25}{100}) \times \frac{100000}{100} = \$2500\]</span></p>
 <p><span class="math display">\[ Elite\_NL50  = (9 \times \frac{50}{100}) \times \frac{100000}{100} = \$4500 \]</span></p>
 <p><span class="math display">\[ Elite\_NL100 = (8 \times 1) \times \frac{100000}{100} = \$8000 \]</span></p>
-<p>There seems to be quite a gap between the two brackets. Here we can see that we encounter the same problem as with did with the IT crowd. Elite player earn significantly more that average professional players and they are way fewer. Fortunately for us this is also not a power law distribution because a player is limited on how much he can earn on one hand just from blinds and he can play just so many hours in a month, therefore it is highly unlikely to see someone earn in the millions in one month. These population of elite players is around 10%.</p>
-<p>=============================================================</p>
-<p>We can see that this is not anywhere near a normal distribution. By the definition of professional players, we know that they are the ones that actually earn enough so that they can survive of this income. This leaves us with a skewed distribution. I think we can safely assume that most professional players are average players and the elite that earn as much as we have shown here are a small percent 10%. With that said, we can start creating the population of online poker players.</p>
-<p>Another assumption is that professional poker players will not spend all their time in NL2, NL5 and NL10 games, will most likely spend it on something that will provide more income. This is also consistent with the living wage assumption. I know $750 might not seem much in a month for most Western democracies, however, it is quite a decent income in second and third world countries. So, how are we going to do this?</p>
-<p>Simple, we will create two distributions that will reflect the average player and the elite player. The first one will be 90% of the population and the second one will be the other 10%</p>
+<p>There seems to be quite a gap between the two brackets. Here we can see that we encounter the same problem as with did with the IT crowd. Elite player earn significantly more that average professional players and they are way fewer. Fortunately for us this is also not a power law distribution because a player is limited on how much he can earn on one hand just from blinds. Since he can play just so many hours in a month it is highly unlikely to see someone earn in the millions in one month. These population of elite players is around 10%. I will have the same approach as I did for the IT workers when creating the distribution.</p>
 <pre class="r"><code>avg_player &lt;- rnorm(9000, 1400, 300)
+
 elt_player &lt;- rnorm(1000, 4000, 1000)
+
 poker_players &lt;- c(avg_player, elt_player)</code></pre>
 <pre class="r"><code>poker_players %&gt;% 
   histogram() +
@@ -304,13 +296,31 @@ poker_players &lt;- c(avg_player, elt_player)</code></pre>
        subtitle = &quot;Professional Poker Players&quot;)</code></pre>
 <pre><code>#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-3-1.png" width="100%" /></p>
-<p>This distribution seems legit for a power law distribution. And now, for the final touch, we will need to add the 10% chance to become a professional player. We will do this by using the list we have created earlier. For this we will create a binomial distribution with a 10% probability and a size 1. Basically we can create a random string of values, either 1 or 0 and about 10% are one. Let’s see it in practice.</p>
-<pre class="r"><code>success_prob &lt;- rbinom(n = 10000, size = 1, prob = 0.1)
+<p>The distribution seems OK from what was described in my source. Now, for the final touch, I just need two more steps:</p>
+<ol style="list-style-type: decimal">
+<li>Transform the data in lifelong earnings</li>
+<li>Add the probability of actually making it as as professional poker player as we did for the medical career path</li>
+</ol>
+<p>So, for how long should I expect to be active in this domain? This is a bit tricky because it is not a career recognised by the Romanian government so there is no pension plan for it. This means that I am not forced to retire at 65, I can do it earlier or later, however since I want to compare apples with apples I will account for working until 65 as for the previous two careers.</p>
+<p>And all I need to know now is when can I start working? Since there are no study requirements or skill assessment to start this, you just need to log in an play, I would be able to start any time. If I want maximum income and experience gain, I will start at 19, as soon as I finish high school. This would mean:</p>
+<p><span class="math display">\[ months\_played = (65 - 19) * 12 = 552 \]</span>
+And now for the last part, the probability to become a professional poker player. As mentioned above, the probability is 10% according to the blog.</p>
+<pre class="r"><code># Poker Players LIFELONG earnings
+poker_players &lt;- poker_players * 552
+
+# The list that will show me if I have made it or not
+success_prob &lt;- rbinom(n = 10000, size = 1, prob = 0.1)
+
+# Now I will add the chance to the previous list
+poker_players_final &lt;- poker_players * success_prob
+
+# Just to be sure, I would like to see the rate
 print(sum(success_prob) / 10000)</code></pre>
-<pre><code>#&gt; [1] 0.1011</code></pre>
-<p>Perfect, 10.11% is exactly what we would expect.</p>
-<p>Now all we need to do is multiply the two lists. When a value in the second list is 0 it will transform the earnings to 0, so we did not make it as a professional poker player. When it is 1 the result will not be affected.</p>
-<pre class="r"><code>poker_players_final &lt;- poker_players * success_prob</code></pre>
-<p>Now that we painfully and to the best of our knowledge created the populations, let’s proceed in analysing the data.</p>
+<pre><code>#&gt; [1] 0.098</code></pre>
+<p>9.80% is exactly what it is to be expected.</p>
+<p>All I need right now is to analyse the data and see which career path is better for me.</p>
 </div>
+</div>
+<div id="data-analysis" class="section level1">
+<h1>Data Analysis</h1>
 </div>
