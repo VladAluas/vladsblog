@@ -315,7 +315,6 @@ it_sal_dist %>%
 ```
 
 This is not a normal distribution, but that was to be expected, however it is not a power law distribution either. This can become a power law if I take into account if I consider developing an app and make it big.
-<<<<<<< HEAD
 
 It is a bit complicated to get data on what is the success rate of an app. An interesting and comprehensive summary can be found in this  [article](https://venturebeat.com/2017/09/24/your-chances-of-making-a-successful-mobile-app-are-almost-nil/). I can see that I will need €25,000 as initial investment and I need to make a full time job out of it and afterwards you need to invest in marketing and spend a lot of time adjusting ASO. For me this would have been a potential career if it would have been possible to spend some weekends creating the app, uploading it to an app store and be done with it.
 
@@ -323,15 +322,6 @@ From what I've seen there is virtually no chance of that and I do not plan on sp
 
 With this in mind, I will assume that the salaries are as shown in the graph above. The mentioned salaries are annual salaries in RON before tax. Now I will just need to adjust them to something more useful.
 
-=======
-
-It is a bit complicated to get data on what is the success rate of an app. An interesting and comprehensive summary can be found in this  [article](https://venturebeat.com/2017/09/24/your-chances-of-making-a-successful-mobile-app-are-almost-nil/). I can see that I will need €25,000 as initial investment and I need to make a full time job out of it and afterwards you need to invest in marketing and spend a lot of time adjusting ASO. For me this would have been a potential career if it would have been possible to spend some weekends creating the app, uploading it to an app store and be done with it.
-
-From what I've seen there is virtually no chance of that and I do not plan on spending all the effort needed for a successful app so I will not include this in the analysis.
-
-With this in mind, I will assume that the salaries are as shown in the graph above. The mentioned salaries are annual salaries in RON before tax. Now I will just need to adjust them to something more useful.
-
->>>>>>> d1c1ead9f59f46e37ee33d223f6ebec8215dd033
 First of all, I will need to extract the taxes. At the time of this writing IT professionals are exempt from the income tax, so all I would need to pay would be:
 
 -   Social Security: 25%
@@ -348,17 +338,10 @@ it_sal_dist_net_eur <- it_sal_dist_net / 5
 ```
 
 Now all is left is to see for how long I would expect to work in the industry?
-<<<<<<< HEAD
 
 Most people working in the IT industry start working while studying at university. I will not count these jobs because most of them are really low paying or they are unpaid internships. This situation allows people to get a proper job right after finishing university or even a bit before graduation. I will keep my assumption that I will finish high school at 19 so I have a starting point. 
 
 If you are studying software engineering, in Romania, you can either study for three or four years, depending if the university follows the Bologna system or not. This does not really matter because it is not the only way to get to work in IT. There are a lot of people who attend a professional conversion and they usually do this at a latter age. So, if I were to account for that as well, I think it would be pretty safe to assume that I would start work around 25.
-=======
-
-Most people working in the IT industry start working while studying at university. I will not count these jobs because most of them are really low paying or they are unpaid internships. This situation allows people to get a proper job right after finishing university or even a bit before graduation. I will keep my assumption that I will finish high school at 19 so I have a starting point. 
-
-If you are studying software engineering, in Romania, you can either study for three or four years, depending if the university follows the Bologna system or not. This does not really matter because it is not the only way to get to work in IT. There are a lot of people who attend a professional conversion and they usually do this at a latter age. So, if I were to accont for that as well, I think it would be pretty safe to assume that I would start work around 25.
->>>>>>> d1c1ead9f59f46e37ee33d223f6ebec8215dd033
 
 Considering that my goal is to retire at 65, I have 40 years of work ahead of me, so all I need to do is multiply everything by 40.
 
@@ -367,15 +350,12 @@ it_sal_dist_net_eur <- it_sal_dist_net_eur * 40
 ```
 
 As in the first part, I will check the data once everything is prepared. First, I would like to see if my idea of making a living as a poker player is feasible.
-<<<<<<< HEAD
 
 ## Poker Star
 
 This was one of the most exhausting researches I've done so far. There are some huge problems problems I encountered while trying to gather data for this career path. This is to be expected as I imagine that casinos are not willing to let everyone what are the real chances of winning by revealing the numbers. This was to be expected, however I had hoped that I will be able to find some kind of information regarding this but no luck in this.
 
 So I decided to change my tune and see if an online poker career would be better suited? Going online has one additional advantage although that is of no moment, it requires less funds with which to start.
-=======
->>>>>>> d1c1ead9f59f46e37ee33d223f6ebec8215dd033
 
 With that being said, in the next section I will like to answer the following questions:
 
