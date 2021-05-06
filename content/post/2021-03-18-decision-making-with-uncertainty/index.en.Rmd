@@ -7,58 +7,71 @@ categories: ["Opinion"]
 tags: ["Monte Carlo", "decision making", "uncertainty", "chance"]
 thumbnail: /images/chance-logo.png
 draft: true
+code_folding: show
 ---
 
-**Insert Lead paragraph here.**
+> We sail within a vast sphere, ever drifting in uncertainty, driven from end to end.
+>
+>`r tufte::quote_footer('--- Blaise Pascal')`
+
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE, comment = "#>", collapse = FALSE, out.width = "100%")
 
-library(tidyverse)
 library(scales)
+library(tidyverse)
+library(kableExtra)
 ```
 
 ------------------------------------------------------------------------
 
-People make all kind of decisions on a daily basis, with different levels of consequences and almost all of them are taken for unknown reasons. By this I mean that most of the decisions we take are taken by the emotional part of out cognitive system and rationalised by the rational part (Daniel Kahneman calls them *system 1* and *system 2*). I am not going to go into details about this, however I will point out some of the ways in which this phenomenon affects out decision making. If you want to go into details on the subject I highly recommend the book *Thinking Fast and Slow* by Daniel Kahneman.
+People engage in decision making on a daily basis and although most of our decisions seem to derive from logical arguments, the truth is that exactly the opposite is true. Most of the decisions we make are due to [biases](https://en.wikipedia.org/wiki/List_of_cognitive_biases) and [heuristics](https://en.wikipedia.org/wiki/Heuristic) our minds have developed to respond to the environment around them faster.
 
-My purpose in this article is to show some of the ways in which we can reduce uncertainty when it comes to taking a decision and trying to take the outcome that is less likely to be influenced by chance.
+These tendencies have been first described and studied by [Amos Tversky](https://en.wikipedia.org/wiki/Amos_Tversky) and [Daniel Kahneman](https://scholar.princeton.edu/kahneman/home) and have been explained in Kahneman's excellent book: *Thinking fast and slow*. I highly recommend the book since it is an excellent guide in where our minds tend to be error prone and mislead us. I will explain in brief however that our minds operate as two separate system called by Kahneman and Tversky *system 1* and *system 2*.
 
-# Decision Consequences
+*System 1* is the default system of the mind, the one used for everyday activities. These activities include walking, breathing, detecting danger and avoiding it, eating, doing routine activities, and all activities that do not involve heavy cognitive effort. *System 1* is emotional, automatic, fast and uses no extra energy from our energy hungry brains.
 
-I would like to begin with a brief by pointing out that not all decisions we make have the same consequences, or affect us in the same way. Your decision to have a pretzel for breakfast instead of a salad might have consequences later in life if you repeat this behaviour multiple times. Otherwise, you are quite safe to do so from time to time.
+*System 2* is the exact opposite of *System 1*. It is rational, quite slow, and requires a large amount of energy and effort from our part. *System 2* allows you to analyse in detail every situation, however this is not always ideal. If a car would come speeding towards you, *System 2* would analyse the colour of the car, the brand and maybe the speed and approach vector, which is a nice thought exercise but might get hit by the car before *System 2* would act. *System 1* will not bother with all those details, it will just register car coming towards me with great speed, I need to move out of the way.
 
-Not the same can be said about a decision to bet all your savings on a race or a sports game. Considering your saving amount to a decent sum, your bet can leave you without anything you have saved or can increase your saving quite drastically.
+The problem when making decisions is that there are situations moderated or mediated by the aforementioned biases and heuristics in which *System 1* might make the decision and our minds might think it is actually *System 2*. Otherwise said, we might make decisions for subjective reasons and have a high degree of confidence in then believing they are objective.
 
-So, as we can see consequences can vary quite a lot in the outcome type (positive / negative) and in their magnitude. The focus of this article will be to check how we can better understand the consequences of our decisions, try to avoid large negative outcomes and should it be the case seek out large positive ones.
+In this article I would like to show some methods that can reduce these types of biases and help in engaging *System 2* in the decision making process.
 
 # Distribution Types
 
-In order to be able to continue, I want to explain that not all things are as predictable as they seem and this is because not all things are distributed equally.
+I would like to start with some examples how some situations can seem similar on the surface and have massively different outcomes. This is one of the most common situations in which *System 1* makes the decision and we might not notice.
 
-What do I mean by that? Let's give some examples to make it clear.
+I would like to start with some examples as it is way easier. Let us say we are at a music festival (I know, I know...) together with 9,998 other people. We are lucky enough to have information about this crowd and we know that the average age is 24.5 years old. We also know that the average net income for the crowd is \$65K. With this information at our disposal we can play around with the impact of one person.
 
-Let's say you go to a festival (I know, I wish it as well) of around 10.000 people. Considering the people who tend to frequent such gatherings, I will guess that the average age of the people there is between 22 and 27 years old. For the purpose of our example I will say 24.5.
-
-Now, think of the oldest person you have heard of, it can be anyone does not matter. Add their age to the calculation of the average. Does it make a bit difference? No, I does not. Even if you think of the oldest fictional person, Methuselah, with his age of 969 does not impact the average by much (I know some sumerian kings are supposed to have lived for thousands or tens of thousands of years, however they used a different counting system so we cannot be sure how they actually counted). So, let's see the impact of Methuselah on the average age.
+Firstly, I would like you to think of the oldest person you know. It does not have to be alive any more. What would happen if we were to add their age to the average? Since I cannot read your mind, I will jump in with the oldest person that pops to my mind, Methuselah at a respectable 969 years old. So, let's see the impact of Methuselah on the average age.
 
 $$m_{age} = \frac{10,000 \times 24.5 + 969}{10,001} = `r (10000 * 24.5 + 969) / 10001`$$
 
-Not such a big impact is it.
+Not much of an impact, is it?
 
-For the second example of a distribution, I would like to see the average net worth of the crowd. I will assume that since the people at this festival are quite young, most of them do not have a lot o noteworthy possessions as of yet, however to compensate for those who do, I will say the average is around \$65K. Now, following the logic we used above, if you think of the richest man you know of and add him or her (Oprah can just as easily skew the data) to the crowd, how much will the average change?
+Secondly, let us try the same impact for net worth. Think of the richest person you know and try to figure out what would their impact be on the crowd, how much will the average change?
 
-I'm thinking of Elon Musk although at the time of writing this article he is work a measly \$169B as opposed to Jeff Bezos' \$193B, however I'm a big fan of Musk so let's check with his net worth.
+I'm thinking of Elon Musk although at the time of writing this article he is worth a measly \$169B as opposed to Jeff Bezos' \$193B. I'm a fan of Musk so let's check with his net worth.
 
-$$m_{net\_worth} = \frac{10,000 \times 65,000 + 169,000,000,000}{10,001} = \$16,963,304$$ Quite a difference, right? I'd say so.
+$$m_{net\_worth} = \frac{10,000 \times 65,000 + 169,000,000,000}{10,001} = \$16,963,304$$
 
-### Normal Distribution
+Quite a difference, right? I'd say so.
 
-In the first example the data is not that impacted that strongly because it follows a [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution). A normal distribution is a phenomenon observed by [Carl Gauss](https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss) in which the characteristics of a population (of a variable to be more precise) tend to cluster towards the average value and the further you go from the average value, the less likely it is to happen.
+This difference is because the two characteristics of the music enthusiasts population follow two different distribution types. The first example follows a normal distribution while the second one follows a power law distribution.
 
-Basically, if we have a set of data that follows a normal distribution, we can be quite certain that outliers, or values that will significantly impact our outcome are highly unlikely to happen. In out example, you cannot point to a single person that can impact the average height of the festival, only if you find someone who is several kilometres tall.
+Some basic characteristics of population distribution will be essential in our analysis, so I will take a few moments to explain the two types of distribution I mentioned earlier, although a distribution can have many other variations.
 
-These types of data usually are the ones that measure natural phenomena, as mentioned earlier. They can include but not be limited to:
+## Normal Distribution
+
+As mentioned above the age of the music enthusiasts is distributed [normally](https://en.wikipedia.org/wiki/Normal_distribution). A normal distribution is a phenomenon observed by [Carl Gauss](https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss) and it can help us a lot in our analysis due to its [properties.](https://www.statisticshowto.com/probability-and-statistics/normal-distributions/)
+
+A normal distribution means that most individuals in a population are close to the average and the further we go from the average the fewer individuals in the population. If we take height as an example, most people will be around average height in a population and the ones that are extremely tall or extremely short being a rarity. The more extreme the height (taller or shorter) the less likely to find someone with that height.
+
+If a population has an average height of 1.75m (5.74 ft), you will have an easier time finding someone who is 1.9m (6.2 ft) than someone who is 2.13m (7 ft). Also the chances of finding someone who is 7km (4.3 mi) tall is virtually zero.
+
+This is a good thing because it allows us to asses a population quite easy using a sample. Even if our estimates based on the sample are off, if the sample was not biased, we can be fairly certain that we will not be off by much.
+
+Data that falls under a normal distribution are usually the ones that measure natural phenomena. They can include but not be limited to:
 
 -   height
 -   weight
@@ -66,49 +79,65 @@ These types of data usually are the ones that measure natural phenomena, as ment
 -   reaction times
 -   average time spent playing video games
 
-### Power Law Distribution
+## Power Law Distribution
 
-The other effect we can observe is called a power law and sometimes a [Pareto Distribution](https://en.wikipedia.org/wiki/Pareto_distribution), especially in finance, or the 80-20 rule. The last one is the best known and is usually formulated as 20% of individuals control 80% of the assets.
+The other effect we have observed is called a power law distribution, or for those who work in the financial sector a [Pareto Distribution](https://en.wikipedia.org/wiki/Pareto_distribution), and I think it is best know as the *80-20 rule* most commonly remembered as: "20% of the people control 80% of the assets."
 
-As we could see in the example above, in such a distribution, just one observation can impact everything significantly and that is why we need to take the type of distribution into consideration when taking a decision. Not taking this into consideration we have a lot of people calling themselves actors, writers or singers and not what they actually do for a living, most likely bartenders, waiters or other job unrelated with their self-reported career.
+This type of distribution can masquerade itself as a normal distribution but is not. It has a lot of dwarves and a few giants and that is why you cannot make any estimations using any of the normal distribution indicators. If you take a sample of dwarves you cannot estimate the impact of a giant.
 
-This is not meant as an insult for the people who do this, it is just to point out that in some fields, especially the ones that are scalable (once you create something it is easy to replicate without any effort from your part) this distribution tends to be very skewed and a few people control most of the resources.
+Ignoring this fact is why we have a lot of people calling themselves actors, writers or singers and not what they actually do for a living, most likely bartenders, waiters or other job unrelated with their self-reported career.
 
-### Distributions in Decision Making
+## Distributions in Decision Making
 
-The most important thing to remember in regards to distributions is that if we have to make a decision in regards to a normal distribution, we can be pretty sure that the average of the distribution is quite indicative of what is happening. We can use a sample without any problem. Does not matter whom do we pick from a crowd to measure the average height, even if we get the average height wrong, it will be off by just a small margin.
+Here is where it is important to know a bit about distributions.
 
-This cannot be said about a power law distribution. One individual is nothing like each other, you either have dwarves or giants and if you take a sample of dwarves you cannot measure the impact of a giant, and therefore an average of any measure from a sample of such a distribution is useless.
+If I were to propose a bet in which you are allowed to sample 100 people from the festival mentioned earlier and give some information about the population based on that sample, in which bets you would engage?
 
-So, how do we distinguish between the two kinds of distributions in the real world and how can we apply this knowledge in decision making? For this there is no straightforward answer, however, there are some methods that can help in evaluating the impact of different decisions.
+1.  Education level
+2.  Number of cars owned
+3.  Amount of beer drunk weekly
 
-In the next section I will describe a problem, I will explain my reasoning in adding and analysing variables to it and I will show how you can use a [Monte Carlo method](https://en.wikipedia.org/wiki/Monte_Carlo_method#:~:text=Monte%20Carlo%20methods%2C%20or%20Monte,might%20be%20deterministic%20in%20principle.) to make sure that you can take the best decision out of all of them. Or the one that is best suited for your needs, I should say.
+I would go for education level since it is highly unlikely someone has spent 50 years in education. And even if it is so, the impact to 10,000 will be small. The same goes for amount of beer drunk weekly. If there is someone who drinks thousands of beer weekly you might be in trouble, but not as much as they are. I think you would be safe with that bet.
+
+But what about the amount of cars? Well, here it can get a bit tricky. Most people have one or two cars. But what happens if in the crowd is the Sultan of Brunei with a car collection of 7000 cars? Considering the low age of the crowd, it is possible that he owns more cars that the whole crowd put together. This would not be a problem if you can include him in the sample however a sample of 100 people out of 10,000 give you a chance of 1% to include him in it. This means that 99 times out of 100 your sample will underestimate the average number of cars owned by the crowd.
+
+This is why it is important to try and figure out what kind of distribution has the population to which you are trying to make a decision and adjust your decision making accordingly. In the following section I will describe a problem which would be interesting to solve, what career would be best if I were to choose again, and see how we can take advantage of these distributions.
 
 # The problem
 
-Let us imagine that you would like to choose a career. You are not really sure what you would like to choose because you don't have a particular career for which you have a strong calling, however there are some that seem decent to you:
+In the next section I would like to show in brief what would be my thought process if I were to choose a career once more and assuming that I have the knowledge I have now.
 
--   The first option would be doctor. You have seen a lot of medical procedurals and it looks great and exciting, however it would be even better if you can set up your own practice and be the master of your own destiny. Also it would be better paid
--   The second option would be to work in IT. It still seems like a great job because you can have a lot of puzzles with which to play and if you mess something up you don't endanger someone's life.
--   The third option is to disregard all safe plans and go for something that will let you retire early. After all, you have seem many people win big at poker of blackjack and they are far from you cognitive prowess, therefore it might be riskier, however, if anyone has a chance of doing it, it's you.
+First of all I would need to know what do I expect from a career, money, fame, free time, all of those? There can be multiple variables analysed here, however for the sake of simplicity I will keep it short and analyse just one. So, in this analysis the most important factor in choosing a career is how much income can this career generate during a person working life.
 
-However, all these options seem good and you can't really choose out of any of them. So, how do you decide with which career you would end up better at retirement? For the sake of this example and to make it easy to understand and reproduce, we will only take into account the amount of money you will earn over your career, however using the same principles you can calculate as many variables as you like.
+Now, what careers are on the short list?
+
+1.  The first option would be doctor. This is a good option in my opinion as it is supposed to be well paid, and one can find work almost everywhere. Wherever there are people, there are sick people and a doctor will always be in demand. A medical career offers a lot of variety in both specialities and type of practice which is always good to have.
+2.  The second career option would be one in IT. This is also rumoured to be well paid and besides that it can give one a lot of puzzles with which to play. I like challenges and spending time figuring out puzzles so this seems a good choice for me. As a bonus, any mistakes made as a programmer can be easily patched and fixed, and most mistakes made by programmers do not endanger anyone's life, as opposed to a doctor's mistake.
+3.  The third option is one that is highly appealing because it can generate a lot of income with minimal effort. This is on the surface and it remains to be seen when we analyse the data. The career is poker player. I like the idea to create my own schedule and work when I want from where I want. It remains to be seen if this is such an appealing option as it seems at first.
 
 # The method
 
-Since you are an amazing fellow, you can assume that you will not only outperform your peers in gambling, but you will do so even if you are a dentist or a programmer, so we will eliminate this from the equation since it is a constant. So in order to answer the question we will check how an average person performs the task.
+Everything in nature is subject to variety so we will assume that the income will vary as based on different factors. Therefore we cannot generate a single number and say *"There! this is the expected income if you choose this career!"*.
 
-Since one example cannot tell us much about what might happen, we will set up some conditions for each of the career paths and generate some random numbers that abide by each condition.
+As an example, if I were to choose to study medicine, I might have an idea of what kind of doctor I want to be, however that does not guarantee that I will end up in that particular field. I might not like the field once I go into the nifty gritty of it, or I might like another field more once I find out more about it. Since I cannot control that I will try to simulate multiple outcomes and see overall which career is the best taking into account its highs and lows.
 
-This will simulate our outcome at retirement if we were to live multiple lives and work in each domain for some of those lives. After this we can simply check the results and see which one of the careers would give us the better chance for a retirement.
+*E.g.:* If I were to choose between being a janitor who just won the lottery and being a doctor, I would chose to be the janitor. However, if I were to chose between the two and live 10,000 I would choose the doctor because the other 9,999 time it is the better outcome.
+
+How do we do this?
+
+We will gather data on each of the three career paths we have chosen and we will analyse it to try and figure out which are the main characteristics of the three populations, doctors, IT workers, and poker players. We will try to find out what is the average salary, how much does it usually vary from there, and if there is a tendency of most salaries to be over or under that average. Once we have all this information, we will extract a sample of that data of 10,000 randomly chosen salaries.
+
+The salary information will be from the Romanian job market since I am based in Romania.
 
 ## Coding examples
 
-In order to better asses the situation, I will use some code. The code is written in *R*, however it can be ignored completely if you do not want to bother with it. I will try my best to comment the code properly so you can follow even if you are not familiar with *R*. If you want to learn more about this particular programming language, I would recommend [R for Data Science](https://r4ds.had.co.nz/), a brilliant book that is the perfect starting place.
+Since we are analysing data we will need a tool that will allow us to do so. I will use *R* since it is a versatile tool that will allow us to create distributions and visualise then quite easily. The code can be completely ignored if you do not want to reproduce or analyse it, you can just focus on the graphs and the results. If you want to learn more about *R* I would recommend [R for Data Science](https://r4ds.had.co.nz/), a brilliant book that is the perfect starting place.
 
-Let's start coding. At first I would like to set up the variables that I will use in this article. I will explain later why I use these values, however I will use them repetedly so I will like to set them up now avoid changing them later in multiple places.
+Let's start coding. At first I would like to set up the variables that I will use in this article. Since we will use these values multiple times in the article, I will store them here and if we need to adjust them at a later date, I can just change the values once, in here.
 
-```{r variables, include = FALSE}
+The first values we want to encode are the average salaries. At the moment you can ignore the values, they will make sense when we come to the analysis itself.
+
+```{r variables}
 # Medical Salaries
 dr_sal_mean <- 21100
 
@@ -117,20 +146,21 @@ it_sal_med_high <- 225000 # Median Salary for Managers and Directors in IT
 it_sal_med_low  <- 92809  # Median Salary for the everyone else working in IT 
 ```
 
-Next I will like to write some custom function that will allow us to focus on the results, not on endless lines of code.
+The salaries are encoded in here not later when we are analysing the careers themselves because it is a good practice to keep the variables in one place and the same goes for custom function. I will add some in here as well. This functions just store some lines of code that we will need to repeat over and over again and it is good coding practice to store such lines of code in one function so you can avoid having too many lines of code. Also, if we want to change something at a later date, we just need to adjust everything in one place.
 
-```{r functions, include = FALSE}
+```{r functions_hist}
 # Graphical function to avoid writing the same lines over and over
-histogram <- function(.df){
+histogram <- function(.df, .var = Income){
   
   .df %>% 
-    tibble() %>% 
-    ggplot(aes(.)) +
-    geom_histogram(colour = "white", fill = "#2484cc") +
+    ggplot(aes({{.var}})) +
+    geom_histogram(fill = "#2484cc", colour = "white") +
     labs(x = "Income", y = "") +
-    scale_x_continuous(labels = label_dollar(prefix = "€"))
+    scale_x_continuous(labels = label_dollar(prefix = "", suffix = "RON"))
 }
+```
 
+```{r function_ron}
 # Just a simple function to format the Romanian currency so I can used stored variables.
 ron_format <- function(.x){
   require(scales)
@@ -139,145 +169,197 @@ ron_format <- function(.x){
 }
 ```
 
-# The careers
+With this out of the way, we have everything we need set up. The only thing that remains is to start analysing each career and then comparing them.
 
-In the next section I will describe each career, the variables that I will take into account and I will expose the code I will use to do so, if anyone wants to replicate it. The code is written in *R*.
+# The careers
 
 ## The Doctor (of the medicine not Who variety)
 
-I all societies doctors are well respected and well paid. However, not all doctors are paid the same. We can assume that a neurosurgeon is paid better than a internist although not as well as a plastic surgeon.
+Being a doctor is a well respected career in all societies and it tends to be well paid and our target job market, Romania, is not exception to this.
 
-I have found a data source that seems to have done a pretty good job in assessing the average salary for a doctor. The information was taken from the [salaryexplorer.com](http://www.salaryexplorer.com/salary-survey.php?loc=178&loctype=1&job=13&jobtype=2) website. The salary is expressed in the local currency of Romania (RON) and the salaries are expressed before tax. These two impediments are nothing too difficult as we can easily translate everything into Euro, and extract the taxes.
+Even though doctors are well paid in Romania, their income varies depending on different factors like the speciality, experience, degree level and many more. My purpose in the next section is to figure out:
 
-According to the National Bank of Romania, the conversion rate is 1 RON for 0.20 €.
+1.  What is the average salary for a doctor in Romania
+2.  What is the variation from the average
+3.  What is the distribution of those salaries
 
-In regards to the taxes, the Romanian government imposes taxes on the on the employee as follows:
+After I have this information, I can apply all the necessary transformations to have the lifetime earnings of a doctor expressed in Euro(€).
+
+Before I can do all that I will need a data source and finding it can get frustrating. Although there are a lot of websites that offer this information, they are not always reliable, so I prefer to use official databases (*e.g.* [eurostat](https://ec.europa.eu/eurostat)), scholarly articles, or websites that offer transparency regarding their sources.
+
+For this particular situation, I have found [salaryexplorer.com](http://www.salaryexplorer.com/salary-survey.php?loc=178&loctype=1&job=13&jobtype=2). I believe they are reliable in their claims and their sources can be seen at the bottom of the [page.](http://www.salaryexplorer.com/). The displayed salaries are in the local Romanian currency, RON, before tax. Applying the tax and converting to € will be easy once I have determined the larger problems mentioned earlier, *average salary*, *variation*, and *distribution.*
+
+The first part is the easiest to figure out. The average salary is mentioned in the beginning of the article, `r ron_format(dr_sal_mean)`.
+
+Fortunately, due to the website the second and third questions are quite easily answered as well. Most salaries vary between `r ron_format(7750)` and `r ron_format(35600)`. Now, all I need to do is figure out the distribution of those salaries.
+
+The fact that the salaries are between `r ron_format(7750)` and `r ron_format(35600)` and taking a look at the list provided with the salaries for specific jobs I can conclude that the salaries are not distributed according to a power law so they are distributed normally, or as close as normal as to make not much of a difference. Since I am not dealing with a power law I can be pretty confident that even if I am off, I will not be off by much.
+
+With this said, let's create our sample and take a look at it.
+
+```{r dr_sal_graph, message = FALSE}
+dr_sal_dist <- rnorm(10000, dr_sal_mean, sd = 5000)
+
+tibble(Income = dr_sal_dist) %>% # transforms the list in a table for the graph
+    histogram() +
+    labs(title = "Monthly Income Distribution",
+         subtitle = "Medical Professionals")
+```
+
+The graphic above is a simple representation of how many people earn a specific amount on a monthly basis. As it is expected from a normal, or near normal distribution, most people earn close to the average while a few have extremely high earnings or extremely low earnings.
+
+Now that I have the distribution simulated, I can proceed with the transformation of the data so I will have the salaries in € and calculate the earnings for a lifetime. For that I will need to:
+
+1.  Deduce the taxes on these salaries
+2.  Determine how many salaries does a doctor receive in a lifetime
+3.  Convert everything to €
+
+The Romanian government imposes taxes on the on the employee as follows:
 
 -   Social Security: 25%
 -   Health Insurance: 10%
+-   Income tax on the remainder of 65% of the Gross salary: 10%
 
-The remaining 65% is considered income and that is taxed with 10%.
+This will be translated as follows:
 
-Let's start by extracting the taxes out of the average salary for doctors of `r ron_format(dr_sal_mean)`.
+$$ m_{salary(RON)} = (`r dollar_format(prefix = "")(dr_sal_mean)` - \frac{25}{100} \times `r dollar_format(prefix = "")(dr_sal_mean)` - \frac{10}{100} \times `r dollar_format(prefix = "")(dr_sal_mean)`) \times \frac{90}{100} = `r dollar_format(prefix = "")(dr_sal_mean - 0.25 * dr_sal_mean - 0.1 * dr_sal_mean)` \times \frac{90}{100} = `r dollar_format(prefix = "")((dr_sal_mean - 0.25 * dr_sal_mean - 0.1 * dr_sal_mean) * 0.9)`$$ This give me the net salary received by a doctor in Romania. All there is now to do is calculate how many such salaries one doctor receives. In Romania medical school lasts for 7 years and afterwards one needs to spend 3 to 5 years in residency. Since residency is paid I will include it in my analysis and I will consider that a doctor starts working when they start their residency. Since most people finish high-school at 19 and med school is 7 years, I will consider that one starts working at 26.
 
-$$ m_{salary(RON)} = (`r dollar_format(prefix = "")(dr_sal_mean)` - \frac{25}{100} \times `r dollar_format(prefix = "")(dr_sal_mean)` - \frac{10}{100} \times `r dollar_format(prefix = "")(dr_sal_mean)`) \times \frac{90}{100} = `r dollar_format(prefix = "")(dr_sal_mean - 0.25 * dr_sal_mean - 0.1 * dr_sal_mean)` \times \frac{90}{100} = `r dollar_format(prefix = "")((dr_sal_mean - 0.25 * dr_sal_mean - 0.1 * dr_sal_mean) * 0.9)`$$
+Since I do not plan to work more than I need to, I plan on retiring with the first chance I get. In Romania the retirement age is 65 so I will plan for that. From 26 to 65 there are 39 years of work, multiply that by 12 months I can expect to work for around 468 months.
 
-Now we can easily convert everything into Euro.
+And for the conversion to €, that is quite easy. According to the National Bank of Romania, the conversion rate is 1 RON for 0.20 € so all I need to do is divide the number by 5. So, let's code everything:
 
-$$ m_{salary(€)}  =  `r dollar_format(prefix = "")((dr_sal_mean - 0.25 * dr_sal_mean - 0.1 * dr_sal_mean) * 0.9)` \times 0.2 = `r dollar_format(prefix = "")(((dr_sal_mean - 0.25 * dr_sal_mean - 0.1 * dr_sal_mean) * 0.9) * 0.2)`$$
+```{r dr_final_income}
+# First, I will need to extract the taxes so I can compare just the NET salaries
+dr_sal_final <- (dr_sal_dist * 0.65) * 0.9
 
-With this in mind, our average income on a monthly basis, if we were to live 10000 times would be distributed something like this.
+# Now I want to transform them in LIFELONG earnings
+dr_sal_final <- dr_sal_final * 468
 
-```{r dr_monthly_salary, message = FALSE}
-dr_sal_euro <- ((dr_sal_mean - dr_sal_mean * 0.25 - dr_sal_mean * 0.1) * 0.9) * 0.2
-
-dr_sal_dist <- rnorm(10000, mean = dr_sal_euro, sd = 600)
-
-dr_sal_dist %>% 
-   histogram() +
-   labs(title = "Monthly Income Distribution",
-        subtitle = "Medical Care Workers")
+# And finally, the conversion to €
+dr_sal_final <- dr_sal_final / 5  
 ```
 
-Now, we will just need to calculate for how long does a doctor work and some other costs of being a doctor. In Romania, medical school is usually 7 years, and you usually need to spend extra 3 to 5 years for residency, although that is usually paid so I think we can just include the 7 years of study. If you finish high-school at 19 and you spend 7 years in medical school, you can start working and 26.
+One more thing I would like to add, I would like to know which is the potential success rate of me becoming a doctor? This is a bit tricky to find out for certain but I will try. Before that I think it is a good idea to write down my thought process and then I can crunch the numbers.
 
-If we want to retire at 65 and, that would give us 39 years of work or 468 months of works. So, all that we have to do is create a distribution with the mean salary after tax and multiply it by the number of months.
+Since applying for medical school requires quite a brutal exam, I will assume that no one applies for it without being serious about it and without having the discipline and study to pass the exam. This information is relevant because it allows me to safely assume that the a student once admitted is highly likely to become a doctor.
 
-```{r dr_lifelong_salary, message = FALSE}
-dr_sal_dist_total <- dr_sal_dist * 468
+This is acquired by two mechanisms. The first mechanism is the fact that the extra preparation for the exam allows potential students see the effort required and if they are not willing to put in the effort they can change their mind before the admission exam. The second mechanism keeping student from quitting is the [sunk cost fallacy.](https://en.wikipedia.org/wiki/Sunk_cost) For this reason, I will only take into account the admittance rate and that can be taken from the university's website.
 
-dr_sal_dist_total %>% 
-   histogram() +
-   labs(title = "Lifelong Income Distribution",
-        subtitle = "Medical Care Workers")
-  
+In this case I will use the [2020 admissions](http://www.umfcluj.ro/component/content/article/8-ro/595-rezultate-admitere-2020_?Itemid=216) for the University of Medicine and Pharmacy in Cluj-Napoca. The admittance rate is simple, how many people were admitted over how many applied. The admitted numbers were as follows:
+
+1.  318 - General Medicine Budget
+2.  60 - General Medicine Tax
+3.  81 - Dental Medicine Budget
+4.  17 - Dental Medicine Tax
+5.  591 - Rejected
+
+$$admit\_rate = \frac{318 + 60 + 80 + 17}{318 + 60 + 80 + 17 + 591} = `r (318 + 60 + 81 + 17)/(318 + 60 + 80 + 17 + 591)` $$ There, my chances are 45%. Now I will code this chance by simply generating a list of 10,000 elements which are either 0 or 1 and 4500 of them are 1. Then I will simply multiply the two lists. If a salary is multiplied by a 0 it will signify that I did not make it as a doctor.
+
+```{r dr_admittance_rate}
+# The list that will show me if I have made it or not
+admittance_rate <- rbinom(n = 10000, size = 1, prob = 0.45)
+
+# Now I will add the chance to the previous list
+dr_sal_final <- dr_sal_final * admittance_rate
+
+# Just to be sure, I would like to see the rate
+print(sum(admittance_rate) / 10000)
 ```
 
-Not bad, right?. Now let's see how much would someone in IT make.
+I will take a look at the numbers in the analysis part, this is just the preparation of the data. Now, let's see if we can estimate how much does an IT professional earn.
 
-## Part of the IT Crowd
+## The IT Crowd
 
-Romania has one of the most active IT sectors in Eastern Europe and it is expanding continuously which is a good thing because one will not have problems ending up in an IT job if he wants to. We will just need some data on the salaries of the IT crowd. A beautiful analysis on 1,267 salaries can be seen [here](https://www.averagesalarysurvey.com/romania).
+Fortunately for me, Romania has one of the most active IT sectors in this part of Europe and it is expanding continuously. This is a good thing for someone looking to start on this career path because it offers a lot of opportunities. All I need now is to check if those opportunities are worth it or not. For this I have found a beautiful analysis on 1,267 salaries for IT professionals that can be seen [here](https://www.averagesalarysurvey.com/romania).
 
-The sample is large enough to give us a good estimate of what the population actually looks like. We can see that the data is a bit skewed and slightly more people are just under the mean when it comes to income. This is due to the fact that managers and directors have very high salaries and they move the average up. This can be easily fixed, we just need to estimate what percentage of people working in IT are managers or directors and and account for that.
+The sample used in the analysis is large enough to give me a good estimate of how the salaries are distributed in the IT sector. The data is a bit skewed and slightly more than half the people have an income level slightly below the average. This effect is most likely caused by the income of the managers and directors as they have significantly higher income. The higher income raises the average salary value, however this is not a problem, I will just need to estimate the amount of managers and directors and account for that.
 
-The first table gives us most of the information we need regarding the salary distribution in Romania. There we can see that most people, over 58% earn more than `r ron_format(it_sal_med_low)`. This is not exactly the median of the distribution however it is close enough so we will use this to approximate the shape of the distribution. The median is the value exactly in the middle of the distribution.
+As for the medical salaries, I will like first to figure out:
 
-Once we have this, we will use it as an average value for a normal distribution that will contain most of the values in our population. This will be 85% percent of our lives, we will not be managers, therefore we will have salaries accordingly. In the rest of 15% of our 10,000 lives, we will be managers or directors so our salary will be accordingly.
+1.  What is the average salary for an IT professional
+2.  What is the variation from the average
+3.  What is the distribution of those salaries
+
+The first part as for the previous section is quite easy, `r ron_format(11200)`.
+
+If I am to look at the average income across all levels and the fact that managers and directors earn significantly more than everyone else, we can approximate that around 15% of the IT professionals are managers and directors. In short, I can rephrase this as the following statement: Assuming that my skill level for the IT industry is average, by seer luck I will end up in a management position 15% of the time, if I were to live 10,000 lives.
 
 ```{r it_salary_distribution}
+# Distribution of IT salaries for software engineers
 it_sal_low <- rnorm(8500, it_sal_med_low, 25000)
+# Distribution of IT salaries for IT managers and Directors
 it_sal_high <- rnorm(1500, it_sal_med_high, 50000)
 
+# The sample of my income across all lives will be the two distributions put together
 it_sal_dist <- c(it_sal_low, it_sal_high)
 
-# We want to make sure the mean of our distribution if not far off from the actual distribution
+# The average of my salary distribution should be similar to that on the website
 mean(it_sal_dist)
 ```
 
-We can see the average salary of our distribution is quite close to the one from the website, so we can say that our distribution closely resembles the sampled population from the site. Salary distribution looks like below:
+From what I can see the distribution I have created has the same average salary as the population on the website so I can safely assume that the distribution I have created more or less resembles the population I want to recreate. The distribution looks like this:
 
 ```{r it_yearly_salary, message = FALSE}
-it_sal_dist %>% 
+tibble(Income = it_sal_dist) %>% 
   histogram() +
   labs(title = "Yearly Income Distribution",
-       subtitle = "IT Workers") + 
-  scale_x_continuous(labels = label_dollar(prefix = "", suffix = "RON"))
+       subtitle = "IT Workers")
 ```
 
-Not very normal, is it? There are a few people that have huge salaries compared to the rest of the population. So, if you manage to land yourself a management role in IT you're all set. If not, let's see how this translates in EURO and in lifetime earnings.
+This is not a normal distribution, but that was to be expected, however it is not a power law distribution either. This can become a power law if I take into account if I consider developing an app and make it big.
 
-The first thing would be to transform everything into net profit.
+It is a bit complicated to get data on what is the success rate of an app. An interesting and comprehensive summary can be found in this [article](https://venturebeat.com/2017/09/24/your-chances-of-making-a-successful-mobile-app-are-almost-nil/). I can see that I will need €25,000 as initial investment and I need to make a full time job out of it and afterwards you need to invest in marketing and spend a lot of time adjusting ASO. For me this would have been a potential career if it would have been possible to spend some weekends creating the app, uploading it to an app store and be done with it.
 
-At the time of this writing the IT workers were exempt from the income tax so the only two taxes required to be paid are:
+From what I've seen there is virtually no chance of that and I do not plan on spending all the effort needed for a successful app so I will not include this in the analysis.
+
+With this in mind, I will assume that the salaries are as shown in the graph above. The mentioned salaries are annual salaries in RON before tax. Now I will just need to adjust them to something more useful.
+
+First of all, I will need to extract the taxes. At the time of this writing IT professionals are exempt from the income tax, so all I would need to pay would be:
 
 -   Social Security: 25%
 -   Health Insurance: 10%
 
-Afterwards, we will convert it to Euro.
+Secondly, I need to convert everything into €. As before, we will use the conversion rate from above.
 
 ```{r it_sal_dist_net}
+# Net salary
 it_sal_dist_net <- it_sal_dist - (it_sal_dist * 0.25) - (it_sal_dist * 0.1)
 
-it_sal_dist_net_eur <- it_sal_dist_net * 0.2
+# The salary converted to €
+it_sal_dist_net_eur <- it_sal_dist_net / 5
 ```
 
-Now we have the yearly salary. So, for how long can someone work in this industry?
+Now all is left is to see for how long I would expect to work in the industry?
 
-Most people start while studying at university, however most of those positions are either very low paying or are unpaid internships so I will eliminate them. On the other hand, due to this, most people can find work right after finishing their studies. Assuming as we did previously that someone finishes high school at 19, they can study for 3-4 years, depends if you are studying in the Bologna system or not, you can start work at 22. However, since there are a lot of people working in IT who do not have specialisations in IT, I will consider that the most typical person will start at 25. This will account for those people as most people not from IT might start later.
+Most people working in the IT industry start working while studying at university. I will not count these jobs because most of them are really low paying or they are unpaid internships. This situation allows people to get a proper job right after finishing university or even a bit before graduation. I will keep my assumption that I will finish high school at 19 so I have a starting point.
+
+If you are studying software engineering, in Romania, you can either study for three or four years, depending if the university follows the Bologna system or not. This does not really matter because it is not the only way to get to work in IT. There are a lot of people who attend a professional conversion and they usually do this at a latter age. So, if I were to account for that as well, I think it would be pretty safe to assume that I would start work around 25.
 
 Considering that my goal is to retire at 65, I have 40 years of work ahead of me, so all I need to do is multiply everything by 40.
 
-```{r it_sal_lifelong_income, message = FALSE}
+```{r it_sal_lifelong_income}
 it_sal_dist_net_eur <- it_sal_dist_net_eur * 40
-
-it_sal_dist_net_eur %>% 
-  histogram() +
-  labs(title = "Lifelong Income Distribution",
-       subtitle = "IT Workers")
 ```
 
-This looks decent enough. Not as good as a doctors, however not bad at all. Now, I would like to take into account one more part.
+As in the first part, I will check the data once everything is prepared. First, I would like to see if my idea of making a living as a poker player is feasible.
 
-What if I develop an app and make it big with it?
+## Poker Star
 
-Honestly, I checked for relevant statistics regarding the success of an app. You can read a very interesting summary in this [article](https://venturebeat.com/2017/09/24/your-chances-of-making-a-successful-mobile-app-are-almost-nil/). From here and other sources it shows that to actually develop an app you need an initial investment of at least €25,000 and make it a full time job. Afterwards you need to invest in marketing and spend a lot of time adjusting ASO.
+This was one of the most exhausting researches I've done so far. There are some huge problems problems I encountered while trying to gather data for this career path. This is to be expected as I imagine that casinos are not willing to let everyone what are the real chances of winning by revealing the numbers. This was to be expected, however I had hoped that I will be able to find some kind of information regarding this but no luck in this.
 
-This is kinda outside the scope of what I want to do so I will not include it in my final outcome.
+So I decided to change my tune and see if an online poker career would be better suited? Going online has one additional advantage although that is of no moment, it requires less funds with which to start.
 
-## Poker player
+With that being said, in the next section I will like to answer the following questions:
 
-Now let's compute the outcome of ten thousand lives as a online poker player. For this we will need some additional information:
+-   What is the probability to make it as an professional online poker player?
+-   How much should I expect to make should I make is as a player?
+-   How is that money distributed? Is it more likely to win big constantly or is it highly unlikely?
 
--   What is the probability to make it as an professional online poker player
--   How much or how little does an online poker player make in a year
--   How is that money distributed
+For online poker statistics, as for real life poker, there are no public databases therefore all the information I can access is just the one the online poker sites choose to display. I could use them to make some assumptions, however it can get overly complicated real fast. Most of them have token currencies, not real money so it is hard to account for the money. Also, most of them show the amount earned by a player over his whole time as a player so it is difficult to see who does not have a lot earned because they have just created the account or because they are a poor player.
 
-These assumption can be estimated in multiple ways, although most of them are time consuming and the technical methods used are outside the scope of this article. However, I will briefly mention them if you are interested in such an endeavour.
+With that said, I have found the following [blog](https://www.blackrain79.com/) that offers some details about the world of online poker and some data gathered by himself. I know this is not the most reliable dataset, however it is all I have to go with. And I would also like to mention that the data presented by online poker sites is just as unreliable. While the data I am using might be flawed because of unconscious bias, the one presented by websites most likely is biased to make you play. I have also asked people who are involved with online poker to take a look and they said that nothing suspicious pops up, so I will choose to trust the data.
 
-[Statname.net](https://statname.net/) is one of the multiple sites that offer statistics regarding player earnings on different platforms and strategies. You can get the data from there on the earnings of a player, the number of hands and compute how much he would have earned if you account for the blinds. Then you can set a cut-off point in which an earning is considered a living wage and you can compute the percentage of professional players. This will be your probability. The same can go for the other measures.
-
-Since getting the data can be a bit time consuming and this being just an example, I have decided to base my computations on the following [blog](https://www.blackrain79.com/). You can get a lot of useful information about online poker from here and I found it very useful, my understanding of poker being the as basic as it could be. From what I read here, and discussed this with people who know about the subject way more than I do, apparently one of the most successful strategies in online poker is to win blinds not large hands. The tables are also divided by the size of the blinds as follows:
+From what I could read in the article, online poker is more grind based and less exposed to chance than it's face to face counterpart. By that I mean that a player will focus on winning blinds not big hands and over time it will prove successful. The tables are also divided by the size of the blinds as follows:
 
 -   NL2 (also known as 2NL) = ¢1 / ¢2 blinds
 -   NL5 (also known as 5NL) = ¢2 / ¢5 blinds
@@ -286,77 +368,188 @@ Since getting the data can be a bit time consuming and this being just an exampl
 -   NL50 (also known as 50NL) = ¢25 / ¢50 blinds
 -   NL100 (also known as 100NL) = ¢50 / \$1 blinds
 
-Now, how do we transform this into earnings? The formula is simple as seen below:
+Considering that I would have to focus on winning big blinds and not hands, my winnings will be influenced by the value of the big blind. The formula can be seen below:
 
-$$ (winning\_big\_blinds\_chance \times big\_blind\_value) \times \frac{played\_hands}{100}  $$
+$$ (winning\_chance \times blind\_value) \times \frac{played\_hands}{100}  $$ Usually a professional poker player will play around 100,000 hands a month. I think that would be a fair number for my approximations. I am going for this career out of laziness, the opportunity of easy money, and the possibility to make my own hours so I will not overdo it. The next thing that I will need will be the winning rates for each type of table. I will use the probabilities from this [blog post](https://www.blackrain79.com/2014/06/good-win-rates-for-micro-and-small_6.html) and since I have already decided that I will play a fixed number of hands each month, I will use the higher win rates in the tables. Now I will compute the monthly win rate for each table. I will transform them into dollars directly.
 
-Let's compute some and example. From what I could gather a professional player will play around 100.000 hands a month. So from here on I will use this as the number of hands a professional player will play so we can estimate the winnings. With this in mind, let's see how much will a professional player make from a NL2 table with a 30% win rate. That will translate into the following formula:
+$$ Avg\_NL2   = (10 \times \frac{2}{100}) \times \frac{100000}{100} = \$`r (10 * 2/100) * 1000`$$
 
-$$ (30 \times 2) \times \frac{100000}{100} = ¢60000$$
+$$ Avg\_NL5   = (6 \times \frac{5}{100}) \times \frac{100000}{100} = \$`r (6 * 5/100) * 1000`$$
 
-We need to keep in mind that those are cents, adjusting to dollars, we see that you can earn around \$600 a month playing low stakes poker, which is not bad. We also need to take into account that people can play multiple tables online and apparently most people do. So the probabilities that I am going to use here can be found in this [blog post](https://www.blackrain79.com/2014/06/good-win-rates-for-micro-and-small_6.html) and are going to be just the ones for 1-8 tables since I already established that I will play around 100.000 hands a month so increasing the number of tables to 18+ cuts time but lower my attention and therefore the winning rate. If I want to maximise the number of hands, or increase the hourly payment I would increase the number of tables.
+$$ Avg\_NL10  = (4 \times \frac{10}{100}) \times \frac{100000}{100} = \$`r (4 * 10/100) * 1000`$$
 
-I will compute the average for each type of table, however I will transform the cents into dollars directly
+$$ Avg\_NL25  = (3 \times \frac{25}{100}) \times \frac{100000}{100} = \$`r (3 * 25/100) * 1000`$$
 
-$$ NL2   = (10 \times \frac{2}{100}) \times \frac{100000}{100} = \$`r (10 * 2/100) * 1000`$$
+$$ Avg\_NL50  = (2 \times \frac{50}{100}) \times \frac{100000}{100} = \$`r (2 * 50/100) * 1000` $$
 
-$$ NL5   = (6 \times \frac{5}{100}) \times \frac{100000}{100} = \$`r (6 * 5/100) * 1000`$$
+$$ Avg\_NL100 = (2 \times 1) \times \frac{100000}{100} = \$`r (2 * 1) * 1000` $$
 
-$$ NL10  = (4 \times \frac{10}{100}) \times \frac{100000}{100} = \$`r (4 * 10/100) * 1000`$$
+These are the estimates for most professional players, however elite players have a different bracket. I am curious to see how much an elite player make and see how we can distribute the earnings in the population.
 
-$$ NL25  = (3 \times \frac{25}{100}) \times \frac{100000}{100} = \$`r (3 * 25/100) * 1000`$$
+$$ Elite\_NL2   = (30 \times \frac{2}{100}) \times \frac{100000}{100} = \$`r (30 * 2/100) * 1000`$$
 
-$$ NL50  = (2 \times \frac{50}{100}) \times \frac{100000}{100} = \$`r (2 * 50/100) * 1000` $$
+$$ Elite\_NL5   = (10 \times \frac{5}{100}) \times \frac{100000}{100} = \$`r (18 * 5/100) * 1000`$$
 
-$$ NL100 = (2 \times 1) \times \frac{100000}{100} = \$`r (2 * 1) * 1000` $$
+$$ Elite\_NL10  = (12 \times \frac{10}{100}) \times \frac{100000}{100} = \$`r (12 * 10/100) * 1000`$$
 
-Now that we have some averages, I would like to see how much can the best players make using the same estimates from the articles.
+$$ Elite\_NL25  = (10 \times \frac{25}{100}) \times \frac{100000}{100} = \$`r (10 * 25/100) * 1000`$$
 
-$$ NL2   = (30 \times \frac{2}{100}) \times \frac{100000}{100} = \$`r (30 * 2/100) * 1000`$$
+$$ Elite\_NL50  = (9 \times \frac{50}{100}) \times \frac{100000}{100} = \$`r (9  * 50/100) * 1000` $$
 
-$$ NL5   = (10 \times \frac{5}{100}) \times \frac{100000}{100} = \$`r (18 * 5/100) * 1000`$$
+$$ Elite\_NL100 = (8 \times 1) \times \frac{100000}{100} = \$`r (8 * 1) * 1000` $$
 
-$$ NL10  = (12 \times \frac{10}{100}) \times \frac{100000}{100} = \$`r (12 * 10/100) * 1000`$$
-
-$$ NL25  = (10 \times \frac{25}{100}) \times \frac{100000}{100} = \$`r (10 * 25/100) * 1000`$$
-
-$$ NL50  = (9 \times \frac{50}{100}) \times \frac{100000}{100} = \$`r (9  * 50/100) * 1000` $$
-
-$$ NL100 = (8 \times 1) \times \frac{100000}{100} = \$`r (8 * 1) * 1000` $$
-
-We can see that this is not anywhere near a normal distribution. By the definition of professional players, we know that they are the ones that actually earn enough so that they can survive of this income. This leaves us with a skewed distribution. I think we can safely assume that most professional players are average players and the elite that earn as much as we have shown here are a small percent 10%. With that said, we can start creating the population of online poker players.
-
-Another assumption is that professional poker players will not spend all their time in NL2, NL5 and NL10 games, will most likely spend it on something that will provide more income. This is also consistent with the living wage assumption. I know \$750 might not seem much in a month for most Western democracies, however, it is quite a decent income in second and third world countries. So, how are we going to do this?
-
-Simple, we will create two distributions that will reflect the average player and the elite player. The first one will be 90% of the population and the second one will be the other 10%
+There seems to be quite a gap between the two brackets. Here we can see that we encounter the same problem as with did with the IT crowd. Elite player earn significantly more that average professional players and they are way fewer. Fortunately for us this is also not a power law distribution because a player is limited on how much he can earn on one hand just from blinds. Since he can play just so many hours in a month it is highly unlikely to see someone earn in the millions in one month. These population of elite players is around 10%. I will have the same approach as I did for the IT workers when creating the distribution.
 
 ```{r}
 avg_player <- rnorm(9000, 1400, 300)
+
 elt_player <- rnorm(1000, 4000, 1000)
+
 poker_players <- c(avg_player, elt_player)
 ```
 
-```{r}
-poker_players %>% 
+```{r poker_player_distribution, message = FALSE}
+tibble(Income = poker_players) %>% 
   histogram() +
   labs(title = "Monthly Income Distribution",
-       subtitle = "Professional Poker Players")
-  
+       subtitle = "Professional Poker Players") +
+# The salaries are in € so I will adjust them
+  scale_x_continuous(labels = label_dollar(prefix = "€"))
 ```
 
-This distribution seems legit for a power law distribution. And now, for the final touch, we will need to add the 10% chance to become a professional player. We will do this by using the list we have created earlier. For this we will create a binomial distribution with a 10% probability and a size 1. Basically we can create a random string of values, either 1 or 0 and about 10% are one. Let's see it in practice.
+The distribution seems OK from what was described in my source. Now, for the final touch, I just need two more steps:
 
-```{r}
+1.    Transform the data in lifelong earnings
+2.    Add the probability of actually making it as as professional poker player as we did for the medical career path
+
+So, for how long should I expect to be active in this domain? This is a bit tricky because it is not a career recognised by the Romanian government so there is no pension plan for it. This means that I am not forced to retire at 65, I can do it earlier or later, however since I want to compare apples with apples I will account for working until 65 as for the previous two careers.
+
+And all I need to know now is when can I start working? Since there are no study requirements or skill assessment to start this, you just need to log in an play, I would be able to start any time. If I want maximum income and experience gain, I will start at 19, as soon as I finish high school. This would mean:
+
+$$ months\_played = (65 - 19) * 12 = `r (65 - 19) * 12` $$
+And now for the last part, the probability to become a professional poker player. As mentioned above, the probability is 10% according to the blog.
+
+```{r poker_player_final_list}
+# Poker Players LIFELONG earnings
+poker_players <- poker_players * 552
+
+# The list that will show me if I have made it or not
 success_prob <- rbinom(n = 10000, size = 1, prob = 0.1)
+
+# Now I will add the chance to the previous list
+poker_players_final <- poker_players * success_prob
+
+# Just to be sure, I would like to see the rate
 print(sum(success_prob) / 10000)
 ```
+Looks good, `r scales::percent_format(accuracy = 0.01)(sum(success_prob) / 10000)` is exactly what it is to be expected.
 
-Perfect, `r scales::percent_format(accuracy = 0.01)(sum(success_prob) / 10000)` is exactly what we would expect.
+All I need right now is to analyse the data and see which career path is better for me.
 
-Now all we need to do is multiply the two lists. When a value in the second list is 0 it will transform the earnings to 0, so we did not make it as a professional poker player. When it is 1 the result will not be affected.
+# Data Analysis
 
-```{r}
-poker_players_final <- poker_players * success_prob
+The first part of any data analysis is tidying the data up. At the moment I have three separate lists and they are not very useful so I will merge them in one table. The easiest way to do this is to create three separate data frames and combine them in one. The code below will do this and them I can start analysing the data.
+
+```{r tibble_creation}
+df_dr <- tibble(Career = "Doctor",
+                Income = dr_sal_final)
+
+df_it <- tibble(Career = "IT Worker",
+                Income = it_sal_dist_net_eur)
+
+df_pp <- tibble(Career = "Poker Player",
+                Income = poker_players_final)
+
+df <- rbind(df_dr, df_it, df_pp)
+
+# it is always a good idea to eliminate from memory intermediary datasets
+rm(df_dr, df_it, df_pp)
 ```
 
-Now that we painfully and to the best of our knowledge created the populations, let's proceed in analysing the data.
+Now that the data is in one place I can proceed with the data analysis.
+
+The first step for that is to check all the distributions and see if they look anything alike one another.
+
+```{r comparison_graph, message=FALSE}
+df %>% 
+  histogram() +
+  facet_wrap(~ Career, ncol = 1) +
+  labs(title = "Lifelong Income",
+       subtitle = "ALL Careers") +
+  scale_x_continuous(labels = label_dollar(prefix = "€"))
+```
+There seems to be quite a difference between the three. 
+
+The IT workers seem to have more salaries around €500,000 as lifelong income, a bit smaller that the doctors'. However, they are the only ones that have a 100% success rate in actually being able to earn from this career. 
+
+I can also see that the doctors, the ones who made it pass the culling, have quite a normally distributed salary range and from what I can see, which is a good thing as it shows that we can extract some conclusions from the data. It is very tempting to follow this career path as it can have high rewards although the initial admission rate makes me a bit cautious. 
+
+The last group that I can see is the poker players. They do not seem to have any clustering, only some small ones around €750,000 and otherwise are quite equally distributed. It's hard to say when they are as few as they are to begin with. Let's check them without the 90% that did not make it.
+
+```{r poker_players_final_graph, message = FALSE}
+df %>% 
+  filter(Income != 0, Career == "Poker Player") %>% 
+  histogram() +
+  labs(title = "Lifelong Income",
+       subtitle = "Poker Players")
+```
+
+It is quite clear from the data that this job is quite well paid, most of the ones that made it as a professional player earn around €750K over their professional careers, so that makes them 50% better paid than most IT professionals, and the whales have it better than the doctors, over €3M. The problem with this is even more obvious then it is for the doctors, out of 10,000 only about 10% make it up to here. In my IT sample I have `r sum(it_sal_dist_net_eur >= 750000)` people who earn over €750K which is more than all the poker players that made it as a professional.
+
+Now, before I dive too deep in these type of discussions I must remember my basic premise, which is the career path that give me the highest income across 10,000 lives and is the least exposed to luck in getting there. With that said I would like to check the numbers.
+
+```{r final_summary}
+# The data as it is now is not useful, I will rearrange it a bit to be better summarised
+# This will help later on as well so I will store it in a separate data frame
+df_wide <- df %>% 
+  group_by(Career) %>% 
+  mutate(ID = row_number()) %>% 
+  ungroup() %>% 
+  pivot_wider(names_from = Career, values_from = Income) %>% 
+  select(-ID) 
+
+# And a summary of the data
+df_wide %>% 
+  summary() %>%   
+  kable(format = "html")
+```
+
+So, this is plain as day, with a lifelong average of `r dollar_format(prefix = "€")(mean(it_sal_dist_net_eur))` the IT crew wins the contest. This is because although the individual salaries for the doctors tend to be higher that the ones for IT, quite a few people did not make it as a doctor and their earnings from this field, €0 in this case, move the average down to `r dollar_format(prefix = "€")(mean(dr_sal_final))`.
+
+It is interesting that the Poker players have the highest earners with `r dollar_format(prefix = "€")(max(poker_players_final))` however the average income of `r dollar_format(prefix = "€")(mean(poker_players_final))` is not very appealing to me.
+
+The last thing I would like to test is that indeed there is a significant difference between these careers. It does not matter as much in this context since based on these data I would choose to follow a career in IT. Since it is the most accessible my consequences in choosing this career are not high. However, if the situation would have been less clear cut I might want to make sure that it matters if I choose one career over another.
+
+This can be done with an [Analysis Of Variance (ANOVA)](https://en.wikipedia.org/wiki/Analysis_of_variance#:~:text=Analysis%20of%20variance%20(ANOVA)%20is,by%20the%20statistician%20Ronald%20Fisher.). I'm not going to go into details about this, I will just mention that ANOVA is a way of comparing three or more groups and checking if the differences between them are significant or not. This is not exactly true but the subject is outside the scope of this article and this explanation is a useful way of remembering it.
+
+```{r ANOVA}
+anova_results <- aov(`IT Worker` ~ `Doctor` + `Poker Player`, data = df_wide)
+
+summary(anova_results)
+```
+
+So, this looks interesting. From what this shows me, there is a very significant difference between IT and poker player, which is to be expected. I can tell this by the Pr(>F) value, the smaller it is the less chance that the two groups are the same distribution. 
+
+The problem is that the difference between IT and doctor is not significant. This is understandable somehow as both careers have quite similar incomes and a somewhat similar distribution. The doctors have a bell curve while the IT crowd has two, one for the bosses one for the rest of the people. This is why the analysis resulted in no significant changes between the two choices. This would have mattered if I would have decided against the odds to go for a medical career as it would have let me choose the easier path with no significant consequences. This way I am even more satisfied by my decision.
+
+# Conclusion
+
+As I hope I have showed here, decisions in the real world are not as easy to make as they are in a classroom where things tend to be clean cut. This can get very frustrating and that is not always a bad thing. Frustration is a good motivator to help one persist in ones pursuit of understanding and resolving a problem. With patience and perseverance most things can be overcome.
+
+What I hope I have showed here is how you can make decisions with imperfect data by focusing on a few key variables for which you can control. Once you have this is easy to create a simulations of random outcomes within this outcome so you can analyse the data. As mentioned earlier in this article, the preferred approach is to simulate multiple scenarios to account for blind luck. You can win the lottery and be better off that any doctor or IT worker or Poker player but you cannot count on that.
+
+Let me know what you think of this article and if you agree with it.
+
+
+
+
+
+
+
+
+
+
+
+
+
+

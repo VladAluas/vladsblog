@@ -3,6 +3,7 @@
   title            = "Coffee and Data"
   LanguageName     = "English"
   weight           = 1
+  codeMaxLines     = 2
 
 [ro]
   title            = "Cafea si Date" # just for the sake of showing this is possible
