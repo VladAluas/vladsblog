@@ -154,12 +154,9 @@ histogram <- function(.df, .var = Income){
   
   .df %>% 
     ggplot(aes({{.var}})) +
-    geom_histogram(colour = "white", fill = "#2484cc") +
+    geom_histogram(fill = "#2484cc", colour = "white") +
     labs(x = "Income", y = "") +
-    scale_x_continuous(labels = label_dollar(prefix = "€"))
-    #theme_void()+
-    #theme(plot.background = element_rect(fill = "#1A2E40", color = NA),
-    #      strip.text.x = element_text(family = "oswald", face = "bold", size = 12, color = "#D8E6F2"))
+    scale_x_continuous(labels = label_dollar(prefix = "", suffix = "RON"))
 }
 ```
 
@@ -200,14 +197,13 @@ The fact that the salaries are between `r ron_format(7750)` and `r ron_format(35
 
 With this said, let's create our sample and take a look at it.
 
-```{r, message = FALSE}
+```{r dr_sal_graph, message = FALSE}
 dr_sal_dist <- rnorm(10000, dr_sal_mean, sd = 5000)
 
 tibble(Income = dr_sal_dist) %>% # transforms the list in a table for the graph
     histogram() +
     labs(title = "Monthly Income Distribution",
-         subtitle = "Medical Professionals") + 
-    scale_x_continuous(labels = label_dollar(prefix = "", suffix = "RON"))
+         subtitle = "Medical Professionals")
 ```
 
 The graphic above is a simple representation of how many people earn a specific amount on a monthly basis. As it is expected from a normal, or near normal distribution, most people earn close to the average while a few have extremely high earnings or extremely low earnings.
@@ -307,8 +303,7 @@ From what I can see the distribution I have created has the same average salary 
 tibble(Income = it_sal_dist) %>% 
   histogram() +
   labs(title = "Yearly Income Distribution",
-       subtitle = "IT Workers") + 
-  scale_x_continuous(labels = label_dollar(prefix = "", suffix = "RON"))
+       subtitle = "IT Workers")
 ```
 
 This is not a normal distribution, but that was to be expected, however it is not a power law distribution either. This can become a power law if I take into account if I consider developing an app and make it big.
@@ -417,7 +412,9 @@ poker_players <- c(avg_player, elt_player)
 tibble(Income = poker_players) %>% 
   histogram() +
   labs(title = "Monthly Income Distribution",
-       subtitle = "Professional Poker Players")
+       subtitle = "Professional Poker Players") +
+# The salaries are in € so I will adjust them
+  scale_x_continuous(labels = label_dollar(prefix = "€"))
 ```
 
 The distribution seems OK from what was described in my source. Now, for the final touch, I just need two more steps:
@@ -432,7 +429,7 @@ And all I need to know now is when can I start working? Since there are no study
 $$ months\_played = (65 - 19) * 12 = `r (65 - 19) * 12` $$
 And now for the last part, the probability to become a professional poker player. As mentioned above, the probability is 10% according to the blog.
 
-```{r}
+```{r poker_player_final_list}
 # Poker Players LIFELONG earnings
 poker_players <- poker_players * 552
 
@@ -473,12 +470,13 @@ Now that the data is in one place I can proceed with the data analysis.
 
 The first step for that is to check all the distributions and see if they look anything alike one another.
 
-```{r}
+```{r comparison_graph, message=FALSE}
 df %>% 
   histogram() +
   facet_wrap(~ Career, ncol = 1) +
   labs(title = "Lifelong Income",
-       subtitle = "ALL Careers")
+       subtitle = "ALL Careers") +
+  scale_x_continuous(labels = label_dollar(prefix = "€"))
 ```
 There seems to be quite a difference between the three. 
 

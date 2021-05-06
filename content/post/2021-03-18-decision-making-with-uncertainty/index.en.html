@@ -110,12 +110,9 @@ histogram &lt;- function(.df, .var = Income){
   
   .df %&gt;% 
     ggplot(aes({{.var}})) +
-    geom_histogram(colour = &quot;white&quot;, fill = &quot;#2484cc&quot;) +
+    geom_histogram(fill = &quot;#2484cc&quot;, colour = &quot;white&quot;) +
     labs(x = &quot;Income&quot;, y = &quot;&quot;) +
-    scale_x_continuous(labels = label_dollar(prefix = &quot;€&quot;))
-    #theme_void()+
-    #theme(plot.background = element_rect(fill = &quot;#1A2E40&quot;, color = NA),
-    #      strip.text.x = element_text(family = &quot;oswald&quot;, face = &quot;bold&quot;, size = 12, color = &quot;#D8E6F2&quot;))
+    scale_x_continuous(labels = label_dollar(prefix = &quot;&quot;, suffix = &quot;RON&quot;))
 }</code></pre>
 <pre class="r"><code># Just a simple function to format the Romanian currency so I can used stored variables.
 ron_format &lt;- function(.x){
@@ -149,9 +146,8 @@ ron_format &lt;- function(.x){
 tibble(Income = dr_sal_dist) %&gt;% # transforms the list in a table for the graph
     histogram() +
     labs(title = &quot;Monthly Income Distribution&quot;,
-         subtitle = &quot;Medical Professionals&quot;) + 
-    scale_x_continuous(labels = label_dollar(prefix = &quot;&quot;, suffix = &quot;RON&quot;))</code></pre>
-<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-1-1.png" width="100%" /></p>
+         subtitle = &quot;Medical Professionals&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/dr_sal_graph-1.png" width="100%" /></p>
 <p>The graphic above is a simple representation of how many people earn a specific amount on a monthly basis. As it is expected from a normal, or near normal distribution, most people earn close to the average while a few have extremely high earnings or extremely low earnings.</p>
 <p>Now that I have the distribution simulated, I can proceed with the transformation of the data so I will have the salaries in € and calculate the earnings for a lifetime. For that I will need to:</p>
 <ol style="list-style-type: decimal">
@@ -197,7 +193,7 @@ dr_sal_final &lt;- dr_sal_final * admittance_rate
 
 # Just to be sure, I would like to see the rate
 print(sum(admittance_rate) / 10000)</code></pre>
-<pre><code>#&gt; [1] 0.4552</code></pre>
+<pre><code>#&gt; [1] 0.4506</code></pre>
 <p>I will take a look at the numbers in the analysis part, this is just the preparation of the data. Now, let’s see if we can estimate how much does an IT professional earn.</p>
 </div>
 <div id="the-it-crowd" class="section level2">
@@ -222,13 +218,12 @@ it_sal_dist &lt;- c(it_sal_low, it_sal_high)
 
 # The average of my salary distribution should be similar to that on the website
 mean(it_sal_dist)</code></pre>
-<pre><code>#&gt; [1] 112325.3</code></pre>
+<pre><code>#&gt; [1] 113147.8</code></pre>
 <p>From what I can see the distribution I have created has the same average salary as the population on the website so I can safely assume that the distribution I have created more or less resembles the population I want to recreate. The distribution looks like this:</p>
 <pre class="r"><code>tibble(Income = it_sal_dist) %&gt;% 
   histogram() +
   labs(title = &quot;Yearly Income Distribution&quot;,
-       subtitle = &quot;IT Workers&quot;) + 
-  scale_x_continuous(labels = label_dollar(prefix = &quot;&quot;, suffix = &quot;RON&quot;))</code></pre>
+       subtitle = &quot;IT Workers&quot;)</code></pre>
 <p><img src="{{< blogdown/postref >}}index.en_files/figure-html/it_yearly_salary-1.png" width="100%" /></p>
 <p>This is not a normal distribution, but that was to be expected, however it is not a power law distribution either. This can become a power law if I take into account if I consider developing an app and make it big.</p>
 <p>It is a bit complicated to get data on what is the success rate of an app. An interesting and comprehensive summary can be found in this <a href="https://venturebeat.com/2017/09/24/your-chances-of-making-a-successful-mobile-app-are-almost-nil/">article</a>. I can see that I will need €25,000 as initial investment and I need to make a full time job out of it and afterwards you need to invest in marketing and spend a lot of time adjusting ASO. For me this would have been a potential career if it would have been possible to spend some weekends creating the app, uploading it to an app store and be done with it.</p>
@@ -297,7 +292,9 @@ poker_players &lt;- c(avg_player, elt_player)</code></pre>
 <pre class="r"><code>tibble(Income = poker_players) %&gt;% 
   histogram() +
   labs(title = &quot;Monthly Income Distribution&quot;,
-       subtitle = &quot;Professional Poker Players&quot;)</code></pre>
+       subtitle = &quot;Professional Poker Players&quot;) +
+# The salaries are in € so I will adjust them
+  scale_x_continuous(labels = label_dollar(prefix = &quot;€&quot;))</code></pre>
 <p><img src="{{< blogdown/postref >}}index.en_files/figure-html/poker_player_distribution-1.png" width="100%" /></p>
 <p>The distribution seems OK from what was described in my source. Now, for the final touch, I just need two more steps:</p>
 <ol style="list-style-type: decimal">
@@ -319,8 +316,8 @@ poker_players_final &lt;- poker_players * success_prob
 
 # Just to be sure, I would like to see the rate
 print(sum(success_prob) / 10000)</code></pre>
-<pre><code>#&gt; [1] 0.0973</code></pre>
-<p>Looks good, 9.73% is exactly what it is to be expected.</p>
+<pre><code>#&gt; [1] 0.1026</code></pre>
+<p>Looks good, 10.26% is exactly what it is to be expected.</p>
 <p>All I need right now is to analyse the data and see which career path is better for me.</p>
 </div>
 </div>
@@ -346,9 +343,9 @@ rm(df_dr, df_it, df_pp)</code></pre>
   histogram() +
   facet_wrap(~ Career, ncol = 1) +
   labs(title = &quot;Lifelong Income&quot;,
-       subtitle = &quot;ALL Careers&quot;)</code></pre>
-<pre><code>#&gt; `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-4-1.png" width="100%" />
+       subtitle = &quot;ALL Careers&quot;) +
+  scale_x_continuous(labels = label_dollar(prefix = &quot;€&quot;))</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/comparison_graph-1.png" width="100%" />
 There seems to be quite a difference between the three.</p>
 <p>The IT workers seem to have more salaries around €500,000 as lifelong income, a bit smaller that the doctors’. However, they are the only ones that have a 100% success rate in actually being able to earn from this career.</p>
 <p>I can also see that the doctors, the ones who made it pass the culling, have quite a normally distributed salary range and from what I can see, which is a good thing as it shows that we can extract some conclusions from the data. It is very tempting to follow this career path as it can have high rewards although the initial admission rate makes me a bit cautious.</p>
@@ -359,7 +356,7 @@ There seems to be quite a difference between the three.</p>
   labs(title = &quot;Lifelong Income&quot;,
        subtitle = &quot;Poker Players&quot;)</code></pre>
 <p><img src="{{< blogdown/postref >}}index.en_files/figure-html/poker_players_final_graph-1.png" width="100%" /></p>
-<p>It is quite clear from the data that this job is quite well paid, most of the ones that made it as a professional player earn around €750K over their professional careers, so that makes them 50% better paid than most IT professionals, and the whales have it better than the doctors, over €3M. The problem with this is even more obvious then it is for the doctors, out of 10,000 only about 10% make it up to here. In my IT sample I have 1586 people who earn over €750K which is more than all the poker players that made it as a professional.</p>
+<p>It is quite clear from the data that this job is quite well paid, most of the ones that made it as a professional player earn around €750K over their professional careers, so that makes them 50% better paid than most IT professionals, and the whales have it better than the doctors, over €3M. The problem with this is even more obvious then it is for the doctors, out of 10,000 only about 10% make it up to here. In my IT sample I have 1609 people who earn over €750K which is more than all the poker players that made it as a professional.</p>
 <p>Now, before I dive too deep in these type of discussions I must remember my basic premise, which is the career path that give me the highest income across 10,000 lives and is the least exposed to luck in getting there. With that said I would like to check the numbers.</p>
 <pre class="r"><code># The data as it is now is not useful, I will rearrange it a bit to be better summarised
 # This will help later on as well so I will store it in a separate data frame
@@ -398,7 +395,7 @@ Poker Player
 Min. : 0
 </td>
 <td style="text-align:left;">
-Min. : -46923
+Min. : 6108
 </td>
 <td style="text-align:left;">
 Min. : 0
@@ -411,7 +408,7 @@ Min. : 0
 1st Qu.: 0
 </td>
 <td style="text-align:left;">
-1st Qu.: 410301
+1st Qu.: 413564
 </td>
 <td style="text-align:left;">
 1st Qu.: 0
@@ -424,7 +421,7 @@ Min. : 0
 Median : 0
 </td>
 <td style="text-align:left;">
-Median : 509921
+Median : 508887
 </td>
 <td style="text-align:left;">
 Median : 0
@@ -434,23 +431,23 @@ Median : 0
 <td style="text-align:left;">
 </td>
 <td style="text-align:left;">
-Mean : 524341
+Mean : 519983
 </td>
 <td style="text-align:left;">
-Mean : 584092
+Mean : 588369
 </td>
 <td style="text-align:left;">
-Mean : 89926
+Mean : 95153
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
 <td style="text-align:left;">
-3rd Qu.:1112234
+3rd Qu.:1117171
 </td>
 <td style="text-align:left;">
-3rd Qu.: 630953
+3rd Qu.: 637459
 </td>
 <td style="text-align:left;">
 3rd Qu.: 0
@@ -460,28 +457,28 @@ Mean : 89926
 <td style="text-align:left;">
 </td>
 <td style="text-align:left;">
-Max. :2276445
+Max. :2096457
 </td>
 <td style="text-align:left;">
-Max. :1916375
+Max. :2049625
 </td>
 <td style="text-align:left;">
-Max. :3763895
+Max. :3959211
 </td>
 </tr>
 </tbody>
 </table>
-<p>So, this is plain as day, with a lifelong average of €584,092 the IT crew wins the contest. This is because although the individual salaries for the doctors tend to be higher that the ones for IT, quite a few people did not make it as a doctor and their earnings from this field, €0 in this case, move the average down to €524,341.</p>
-<p>It is interesting that the Poker players have the highest earners with €3,763,895 however the average income of €89,925.99 is not very appealing to me.</p>
+<p>So, this is plain as day, with a lifelong average of €588,369 the IT crew wins the contest. This is because although the individual salaries for the doctors tend to be higher that the ones for IT, quite a few people did not make it as a doctor and their earnings from this field, €0 in this case, move the average down to €519,983.</p>
+<p>It is interesting that the Poker players have the highest earners with €3,959,211 however the average income of €95,152.84 is not very appealing to me.</p>
 <p>The last thing I would like to test is that indeed there is a significant difference between these careers. It does not matter as much in this context since based on these data I would choose to follow a career in IT. Since it is the most accessible my consequences in choosing this career are not high. However, if the situation would have been less clear cut I might want to make sure that it matters if I choose one career over another.</p>
 <p>This can be done with an <a href="https://en.wikipedia.org/wiki/Analysis_of_variance#:~:text=Analysis%20of%20variance%20(ANOVA)%20is,by%20the%20statistician%20Ronald%20Fisher.">Analysis Of Variance (ANOVA)</a>. I’m not going to go into details about this, I will just mention that ANOVA is a way of comparing three or more groups and checking if the differences between them are significant or not. This is not exactly true but the subject is outside the scope of this article and this explanation is a useful way of remembering it.</p>
 <pre class="r"><code>anova_results &lt;- aov(`IT Worker` ~ `Doctor` + `Poker Player`, data = df_wide)
 
 summary(anova_results)</code></pre>
 <pre><code>#&gt;                  Df    Sum Sq   Mean Sq F value Pr(&gt;F)    
-#&gt; Doctor            1 3.529e+11 3.529e+11   4.241 0.0395 *  
-#&gt; `Poker Player`    1 8.052e+12 8.052e+12  96.768 &lt;2e-16 ***
-#&gt; Residuals      9997 8.319e+14 8.321e+10                   
+#&gt; Doctor            1 4.134e+11 4.134e+11   4.811 0.0283 *  
+#&gt; `Poker Player`    1 8.698e+12 8.698e+12 101.218 &lt;2e-16 ***
+#&gt; Residuals      9997 8.591e+14 8.594e+10                   
 #&gt; ---
 #&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <p>So, this looks interesting. From what this shows me, there is a very significant difference between IT and poker player, which is to be expected. I can tell this by the Pr(&gt;F) value, the smaller it is the less chance that the two groups are the same distribution.</p>
