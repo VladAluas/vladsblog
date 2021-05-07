@@ -6,7 +6,6 @@ slug: decision-making-under-uncertainty
 categories: ["Opinion"]
 tags: ["Monte Carlo", "decision making", "uncertainty", "chance"]
 thumbnail: /images/chance-logo.png
-draft: true
 code_folding: show
 ---
 
