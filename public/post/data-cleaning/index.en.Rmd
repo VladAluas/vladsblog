@@ -243,3 +243,156 @@ I know it can be a bit of a headache at first since the learning curve for *R* c
 This is a very good first step. You will see that reports or tasks that can take hours or days can be done in a few seconds or minutes if you automate your work and let a script run.
 
 Now that you have a lot more free time, you have the time to let me know how it went or if you encountered any problems.
+uation o bit, however the solution is to include in the `plt` object just the desired code, and everything else that is changing is left out of the object. In this case, we will leave the `ggplot()` function out as well.
+
+```{r dry_code_df}
+plt <- mtcars %>%
+          mutate(car_names = rownames(mtcars),
+                 cyl = as.factor(cyl))
+# The code becomes
+plt %>%
+  ggplot(mapping = aes(x = cyl, y = mpg)) +
+  geom_boxplot() +
+  geom_point() +
+  geom_text(mapping = aes(label = car_names), hjust = 0, nudge_x = 0.05, check_overlap = TRUE)
+```
+
+As we can see this can help us reduce the number of lines of code. In this particular case not by much, however, if you have to type the 10 lines of code for one dataset transformation over and over again, it is very useful to store all those transformations is an object. In this particular case, that object would be another dataset.
+
+Although this particular example is a basic one, we just created a new dataset that is easier to work with, the true power of *R* being object oriented, and what helps the most in keeping your code **DRY** is what we will discuss in the next section, *custom functions*.
+
+
+#### Custom Functions
+
+Custom functions are another way to keep your code **DRY**. They are a powerful tool that can assist you keep your code easily maintainable and with fewer line of code. 
+
+They allow you to store and standardise the steps you would normally apply a large range of objects, datasets, columns or even other functions.
+
+In order to understand this principle better, we will create a dataset from scratch to serve as a clear example of the usefulness of custom functions. You can create it as well using the code below:
+
+```{r random_data_frame}
+# We will set a seed for the random generator so we can get the same data should you chose to use the same code
+set.seed(123)
+# We need to generate some random data, so I will use the rnorm() function. You can use other functions if you like
+df <-     # our data frame
+  cbind(  # It's easier to generate columns and bind them together
+    tibble(x = rnorm(10, 0, 2)),
+    tibble(y = rnorm(10, 4, 9)),
+    tibble(z = rnorm(10, 15, 1)),
+    tibble(q = rnorm(10, 2, 18))
+  )
+# Now we need some NA values. We will add them at the end
+df <- 
+  rbind( # we will simply bind some rows at the end
+  df,
+  c(NA, NA, NA, NA),
+  c(NA, NA, NA, NA),
+  c(NA, NA, NA, NA),
+  c(NA, NA, NA, NA),
+  c(NA, NA, NA, NA))
+```
+
+Now that this dataset has some missing data, let's say that you want to replace the missing data with some values. How do you do this? The most used practises just replace the missing values with the *mean* value or the *median* value. 
+
+Let's say you decide to use the *mean* value. In practice, you would do the following:
+
+```{r repeated_mutate_mean}
+df %>%
+  mutate(x = ifelse(is.na(x), mean(x, na.rm = T), x),
+         y = ifelse(is.na(y), mean(y, na.rm = T), y),
+         z = ifelse(is.na(z), mean(z, na.rm = T), z),
+         q = ifelse(is.na(q), mean(q, na.rm = T), q))
+```
+
+Remember what we mentioned earlier, that is a good idea to not repeat your code more than 3-4 times? In this example is all good since we only have four lines of code, however, even these four lines can be annoying to type. Also, if we need to change the function, it can be annoying to go and update all of them. And everything will get even more complicated with more lines of code.
+
+In order to resolve that we will create a function. Remember how I said that everything is an object in *R*? Here is where this is very useful. We can just store a function in an object.
+
+Basically we will just use the logic we used in the `mutate()` and store it like we do with everything else.
+
+```{r custom_function_mean}
+# First we need to pick a name for the function. Since naming objects is not the scope of this article we will just pick something at random
+my_awesome_function <- function(x){ # this tells R that it is a function and x is whatever we choose to include in there
+  
+  # The actual action that is done when calling this function
+  ifelse(is.na(x), mean(x, na.rm = T), x)
+}
+```
+
+Let's check and see if the results are the same.
+
+```{r using_custom_functions_1}
+df %>%
+  mutate(x = my_awesome_function(x),
+         y = my_awesome_function(y),
+         z = my_awesome_function(z),
+         q = my_awesome_function(q))
+```
+
+As you can see, the results are the same, with a lot less code written. This trick is also handy if you want to change the function in the future. All you need to do is change the original function and leave the rest code intact. Like this:
+
+```{r custom_function_median}
+my_awesome_function <- function(x){ 
+  
+  ifelse(is.na(x), median(x, na.rm = T), x)
+}
+
+
+df %>%
+  mutate(x = my_awesome_function(x),
+         y = my_awesome_function(y),
+         z = my_awesome_function(z),
+         q = my_awesome_function(q))
+```
+
+Please note that all you need to do if you want to use the `median()` and not the `mean()` is update one line of code, not four. Writing custom functions is a very powerful tool as it allows you to centralise your logic and make sure you are using the same operation across all variables that need it. 
+  
+Think of how easy would be to forget a `na.rm = TRUE` if you have 40 variables that require this operation, especially that you might not use this in one place in your project.
+
+If you want, you can give this function more flexibility and add the operation we want to use as a parameter to our awesome function.
+
+```{r custom_function_final}
+my_awesome_function <- function(x, .func){
+  ifelse(is.na(x), 
+         .func(x, na.rm = T),
+         x)
+}
+
+
+df %>%
+  mutate(x = my_awesome_function(x, mean),
+         y = my_awesome_function(y, mean),
+         z = my_awesome_function(z, median),
+         q = my_awesome_function(q, sum))
+```
+
+As you can see, this version of the custom function allows more flexibility in deciding what operation we want to use on our variables. However, we also need to take into account that this will require us to change the operation in multiple places, if we want to change the default. If we want to use different operation on different columns, this would be the best approach.
+
+It all depends on your needs.
+
+With this said, I would like to show you a code example that will recreate the graphs we had earlier and allow us to change the `x` and `y` axes and the colour grouping.
+
+```{r custom_function_plot}
+my_plot <- function(.data, x, y, colour, nudge){
+  x <- enquo(x)
+  y <- enquo(y)
+  colour <- enquo(colour)
+  
+  ggplot(.data, mapping = aes(x = !!x, y = !!y, colour = !!colour)) +
+    geom_boxplot() +
+    geom_point() +
+    geom_text(mapping = aes(label = car_names), hjust = 0, nudge_x = nudge, check_overlap = TRUE)
+  
+}
+mtcars %>%
+  mutate(car_names = rownames(mtcars),
+         cyl = as.factor(cyl)) %>%
+  # Our custom function
+  my_plot(cyl, mpg, cyl, 0.05)
+```
+
+I hope that I managed to impress upon you the utility and importance of custom functions in any data analysis project in *R*, if you want to be able to update and maintain the code easily and relatively fast.
+
+In this article I have only scratched the surface of what custom functions can do in *R* as the point of this article was to show you how you can write code that is easier to maintain and update. I plan on writing an article about functions and go into more detail, however, in the meantime, I would highly recommend checking out Hadley Wickham's book [Advanced R](http://adv-r.had.co.nz/Introduction.html). It is amazing!
+
+Let me know if you found this article helpful in your data projects.
