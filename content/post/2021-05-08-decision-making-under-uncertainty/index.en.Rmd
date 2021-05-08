@@ -4,7 +4,7 @@ author: Vlad Aluas
 date: '2021-05-08'
 slug: decision-making-under-uncertainty
 categories: ["Opinion"]
-tags: ["Monte Carlo", "decision making", "uncertainty", "chance"]
+tags: ["decision making", "uncertainty", "chance"]
 thumbnail: /images/chance-logo.png
 ---
 
