@@ -1,7 +1,8 @@
 ---
 title: Decision making under uncertainty
+subtitle: Choosing between three careers, Doctor, IT, and Poker Player
 author: Vlad Aluas
-date: '2021-05-08'
+date: '2021-04-08'
 slug: decision-making-under-uncertainty
 categories: ["Opinion"]
 tags: ["decision making", "uncertainty", "chance"]
@@ -10,7 +11,7 @@ thumbnail: /images/chance-logo.png
 
 
 
-> We sail within a vast sphere, ever drifting in uncertainty, driven from end to end.
+> "We sail within a vast sphere, ever drifting in uncertainty, driven from end to end."
 >
 >`r tufte::quote_footer('--- Blaise Pascal')`
 
@@ -97,7 +98,7 @@ If I were to propose a bet in which you are allowed to sample 100 people from th
 2.  Number of cars owned
 3.  Amount of beer drunk weekly
 
-I would go for education level since it is highly unlikely someone has spent 50 years in education. And even if it is so, the impact to 10,000 will be small. The same goes for amount of beer drunk weekly. If there is someone who drinks thousands of beer weekly you might be in trouble, but not as much as they are. I think you would be safe with that bet.
+I would go for education level since it is highly unlikely someone has spent 50 years in education. And even if it is so, the impact to 10,000 will be small. The same goes for amount of beer drunk weekly. If there is someone who drinks thousands of beers weekly you might be in trouble, but not as much as they are. I think you would be safe with that bet.
 
 But what about the amount of cars? Well, here it can get a bit tricky. Most people have one or two cars. But what happens if in the crowd is the Sultan of Brunei with a car collection of 7000 cars? Considering the low age of the crowd, it is possible that he owns more cars that the whole crowd put together. This would not be a problem if you can include him in the sample however a sample of 100 people out of 10,000 give you a chance of 1% to include him in it. This means that 99 times out of 100 your sample will underestimate the average number of cars owned by the crowd.
 
@@ -131,7 +132,7 @@ The salary information will be from the Romanian job market since I am based in 
 
 ## Coding examples
 
-Since we are analysing data we will need a tool that will allow us to do so. I will use *R* since it is a versatile tool that will allow us to create distributions and visualise then quite easily. The code can be completely ignored if you do not want to reproduce or analyse it, you can just focus on the graphs and the results. If you want to learn more about *R* I would recommend [R for Data Science](https://r4ds.had.co.nz/), a brilliant book that is the perfect starting place.
+Since we are analysing data we will need a tool that will allow us to do so. I will use *R* since it is a versatile tool that will allow us to create distributions and visualise them quite easily. The code can be completely ignored if you do not want to reproduce or analyse it, you can just focus on the graphs and the results. If you want to learn more about *R* I would recommend [R for Data Science](https://r4ds.had.co.nz/), a brilliant book that is the perfect starting place.
 
 Let's start coding. At first I would like to set up the variables that I will use in this article. Since we will use these values multiple times in the article, I will store them here and if we need to adjust them at a later date, I can just change the values once, in here.
 
@@ -146,7 +147,7 @@ it_sal_med_high <- 225000 # Median Salary for Managers and Directors in IT
 it_sal_med_low  <- 92809  # Median Salary for the everyone else working in IT 
 ```
 
-The salaries are encoded in here not later when we are analysing the careers themselves because it is a good practice to keep the variables in one place and the same goes for custom function. I will add some in here as well. This functions just store some lines of code that we will need to repeat over and over again and it is good coding practice to store such lines of code in one function so you can avoid having too many lines of code. Also, if we want to change something at a later date, we just need to adjust everything in one place.
+The salaries are encoded in here not later when I am analysing the careers themselves because it is a good practice to keep the variables in one place and the same goes for custom function. I will add some in here as well. This functions just store some lines of code that we will need to repeat over and over again and it is good coding practice to store such lines of code in one function so I can avoid having too many lines of code. Also, if I want to change something at a later date, I just need to adjust everything in one place.
 
 ```{r functions_hist}
 # Graphical function to avoid writing the same lines over and over
@@ -161,7 +162,7 @@ histogram <- function(.df, .var = Income){
 ```
 
 ```{r function_ron}
-# Just a simple function to format the Romanian currency so I can used stored variables.
+# Just a simple function to format the Romanian currency so I can use stored variables.
 ron_format <- function(.x){
   require(scales)
   
@@ -214,7 +215,7 @@ Now that I have the distribution simulated, I can proceed with the transformatio
 2.  Determine how many salaries does a doctor receive in a lifetime
 3.  Convert everything to €
 
-The Romanian government imposes taxes on the on the employee as follows:
+The Romanian government imposes taxes on the employee as follows:
 
 -   Social Security: 25%
 -   Health Insurance: 10%
@@ -222,7 +223,9 @@ The Romanian government imposes taxes on the on the employee as follows:
 
 This will be translated as follows:
 
-$$ m_{salary(RON)} = (`r dollar_format(prefix = "")(dr_sal_mean)` - \frac{25}{100} \times `r dollar_format(prefix = "")(dr_sal_mean)` - \frac{10}{100} \times `r dollar_format(prefix = "")(dr_sal_mean)`) \times \frac{90}{100} = `r dollar_format(prefix = "")(dr_sal_mean - 0.25 * dr_sal_mean - 0.1 * dr_sal_mean)` \times \frac{90}{100} = `r dollar_format(prefix = "")((dr_sal_mean - 0.25 * dr_sal_mean - 0.1 * dr_sal_mean) * 0.9)`$$ This give me the net salary received by a doctor in Romania. All there is now to do is calculate how many such salaries one doctor receives. In Romania medical school lasts for 7 years and afterwards one needs to spend 3 to 5 years in residency. Since residency is paid I will include it in my analysis and I will consider that a doctor starts working when they start their residency. Since most people finish high-school at 19 and med school is 7 years, I will consider that one starts working at 26.
+$$ m_{salary(RON)} = (`r dollar_format(prefix = "")(dr_sal_mean)` - \frac{25}{100} \times `r dollar_format(prefix = "")(dr_sal_mean)` - \frac{10}{100} \times `r dollar_format(prefix = "")(dr_sal_mean)`) \times \frac{90}{100} = `r dollar_format(prefix = "")(dr_sal_mean - 0.25 * dr_sal_mean - 0.1 * dr_sal_mean)` \times \frac{90}{100} = `r dollar_format(prefix = "")((dr_sal_mean - 0.25 * dr_sal_mean - 0.1 * dr_sal_mean) * 0.9)`$$ 
+
+This gives me the net salary received by a doctor in Romania. All there is now to do is calculate how many such salaries one doctor receives. In Romania medical school lasts for 7 years and afterwards one needs to spend 3 to 5 years in residency. Since residency is paid I will include it in my analysis and I will consider that a doctor starts working when they start their residency. Since most people finish high-school at 19 and med school is 7 years, I will consider that one starts working at 26.
 
 Since I do not plan to work more than I need to, I plan on retiring with the first chance I get. In Romania the retirement age is 65 so I will plan for that. From 26 to 65 there are 39 years of work, multiply that by 12 months I can expect to work for around 468 months.
 
@@ -241,19 +244,21 @@ dr_sal_final <- dr_sal_final / 5
 
 One more thing I would like to add, I would like to know which is the potential success rate of me becoming a doctor? This is a bit tricky to find out for certain but I will try. Before that I think it is a good idea to write down my thought process and then I can crunch the numbers.
 
-Since applying for medical school requires quite a brutal exam, I will assume that no one applies for it without being serious about it and without having the discipline and study to pass the exam. This information is relevant because it allows me to safely assume that the a student once admitted is highly likely to become a doctor.
+Since applying for medical school requires quite a brutal exam, I will assume that no one applies for it without being serious about it and without having the discipline and study to pass the exam. This information is relevant because it allows me to safely assume that a student once admitted is highly likely to become a doctor.
 
-This is acquired by two mechanisms. The first mechanism is the fact that the extra preparation for the exam allows potential students see the effort required and if they are not willing to put in the effort they can change their mind before the admission exam. The second mechanism keeping student from quitting is the [sunk cost fallacy.](https://en.wikipedia.org/wiki/Sunk_cost) For this reason, I will only take into account the admittance rate and that can be taken from the university's website.
+This is acquired by two mechanisms. The first mechanism is the fact that the extra preparation for the exam allows potential students see the effort required and if they are not willing to put in the effort they can change their mind before the admission exam. The second mechanism keeping students from quitting is the [sunk cost fallacy.](https://en.wikipedia.org/wiki/Sunk_cost) For this reason, I will only take into account the admittance rate and that can be taken from the university's website.
 
 In this case I will use the [2020 admissions](http://www.umfcluj.ro/component/content/article/8-ro/595-rezultate-admitere-2020_?Itemid=216) for the University of Medicine and Pharmacy in Cluj-Napoca. The admittance rate is simple, how many people were admitted over how many applied. The admitted numbers were as follows:
 
-1.  318 - General Medicine Budget
-2.  60 - General Medicine Tax
-3.  81 - Dental Medicine Budget
-4.  17 - Dental Medicine Tax
-5.  591 - Rejected
+-  General Medicine (Scholarship) - 318 Admitted
+-  General Medicine (No Scholarship) - 60 Admitted
+-  Dental Medicine (Scholarship) - 81 Admitted
+-  Dental Medicine (No Scholarship) - 17 Admitted
+-  Rejected - 591
 
-$$admit\_rate = \frac{318 + 60 + 80 + 17}{318 + 60 + 80 + 17 + 591} = `r (318 + 60 + 81 + 17)/(318 + 60 + 80 + 17 + 591)` $$ There, my chances are 45%. Now I will code this chance by simply generating a list of 10,000 elements which are either 0 or 1 and 4500 of them are 1. Then I will simply multiply the two lists. If a salary is multiplied by a 0 it will signify that I did not make it as a doctor.
+$$admit\_rate = \frac{318 + 60 + 80 + 17}{318 + 60 + 80 + 17 + 591} = `r (318 + 60 + 81 + 17)/(318 + 60 + 80 + 17 + 591)` $$ 
+
+There, my chances are 45%. Now I will code this chance by simply generating a list of 10,000 elements which are either 0 or 1 and 4500 of them are 1. Then I will simply multiply the two lists. If a salary is multiplied by a 0 it will signify that I did not make it as a doctor.
 
 ```{r dr_admittance_rate}
 # The list that will show me if I have made it or not
@@ -287,6 +292,7 @@ If I am to look at the average income across all levels and the fact that manage
 ```{r it_salary_distribution}
 # Distribution of IT salaries for software engineers
 it_sal_low <- rnorm(8500, it_sal_med_low, 25000)
+
 # Distribution of IT salaries for IT managers and Directors
 it_sal_high <- rnorm(1500, it_sal_med_high, 50000)
 
@@ -319,7 +325,7 @@ First of all, I will need to extract the taxes. At the time of this writing IT p
 -   Social Security: 25%
 -   Health Insurance: 10%
 
-Secondly, I need to convert everything into €. As before, we will use the conversion rate from above.
+Secondly, I need to convert everything into €. As before, I will use the conversion rate from above.
 
 ```{r it_sal_dist_net}
 # Net salary
@@ -345,7 +351,7 @@ As in the first part, I will check the data once everything is prepared. First, 
 
 ## Poker Star
 
-This was one of the most exhausting researches I've done so far. There are some huge problems problems I encountered while trying to gather data for this career path. This is to be expected as I imagine that casinos are not willing to let everyone what are the real chances of winning by revealing the numbers. This was to be expected, however I had hoped that I will be able to find some kind of information regarding this but no luck in this.
+This was one of the most exhausting researches I've done so far. There are some huge problems I encountered while trying to gather data for this career path. This is to be expected as I imagine that casinos are not willing to let everyone what are the real chances of winning by revealing the numbers. This was to be expected, however I had hoped that I will be able to find some kind of information regarding this but no luck with it.
 
 So I decided to change my tune and see if an online poker career would be better suited? Going online has one additional advantage although that is of no moment, it requires less funds with which to start.
 
@@ -384,7 +390,7 @@ $$ Avg\_NL50  = (2 \times \frac{50}{100}) \times \frac{100000}{100} = \$`r (2 * 
 
 $$ Avg\_NL100 = (2 \times 1) \times \frac{100000}{100} = \$`r (2 * 1) * 1000` $$
 
-These are the estimates for most professional players, however elite players have a different bracket. I am curious to see how much an elite player make and see how we can distribute the earnings in the population.
+These are the estimates for most professional players, however elite players have a different bracket. I am curious to see how much an elite player makes and see how we can distribute the earnings in the population.
 
 $$ Elite\_NL2   = (30 \times \frac{2}{100}) \times \frac{100000}{100} = \$`r (30 * 2/100) * 1000`$$
 
@@ -426,7 +432,7 @@ So, for how long should I expect to be active in this domain? This is a bit tric
 
 And all I need to know now is when can I start working? Since there are no study requirements or skill assessment to start this, you just need to log in an play, I would be able to start any time. If I want maximum income and experience gain, I will start at 19, as soon as I finish high school. This would mean:
 
-$$ months\_played = (65 - 19) * 12 = `r (65 - 19) * 12` $$
+$$ months\_played = (65 - 19) \times 12 = `r (65 - 19) * 12` $$
 And now for the last part, the probability to become a professional poker player. As mentioned above, the probability is 10% according to the blog.
 
 ```{r poker_player_final_list}
@@ -491,12 +497,19 @@ df %>%
   filter(Income != 0, Career == "Poker Player") %>% 
   histogram() +
   labs(title = "Lifelong Income",
-       subtitle = "Poker Players")
+       subtitle = "Poker Players") +
+  scale_x_continuous(labels = label_dollar(prefix = "€"))
 ```
 
 It is quite clear from the data that this job is quite well paid, most of the ones that made it as a professional player earn around €750K over their professional careers, so that makes them 50% better paid than most IT professionals, and the whales have it better than the doctors, over €3M. The problem with this is even more obvious then it is for the doctors, out of 10,000 only about 10% make it up to here. In my IT sample I have `r sum(it_sal_dist_net_eur >= 750000)` people who earn over €750K which is more than all the poker players that made it as a professional.
 
-Now, before I dive too deep in these type of discussions I must remember my basic premise, which is the career path that give me the highest income across 10,000 lives and is the least exposed to luck in getting there. With that said I would like to check the numbers.
+Now, before I dive too deep in this type of discussion I must remember my initial premise, which is the career path that gives me the highest income across 10,000 lives and is the least exposed to luck in getting there. With that said I would like to check the numbers.
+
+```{r, include=FALSE}
+df <- df %>% 
+  mutate(Income = ifelse(Income < 0, 0, Income))
+```
+
 
 ```{r final_summary}
 # The data as it is now is not useful, I will rearrange it a bit to be better summarised
@@ -518,14 +531,14 @@ So, this is plain as day, with a lifelong average of `r dollar_format(prefix = "
 
 It is interesting that the Poker players have the highest earners with `r dollar_format(prefix = "€")(max(poker_players_final))` however the average income of `r dollar_format(prefix = "€")(mean(poker_players_final))` is not very appealing to me.
 
-The last thing I would like to test is that indeed there is a significant difference between these careers. It does not matter as much in this context since based on these data I would choose to follow a career in IT. Since it is the most accessible my consequences in choosing this career are not high. However, if the situation would have been less clear cut I might want to make sure that it matters if I choose one career over another.
+The last thing I would like to test is that indeed there is a significant difference between these careers. It does not matter as much in this context since based on these data I would choose to follow a career in IT. Since it is the most accessible, my consequences in choosing this career are not high. However, if the situation would have been less clear cut I might want to make sure that it matters if I choose one career over another.
 
-This can be done with an [Analysis Of Variance (ANOVA)](https://en.wikipedia.org/wiki/Analysis_of_variance#:~:text=Analysis%20of%20variance%20(ANOVA)%20is,by%20the%20statistician%20Ronald%20Fisher.). I'm not going to go into details about this, I will just mention that ANOVA is a way of comparing three or more groups and checking if the differences between them are significant or not. This is not exactly true but the subject is outside the scope of this article and this explanation is a useful way of remembering it.
+This can be done with an [Analysis Of Variance (ANOVA)](https://en.wikipedia.org/wiki/Analysis_of_variance#:~:text=Analysis%20of%20variance%20(ANOVA)%20is,by%20the%20statistician%20Ronald%20Fisher.). I'm not going to go into details about this, I will just mention that ANOVA is a way of comparing three or more groups and checking if the differences between them are significant or not. 
 
 ```{r ANOVA}
 anova_results <- aov(`IT Worker` ~ `Doctor` + `Poker Player`, data = df_wide)
 
-summary(anova_results)
+summary(anova_results) 
 ```
 
 So, this looks interesting. From what this shows me, there is a very significant difference between IT and poker player, which is to be expected. I can tell this by the Pr(>F) value, the smaller it is the less chance that the two groups are the same distribution. 
@@ -534,8 +547,8 @@ The problem is that the difference between IT and doctor is not significant. Thi
 
 # Conclusion
 
-As I hope I have showed here, decisions in the real world are not as easy to make as they are in a classroom where things tend to be clean cut. This can get very frustrating and that is not always a bad thing. Frustration is a good motivator to help one persist in ones pursuit of understanding and resolving a problem. With patience and perseverance most things can be overcome.
+As I hope I have showed here, decisions in the real world are not as easy to make as they are in a classroom where things tend to be clean cut. This can get very frustrating and that is not always a bad thing. Frustration is a good motivator to help one persist in one's pursuit of understanding and resolving a problem. With patience and perseverance most things can be overcome.
 
-What I hope I have showed here is how you can make decisions with imperfect data by focusing on a few key variables for which you can control. Once you have this is easy to create a simulations of random outcomes within this outcome so you can analyse the data. As mentioned earlier in this article, the preferred approach is to simulate multiple scenarios to account for blind luck. You can win the lottery and be better off that any doctor or IT worker or Poker player but you cannot count on that.
+What I hope I have showed here is how you can make decisions with imperfect data by focusing on a few key variables which you can control. Once you have this, it is easy to create a simulation of random outcomes and within this outcome so you can analyse the data. As mentioned earlier in this article, the preferred approach is to simulate multiple scenarios to account for blind luck. You can win the lottery and be better off that any doctor or IT worker or Poker player but you cannot count on that.
 
-Let me know what you think of this article and if you agree with it.
+Let me know what you think of this article and what would be your approach.

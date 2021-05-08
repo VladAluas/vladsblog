@@ -29,7 +29,9 @@ Additionally, **R** comes with a very powerful integrated development environmen
 
 Another great advantage of **R** over other programming languages is the wide range of tools they offer in tidying the data. In an **R** framework, *tidying* data refers to the process in which the data is transformed in such a way that the final dataset has each variable on a separate column and each row is a new observation. This approach makes it easier to extract information out of data and it makes it easier to reuse code or an analysis on a new dataset.
 
-> *"Like families, tidy datasets are all alike but every messy dataset is messy in its own way. Tidy datasets provide a standardized way to link the structure of a dataset (its physical layout) with its semantics (its meaning)"* (Hadley Wickham, Chief Scientist RStudio)
+> *"Like families, tidy datasets are all alike but every messy dataset is messy in its own way. Tidy datasets provide a standardized way to link the structure of a dataset (its physical layout) with its semantics (its meaning)"*
+>
+>`r tufte::quote_footer('---Hadley Wickham, Chief Scientist RStudio')`
 
 The last advantage I would like to mention is the transparency and re usability of using using code over a point and click approach (*e.g.* using Microsoft Excel or a Business Intelligence software). When you have a report or an analysis written using code it can be run by anyone, they just need to run the code in the required order. If you have multiple datasets that require the same approach, transformation, summary, etc, you can do that with just one run of the code, as opposed to a point and click approach where most of the times you need to process the files one after the other. And the best thing about writing code for data analysis, it can be easily shared between team members and reused in multiple projects.
 

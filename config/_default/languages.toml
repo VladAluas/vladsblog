@@ -1,12 +1,12 @@
 
 [en]
-  title            = "Coffee and Data"
+  title            = "The Data Behind the Story"
   LanguageName     = "English"
   weight           = 1
   codeMaxLines     = 2
 
 [ro]
-  title            = "Cafea si Date" # just for the sake of showing this is possible
+  title            = "Datele din Spatele Poveștilor" # just for the sake of showing this is possible
   introDescription = "Inginer de Date, Analist de Date, Psiholog Cognitiv și în general Om cu Păreri"
   LanguageName     = "Română"
   weight           = 2
