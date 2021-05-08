@@ -1,12 +1,14 @@
 ---
 title: Decision making under uncertainty
 author: Vlad Aluas
-date: '2021-02-21'
+date: '2021-05-08'
 slug: decision-making-under-uncertainty
 categories: ["Opinion"]
 tags: ["Monte Carlo", "decision making", "uncertainty", "chance"]
 thumbnail: /images/chance-logo.png
 ---
+
+
 
 > We sail within a vast sphere, ever drifting in uncertainty, driven from end to end.
 >
@@ -537,17 +539,3 @@ As I hope I have showed here, decisions in the real world are not as easy to mak
 What I hope I have showed here is how you can make decisions with imperfect data by focusing on a few key variables for which you can control. Once you have this is easy to create a simulations of random outcomes within this outcome so you can analyse the data. As mentioned earlier in this article, the preferred approach is to simulate multiple scenarios to account for blind luck. You can win the lottery and be better off that any doctor or IT worker or Poker player but you cannot count on that.
 
 Let me know what you think of this article and if you agree with it.
-
-
-
-
-
-
-
-
-
-
-
-
-
-

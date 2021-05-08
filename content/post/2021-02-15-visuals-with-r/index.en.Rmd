@@ -360,6 +360,32 @@ gapminder %>%
 
 Of course, we can add even more complexity to the graph and extract even more information depending on the level of detail you need from the information. Since this was just an introduction and the scope of the data was exploration, not prediction or other type of analysis, I will stop here.
 
+```{r}
+library(gganimate)
+
+
+gapminder %>%
+  ggplot(mapping = aes(x = gdpPercap, 
+                       y = lifeExp, 
+                       colour = continent, 
+                       size = pop)) +
+  geom_point(alpha = 0.4, show.legend = FALSE)  +
+  geom_point(data = gapminder %>% filter(country == "Romania"), # New Point 
+             colour = "red",                                    # New Point
+             show.legend = FALSE) +                             # New Point
+  scale_x_log10() +
+  scale_colour_manual(values = continent_colors) + 
+  labs(title = "Year: {frame_time}", # Animated Title
+       x = "GDP Per Capita",                       
+       y = "Life Expectancy") + 
+  
+  # Animation Part
+  transition_time(year) +
+  ease_aes("linear") +
+  facet_wrap(~ continent)
+```
+
+
 ## Conclusion
 
 Visualizations can be a very powerful tool to transmit a lot of information in a simple way and with a high impact, the only limit is your imagination. Remember that we started our data exploration from here:
