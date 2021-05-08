@@ -6,7 +6,6 @@ slug: decision-making-under-uncertainty
 categories: ["Opinion"]
 tags: ["Monte Carlo", "decision making", "uncertainty", "chance"]
 thumbnail: /images/chance-logo.png
-code_folding: show
 ---
 
 > We sail within a vast sphere, ever drifting in uncertainty, driven from end to end.
