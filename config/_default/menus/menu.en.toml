@@ -21,6 +21,10 @@
   parent = "Links"
   name = "Twitter"
   url = "https://twitter.com/"
+[[main]]
+  parent = "Links"
+  name = "R-bloggers"
+  url = "https://r-bloggers.com"
 
 [[main]]
   name = "About"
