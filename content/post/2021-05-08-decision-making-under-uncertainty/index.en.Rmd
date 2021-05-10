@@ -5,7 +5,7 @@ author: Vlad Aluas
 date: '2021-04-08'
 slug: decision-making-under-uncertainty
 categories: ["Opinion"]
-tags: ["decision making", "uncertainty", "chance"]
+tags: ["decision making", "uncertainty", "chance", "R"]
 thumbnail: /images/chance-logo.png
 ---
 
